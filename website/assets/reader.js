@@ -1,6 +1,6 @@
 /* ==========================================================================
-   Renegade Reader - Client Side Reader Engine
-   State persistence, 13-theme manager, typography controls & local notes
+   Renegade Reader - Client Side Reader Engine (Desktop + Mobile)
+   State persistence, 13-theme manager, typography, touch gestures & mobile bar
    ========================================================================== */
 
 (function () {
@@ -42,7 +42,7 @@
     root.style.setProperty('--reader-max-width', settings.maxWidth + 'px');
     root.style.setProperty('--font-family', settings.fontFamily);
 
-    // Update UI controls if present
+    // Update UI controls
     const fontVal = document.getElementById('val-font-size');
     if (fontVal) fontVal.textContent = settings.fontSize + 'px';
     const fontSlider = document.getElementById('slider-font-size');
@@ -107,7 +107,10 @@
           }
         } else {
           localStorage.removeItem(noteKey);
-          if (statusLabel) statusLabel.textContent = 'Note cleared.';
+          if (statusLabel) {
+            statusLabel.textContent = 'Note cleared.';
+            setTimeout(() => (statusLabel.textContent = ''), 3000);
+          }
         }
       });
     }
@@ -127,7 +130,6 @@
   // Keyboard navigation
   function initKeyboardNav() {
     document.addEventListener('keydown', e => {
-      // Don't trigger if typing in textarea or input
       if (['TEXTAREA', 'INPUT', 'SELECT'].includes(document.activeElement.tagName)) return;
       if (e.key === 'ArrowLeft') {
         const prev = document.getElementById('nav-prev-btn');
@@ -137,6 +139,112 @@
         if (next && next.getAttribute('href')) window.location.href = next.getAttribute('href');
       }
     });
+  }
+
+  // Swipe & Touch gesture navigation
+  function initTouchNavigation() {
+    let startX = 0;
+    let startY = 0;
+    let startTime = 0;
+    const swipeHint = document.getElementById('swipe-hint');
+
+    function showSwipeHint(text) {
+      if (!swipeHint) return;
+      swipeHint.textContent = text;
+      swipeHint.classList.add('show');
+      setTimeout(() => swipeHint.classList.remove('show'), 1200);
+    }
+
+    document.addEventListener('touchstart', e => {
+      if (e.touches.length !== 1) return;
+      startX = e.touches[0].clientX;
+      startY = e.touches[0].clientY;
+      startTime = Date.now();
+    }, { passive: true });
+
+    document.addEventListener('touchend', e => {
+      if (!startX || !startY) return;
+      // Don't trigger if interacting with controls, inputs, or drawer
+      const target = e.target;
+      if (target.closest('.settings-drawer, .reader-header, .mobile-bottom-bar, .cultivator-notes-section, select, button, input, textarea, a')) {
+        return;
+      }
+
+      const endX = e.changedTouches[0].clientX;
+      const endY = e.changedTouches[0].clientY;
+      const diffX = endX - startX;
+      const diffY = endY - startY;
+      const elapsed = Date.now() - startTime;
+
+      // Swipe threshold: fast (< 450ms), horizontal distance > 75px, angle > 2.5x vertical
+      if (elapsed < 450 && Math.abs(diffX) > 75 && Math.abs(diffX) > Math.abs(diffY) * 2.2) {
+        if (diffX < 0) {
+          // Swipe Left -> Next chapter
+          const nextBtn = document.getElementById('nav-next-btn');
+          if (nextBtn && nextBtn.getAttribute('href') && !nextBtn.classList.contains('disabled')) {
+            showSwipeHint('Next Chapter →');
+            setTimeout(() => { window.location.href = nextBtn.getAttribute('href'); }, 150);
+          }
+        } else {
+          // Swipe Right -> Prev chapter
+          const prevBtn = document.getElementById('nav-prev-btn');
+          if (prevBtn && prevBtn.getAttribute('href') && !prevBtn.classList.contains('disabled')) {
+            showSwipeHint('← Previous Chapter');
+            setTimeout(() => { window.location.href = prevBtn.getAttribute('href'); }, 150);
+          }
+        }
+      }
+      startX = 0;
+      startY = 0;
+    }, { passive: true });
+  }
+
+  // Immersive Auto-Hide on scroll & tap
+  function initImmersiveReading() {
+    const header = document.getElementById('reader-header');
+    const mobileBar = document.getElementById('mobile-bar');
+    let lastScrollY = window.scrollY;
+    let ticking = false;
+
+    window.addEventListener('scroll', () => {
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          const currentScrollY = window.scrollY;
+          const delta = currentScrollY - lastScrollY;
+
+          // Auto hide when scrolling down, show when scrolling up
+          if (delta > 15 && currentScrollY > 120) {
+            if (header) header.classList.add('immersive-hidden');
+            if (mobileBar) mobileBar.classList.add('immersive-hidden');
+          } else if (delta < -10 || currentScrollY < 80) {
+            if (header) header.classList.remove('immersive-hidden');
+            if (mobileBar) mobileBar.classList.remove('immersive-hidden');
+          }
+
+          lastScrollY = currentScrollY;
+          ticking = false;
+        });
+        ticking = true;
+      }
+    }, { passive: true });
+
+    // Center screen tap toggles header and toolbar
+    const readerContent = document.getElementById('reader-content');
+    if (readerContent) {
+      readerContent.addEventListener('click', e => {
+        if (e.target.closest('a, button, input, textarea, select, .cultivator-notes-section')) return;
+        if (header) header.classList.toggle('immersive-hidden');
+        if (mobileBar) mobileBar.classList.toggle('immersive-hidden');
+      });
+    }
+
+    // Scroll to top button
+    const topBtn = document.getElementById('m-btn-top');
+    if (topBtn) {
+      topBtn.addEventListener('click', () => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      });
+    }
   }
 
   document.addEventListener('DOMContentLoaded', () => {
@@ -160,9 +268,11 @@
 
     // Drawer Open/Close
     const settingsBtn = document.getElementById('btn-open-settings');
+    const mobileSettingsBtn = document.getElementById('m-btn-settings');
     const closeBtn = document.getElementById('btn-close-settings');
     const drawer = document.getElementById('settings-drawer');
     const backdrop = document.getElementById('drawer-backdrop');
+    const dragHandle = document.getElementById('drawer-drag-handle');
 
     function openDrawer() {
       if (drawer) drawer.classList.add('open');
@@ -175,8 +285,10 @@
     }
 
     if (settingsBtn) settingsBtn.addEventListener('click', openDrawer);
+    if (mobileSettingsBtn) mobileSettingsBtn.addEventListener('click', openDrawer);
     if (closeBtn) closeBtn.addEventListener('click', closeDrawer);
     if (backdrop) backdrop.addEventListener('click', closeDrawer);
+    if (dragHandle) dragHandle.addEventListener('click', closeDrawer);
 
     // Theme clicks
     document.querySelectorAll('.theme-btn').forEach(btn => {
@@ -237,5 +349,7 @@
     }
 
     initKeyboardNav();
+    initTouchNavigation();
+    initImmersiveReading();
   });
 })();

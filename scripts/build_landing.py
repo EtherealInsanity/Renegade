@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Renegade Reader - Landing Page & Download Page Builder
+Renegade Reader - Landing Page & Download Page Builder (Mobile Optimized)
 Generates website/index.html with 13 Canonical Book accordions and website/download.html
 """
 
@@ -20,7 +20,7 @@ def main():
     with open(meta_stats, "r", encoding="utf-8") as f:
         stats = json.load(f)
 
-    # Compute SHA256 of EPUB
+    # Compute SHA256 and size of EPUB
     epub_path = "website/download/Renegade_Immortal.epub"
     if os.path.exists(epub_path):
         hasher = hashlib.sha256()
@@ -89,12 +89,20 @@ def main():
 <html lang="en" data-theme="slaughter">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="theme-color" content="#0c0d12">
   <title>Renegade Immortal (仙逆) - Complete Web Novel Reader</title>
   <meta name="description" content="Read Renegade Immortal (仙逆) by Er Gen online. Fast, clean, ad-free reader across all 13 canonical books and 2,088 chapters with custom Xianxia themes.">
+  <meta property="og:title" content="Renegade Immortal (仙逆) - Complete Web Novel Reader">
+  <meta property="og:description" content="Read all 2,088 chapters of Renegade Immortal (仙逆) online. Ad-free, 13 custom Xianxia themes, instant offline download.">
+  <meta property="og:image" content="assets/cover.jpg">
+  <meta property="og:type" content="website">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="assets/cover.jpg">
   <link rel="stylesheet" href="assets/themes.css">
   <link rel="stylesheet" href="assets/landing.css">
-  <link rel="icon" type="image/jpeg" href="assets/cover.jpg">
+  <link rel="icon" type="image/png" href="assets/favicon.png">
+  <link rel="apple-touch-icon" href="assets/icon-192.png">
 </head>
 <body>
 
@@ -102,13 +110,13 @@ def main():
   <header class="landing-nav">
     <a href="index.html" class="brand-title">
       <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1-2.5-2.5Z"/><path d="M6 6h10"/><path d="M6 10h10"/></svg>
-      <span>Renegade Reader</span>
+      <span class="logo-text">Renegade Reader</span>
       <span class="brand-badge">仙逆</span>
     </a>
 
     <div class="nav-links">
-      <a href="read/ch_1.html" class="nav-link">Start Reading</a>
-      <a href="download.html" class="nav-link">Download EPUB</a>
+      <a href="read/ch_1.html" class="nav-link">Read</a>
+      <a href="download.html" class="nav-link">EPUB</a>
       <button id="theme-quick-toggle" class="nav-link" style="background: none; border: 1px solid var(--border-color); padding: 6px 12px; border-radius: var(--border-radius); cursor: pointer;" aria-label="Toggle Theme">
         ⚔️ Theme
       </button>
@@ -118,7 +126,10 @@ def main():
   <!-- Hero Banner -->
   <section class="hero-section">
     <div class="hero-cover">
-      <img src="assets/cover.jpg" alt="Renegade Immortal Cover Art" width="260" height="425" loading="eager">
+      <picture>
+        <source srcset="assets/cover.webp" type="image/webp">
+        <img src="assets/cover.jpg" alt="Renegade Immortal (仙逆) Novel Cover Art" width="260" height="346" class="hero-cover-img" loading="eager">
+      </picture>
     </div>
 
     <div class="hero-content">
@@ -187,95 +198,115 @@ def main():
     </div>
   </section>
 
+  <!-- Floating Back to Top Button -->
+  <button id="btn-back-to-top" class="back-to-top-btn" aria-label="Back to Top" title="Scroll to Top">
+    <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m18 15-6-6-6 6"/></svg>
+  </button>
+
   <!-- Footer -->
   <footer class="landing-footer">
     <p>Renegade Reader · Unofficial fan reader platform for <em>Renegade Immortal (仙逆)</em> by Er Gen.</p>
-    <p>Ad-free, zero trackers, 100% static client-side architecture. Built for fast reading on any device.</p>
+    <p>Ad-free, zero trackers, 100% static client-side architecture. Optimized for desktop & mobile.</p>
   </footer>
 
   <script>
     // Toggle Book Accordion
-    function toggleBook(bookNum) {{{{
+    function toggleBook(bookNum) {{
       const acc = document.getElementById('book-' + bookNum);
       if (acc) acc.classList.toggle('open');
-    }}}}
+    }}
 
     // Restore last read chapter button
-    try {{{{
+    try {{
       const lastRead = JSON.parse(localStorage.getItem('renegade_last_read'));
-      if (lastRead && lastRead.chapter) {{{{
+      if (lastRead && lastRead.chapter) {{
         const btn = document.getElementById('btn-continue-reading');
         const txt = document.getElementById('continue-reading-text');
-        if (btn && txt) {{{{
+        if (btn && txt) {{
           btn.href = 'read/ch_' + lastRead.chapter + '.html';
           txt.textContent = 'Resume Chapter ' + lastRead.chapter;
           btn.style.display = 'inline-flex';
-        }}}}
-      }}}}
-    }}}} catch(e) {{{{}}}}
+        }}
+      }}
+    }} catch(e) {{}}
 
     // Live search filter across 2088 chapters
     const searchInput = document.getElementById('toc-search');
-    if (searchInput) {{{{
-      searchInput.addEventListener('input', (e) => {{{{
+    if (searchInput) {{
+      searchInput.addEventListener('input', (e) => {{
         const q = e.target.value.toLowerCase().trim();
         const accordions = document.querySelectorAll('.book-accordion');
 
-        accordions.forEach(acc => {{{{
+        accordions.forEach(acc => {{
           let hasMatch = false;
           const links = acc.querySelectorAll('.chapter-item-link');
-          links.forEach(link => {{{{
+          links.forEach(link => {{
             const text = link.textContent.toLowerCase();
-            if (!q || text.includes(q)) {{{{
+            if (!q || text.includes(q)) {{
               link.style.display = 'block';
               hasMatch = true;
-            }}}} else {{{{
+            }} else {{
               link.style.display = 'none';
-            }}}}
-          }}}});
+            }}
+          }});
 
-          if (q) {{{{
-            if (hasMatch) {{{{
+          if (q) {{
+            if (hasMatch) {{
               acc.style.display = 'block';
               acc.classList.add('open');
-            }}}} else {{{{
+            }} else {{
               acc.style.display = 'none';
-            }}}}
-          }}}} else {{{{
+            }}
+          }} else {{
             acc.style.display = 'block';
-            // Reset default open state (Book 1 open, others closed)
-            if (acc.getAttribute('data-book-num') === '1') {{{{
+            if (acc.getAttribute('data-book-num') === '1') {{
               acc.classList.add('open');
-            }}}} else {{{{
+            }} else {{
               acc.classList.remove('open');
-            }}}}
-          }}}}
-        }}}});
-      }}}});
-    }}}}
+            }}
+          }}
+        }});
+      }});
+    }}
+
+    // Floating Back to Top Button
+    const btt = document.getElementById('btn-back-to-top');
+    if (btt) {{
+      window.addEventListener('scroll', () => {{
+        if (window.scrollY > 400) {{
+          btt.classList.add('visible');
+        }} else {{
+          btt.classList.remove('visible');
+        }}
+      }}, {{ passive: true }});
+
+      btt.addEventListener('click', () => {{
+        window.scrollTo({{ top: 0, behavior: 'smooth' }});
+      }});
+    }}
 
     // Quick theme toggle
     const THEMES = ['slaughter', 'bead', 'ancient-god', 'life-death', 'karma', 'true-false', 'yellow-springs', 'suzaku', 'allheaven', 'cloud-sea', 'astral', 'bamboo', 'medicine-pavilion'];
     const themeBtn = document.getElementById('theme-quick-toggle');
-    if (themeBtn) {{{{
-      themeBtn.addEventListener('click', () => {{{{
+    if (themeBtn) {{
+      themeBtn.addEventListener('click', () => {{
         const curr = document.documentElement.getAttribute('data-theme') || 'slaughter';
         const nextIdx = (THEMES.indexOf(curr) + 1) % THEMES.length;
         const nextTheme = THEMES[nextIdx];
         document.documentElement.setAttribute('data-theme', nextTheme);
-        try {{{{
-          const settings = JSON.parse(localStorage.getItem('renegade_reader_settings')) || {{{{}}}};
+        try {{
+          const settings = JSON.parse(localStorage.getItem('renegade_reader_settings')) || {{}};
           settings.theme = nextTheme;
           localStorage.setItem('renegade_reader_settings', JSON.stringify(settings));
-        }}}} catch(e) {{{{}}}}
-      }}}});
-    }}}}
+        }} catch(e) {{}}
+      }});
+    }}
 
     // Apply saved theme on landing page
-    try {{{{
+    try {{
       const saved = JSON.parse(localStorage.getItem('renegade_reader_settings'));
       if (saved && saved.theme) document.documentElement.setAttribute('data-theme', saved.theme);
-    }}}} catch(e) {{{{}}}}
+    }} catch(e) {{}}
   </script>
 </body>
 </html>
@@ -290,100 +321,126 @@ def main():
 <html lang="en" data-theme="slaughter">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="theme-color" content="#0c0d12">
   <title>Download EPUB - Renegade Immortal (仙逆)</title>
-  <meta name="description" content="Download the complete 2,088-chapter Renegade Immortal EPUB for offline reading on any e-reader or device.">
+  <meta name="description" content="Download the complete 2,088-chapter Renegade Immortal EPUB for offline reading on any e-reader or mobile device.">
+  <meta property="og:title" content="Download Renegade Immortal (仙逆) EPUB">
+  <meta property="og:description" content="Offline full 2,088-chapter EPUB with clean formatting and metadata.">
+  <meta property="og:image" content="assets/cover.jpg">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="assets/cover.jpg">
   <link rel="stylesheet" href="assets/themes.css">
   <link rel="stylesheet" href="assets/landing.css">
-  <link rel="icon" type="image/jpeg" href="assets/cover.jpg">
+  <link rel="icon" type="image/png" href="assets/favicon.png">
+  <link rel="apple-touch-icon" href="assets/icon-192.png">
   <style>
     .download-container {{
       max-width: 800px;
       margin: 40px auto 80px auto;
-      padding: 0 24px;
+      padding: 0 20px;
+      text-align: center;
     }}
     .download-card {{
       background: var(--card-bg);
       border: 1px solid var(--border-color);
       border-radius: var(--border-radius);
-      padding: 36px;
-      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.35);
-      text-align: center;
+      padding: 40px 32px;
+      box-shadow: 0 12px 36px rgba(0,0,0,0.4);
     }}
     .download-cover {{
-      max-width: 180px;
-      margin: 0 auto 24px auto;
+      width: 180px;
+      height: auto;
+      aspect-ratio: 600 / 798;
+      object-fit: cover;
       border-radius: var(--border-radius);
-      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
-      display: block;
+      margin-bottom: 24px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.5), 0 0 20px var(--accent-glow);
+      border: 1px solid var(--border-color);
     }}
     .download-table {{
       width: 100%;
-      margin: 24px 0;
+      margin: 32px 0;
       border-collapse: collapse;
       text-align: left;
     }}
     .download-table td {{
-      padding: 10px 14px;
+      padding: 12px 16px;
       border-bottom: 1px solid var(--border-color);
       font-size: 0.95rem;
     }}
     .download-table td:first-child {{
       color: var(--text-muted);
       width: 35%;
-      font-weight: 600;
+      font-weight: 500;
     }}
     .checksum-code {{
       font-family: monospace;
       font-size: 0.8rem;
-      word-break: break-all;
       background: var(--bg-secondary);
       padding: 4px 8px;
       border-radius: 4px;
+      word-break: break-all;
     }}
     .apps-grid {{
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
       gap: 12px;
-      margin-top: 24px;
+      margin-top: 16px;
       text-align: left;
     }}
     .app-item {{
       background: var(--bg-secondary);
       border: 1px solid var(--border-color);
-      padding: 12px;
       border-radius: var(--border-radius);
-      font-size: 0.85rem;
+      padding: 14px;
+      font-size: 0.88rem;
     }}
     .app-item strong {{
       display: block;
       color: var(--accent-color);
       margin-bottom: 4px;
     }}
+    @media (max-width: 600px) {{
+      .download-card {{
+        padding: 24px 16px;
+      }}
+      .download-cover {{
+        width: 140px;
+      }}
+      .download-table td {{
+        padding: 10px 8px;
+        font-size: 0.85rem;
+      }}
+      .apps-grid {{
+        grid-template-columns: 1fr;
+      }}
+    }}
   </style>
 </head>
 <body>
-
-  <!-- Landing Nav -->
   <header class="landing-nav">
     <a href="index.html" class="brand-title">
-      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+      <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1-2.5-2.5Z"/><path d="M6 6h10"/><path d="M6 10h10"/></svg>
       <span>Renegade Reader</span>
+      <span class="brand-badge">仙逆</span>
     </a>
-
     <div class="nav-links">
-      <a href="index.html" class="nav-link">Table of Contents</a>
-      <a href="read/ch_1.html" class="nav-link">Start Reading</a>
+      <a href="index.html" class="nav-link">Home</a>
+      <a href="read/ch_1.html" class="nav-link">Read Online</a>
     </div>
   </header>
 
   <main class="download-container">
     <div class="download-card">
-      <img src="assets/cover.jpg" alt="Renegade Immortal Cover" class="download-cover">
-      <h1 style="margin: 0 0 8px 0; font-size: 2rem;">Renegade Immortal (仙逆)</h1>
+      <picture>
+        <source srcset="assets/cover.webp" type="image/webp">
+        <img src="assets/cover.jpg" alt="Renegade Immortal Cover" class="download-cover">
+      </picture>
+      <h1 style="margin: 0 0 8px 0; font-size: clamp(1.6rem, 4vw, 2rem);">Renegade Immortal (仙逆)</h1>
       <p style="color: var(--text-muted); margin-bottom: 24px;">Complete 2,088 Chapters · Full 13 Canonical Books · Offline EPUB</p>
 
-      <a href="download/Renegade_Immortal.epub" class="btn-primary" style="font-size: 1.1rem; padding: 14px 32px; display: inline-flex; align-items: center; gap: 10px;" download>
+      <a href="download/Renegade_Immortal.epub" class="btn-primary" style="font-size: 1.05rem; padding: 14px 28px; display: inline-flex; align-items: center; gap: 10px; width: auto;" download>
         <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" x2="12" y1="15" y2="3"/></svg>
         Download Full EPUB ({file_size_mb})
       </a>
