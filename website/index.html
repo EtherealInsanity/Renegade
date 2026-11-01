@@ -33,7 +33,7 @@
 
     <div class="nav-links">
       <a href="./" class="nav-link">Home</a>
-      <a href="chapters" class="nav-link">Read</a>
+      <a href="read/ch_1.html" class="nav-link" id="nav-read-link">Read</a>
       <a href="#reviews" class="nav-link">Reviews</a>
       <a href="download.html" class="nav-link">EPUB</a>
       <button id="btn-pwa-install" class="nav-link" style="display: none; background: none; border: 1px solid var(--accent-color); color: var(--accent-color); padding: 6px 12px; border-radius: var(--border-radius); cursor: pointer;" aria-label="Install App">
@@ -64,13 +64,9 @@
 
       <!-- Action Buttons: Read & Download (with automatic Resume for returning readers) -->
       <div class="hero-cta-buttons">
-        <a id="btn-hero-primary" href="chapters" class="btn-primary">
+        <a id="btn-hero-primary" href="read/ch_1.html" class="btn-primary">
           <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"/></svg>
           <span id="hero-primary-text">Read</span>
-        </a>
-        <a id="btn-hero-toc" href="chapters" class="btn-secondary" style="display: none;">
-          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
-          Chapters
         </a>
         <a href="download.html" class="btn-secondary">
           <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" x2="12" y1="15" y2="3"/></svg>
@@ -117,13 +113,14 @@
       if (lastRead && lastRead.chapter) {
         const primaryBtn = document.getElementById('btn-hero-primary');
         const primaryTxt = document.getElementById('hero-primary-text');
-        const tocBtn = document.getElementById('btn-hero-toc');
+        const navRead = document.getElementById('nav-read-link');
         if (primaryBtn && primaryTxt) {
           primaryBtn.href = 'read/ch_' + lastRead.chapter + '.html';
           primaryTxt.textContent = 'Resume Ch. ' + lastRead.chapter;
         }
-        if (tocBtn) {
-          tocBtn.style.display = 'inline-flex';
+        if (navRead) {
+          navRead.href = 'read/ch_' + lastRead.chapter + '.html';
+          navRead.textContent = 'Resume';
         }
       }
     } catch(e) {}

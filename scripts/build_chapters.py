@@ -84,6 +84,10 @@ def main():
     chapter_files = sorted(glob.glob(os.path.join(epub_dir, "chapter_*.xhtml")))
     print(f"Discovered {len(chapter_files)} chapter xhtml files in {epub_dir}")
 
+    if not chapter_files:
+        print(f"No EPUB source files in {epub_dir}; keeping existing metadata in {meta_out}")
+        return
+
     total_words_novel = 0
     chapters_meta = []
 
