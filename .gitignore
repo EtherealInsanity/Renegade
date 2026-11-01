@@ -15,3 +15,14 @@ Thumbs.db
 
 # Raw EPUB extraction scratch
 epub_extracted/
+
+# AI / Agent rules and assistant configurations
+.agents/
+.agent/
+.gemini/
+.claude/
+.cursor/
+.windsurf/
+.clinerules*
+.copilot/
+
