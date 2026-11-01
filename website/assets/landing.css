@@ -339,11 +339,20 @@ body {
   min-height: 54px;
 }
 
+summary.book-header {
+  list-style: none;
+}
+
+summary.book-header::-webkit-details-marker {
+  display: none;
+}
+
 .book-header:hover, .book-header:active {
   background: var(--bg-tertiary);
 }
 
-.book-accordion.open .book-header {
+.book-accordion.open .book-header,
+details.book-accordion[open] .book-header {
   border-bottom-color: var(--border-color);
 }
 
@@ -365,7 +374,8 @@ body {
   transition: transform 0.25s ease;
 }
 
-.book-accordion.open .book-toggle-icon {
+.book-accordion.open .book-toggle-icon,
+details.book-accordion[open] .book-toggle-icon {
   transform: rotate(180deg);
 }
 
@@ -377,8 +387,75 @@ body {
   padding: 16px 20px;
 }
 
-.book-accordion.open .chapter-grid {
+.book-accordion.open .chapter-grid,
+details.book-accordion[open] .chapter-grid {
   display: grid;
+}
+
+/* Homepage Volumes Section */
+.home-volumes-section {
+  margin: 24px 0 32px 0;
+}
+
+.home-volumes-heading {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--accent-color);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin-bottom: 12px;
+}
+
+.home-volumes-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 10px;
+}
+
+.home-volume-card {
+  display: flex;
+  flex-direction: column;
+  padding: 12px 14px;
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius);
+  text-decoration: none;
+  transition: all var(--transition);
+}
+
+.home-volume-card:hover {
+  border-color: var(--accent-color);
+  background: var(--bg-tertiary);
+  transform: translateY(-2px);
+}
+
+.home-volume-title {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--text-color);
+  margin-bottom: 4px;
+}
+
+.home-volume-meta {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+}
+
+.btn-toggle-all {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  color: var(--text-muted);
+  padding: 8px 14px;
+  border-radius: var(--border-radius);
+  font-size: 0.85rem;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all var(--transition);
+}
+
+.btn-toggle-all:hover {
+  border-color: var(--accent-color);
+  color: var(--accent-color);
 }
 
 .chapter-item-link {

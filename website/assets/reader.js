@@ -69,6 +69,10 @@
         btn.classList.remove('active');
       }
     });
+
+    if (window.updateGiscusTheme) {
+      window.updateGiscusTheme(settings.theme);
+    }
   }
 
   // Reading progress tracking
@@ -124,6 +128,32 @@
           setTimeout(() => (statusLabel.textContent = ''), 3000);
         }
       });
+    }
+  }
+
+  // Daoist Assembly (Chapter Giscus Comments with Lazy Load)
+  function initGiscusComments() {
+    const threadContainer = document.getElementById('giscus-thread-container');
+    if (!threadContainer) return;
+
+    const term = threadContainer.getAttribute('data-term') || document.title;
+
+    if ('IntersectionObserver' in window) {
+      const observer = new IntersectionObserver((entries, obs) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            obs.disconnect();
+            if (window.loadGiscus) {
+              window.loadGiscus(threadContainer, term);
+            }
+          }
+        });
+      }, { rootMargin: '300px 0px' });
+      observer.observe(threadContainer);
+    } else {
+      if (window.loadGiscus) {
+        window.loadGiscus(threadContainer, term);
+      }
     }
   }
 
@@ -351,6 +381,7 @@
     initKeyboardNav();
     initTouchNavigation();
     initImmersiveReading();
+    initGiscusComments();
 
     // Register PWA Service Worker
     if ('serviceWorker' in navigator) {

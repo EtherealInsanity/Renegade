@@ -1,17 +1,17 @@
 # Graph Report - Renegade Reader  (2026-11-01)
 
 ## Corpus Check
-- 10 files · ~55,965,060 words
+- 10 files · ~55,992,986 words
 - Verdict: corpus is large enough that graph structure adds value.
 - Unclassified: 6 file(s) not represented in the graph (top: .css 3, (none) 1, .epub 1)
 
 ## Summary
-- 47 nodes · 56 edges · 8 communities (4 shown, 4 thin omitted)
+- 47 nodes · 57 edges · 8 communities (4 shown, 4 thin omitted)
 - Extraction: 95% EXTRACTED · 5% INFERRED · 0% AMBIGUOUS · INFERRED: 3 edges (avg confidence: 0.85)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `641db6e8`
+- Built from commit: `c9832f03`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -27,9 +27,9 @@
 ## God Nodes (most connected - your core abstractions)
 1. `scripts` - 7 edges
 2. `main()` - 7 edges
-3. `Renegade Reader (仙逆)` - 4 edges
-4. `clean_text()` - 3 edges
-5. `main()` - 3 edges
+3. `main()` - 4 edges
+4. `Renegade Reader (仙逆)` - 4 edges
+5. `clean_text()` - 3 edges
 6. `main()` - 3 edges
 7. `get_book_info()` - 2 edges
 8. `initTouchNavigation()` - 2 edges
@@ -70,6 +70,6 @@ _Questions this graph is uniquely positioned to answer:_
 - **Why does `scripts` connect `scripts` to `package.json`?**
   _High betweenness centrality (0.043) - this node is a cross-community bridge._
 - **Why does `main()` connect `build_chapters.py` to `json`?**
-  _High betweenness centrality (0.017) - this node is a cross-community bridge._
+  _High betweenness centrality (0.016) - this node is a cross-community bridge._
 - **Why does `initTouchNavigation()` connect `initTouchNavigation` to `reader.js`?**
   _High betweenness centrality (0.010) - this node is a cross-community bridge._

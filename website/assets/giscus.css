@@ -1,0 +1,94 @@
+/*!
+ * Renegade Reader - Xianxia Cultivation Theme for Giscus
+ * Matches Wang Lin's Slaughter, Void, and Daoist aesthetic
+ */
+
+main {
+  --color-prettylights-syntax-comment: #64748b;
+  --color-prettylights-syntax-constant: #f59e0b;
+  --color-prettylights-syntax-entity: #ef4444;
+  --color-prettylights-syntax-storage-modifier-import: #e2e8f0;
+  --color-prettylights-syntax-entity-tag: #10b981;
+  --color-prettylights-syntax-keyword: #ef4444;
+  --color-prettylights-syntax-string: #10b981;
+  --color-prettylights-syntax-variable: #f59e0b;
+  --color-prettylights-syntax-string-regexp: #10b981;
+  --color-prettylights-syntax-markup-heading: #ef4444;
+
+  --color-btn-text: #e2e8f0;
+  --color-btn-bg: #141620;
+  --color-btn-border: #272a38;
+  --color-btn-shadow: 0 0 transparent;
+  --color-btn-inset-shadow: 0 0 transparent;
+  --color-btn-hover-bg: #1b1e28;
+  --color-btn-hover-border: #ef4444;
+  --color-btn-active-bg: #272a38;
+  --color-btn-active-border: #ef4444;
+  --color-btn-selected-bg: #1b1e28;
+  --color-btn-primary-text: #ffffff;
+  --color-btn-primary-bg: #ef4444;
+  --color-btn-primary-border: #dc2626;
+  --color-btn-primary-shadow: 0 0 transparent;
+  --color-btn-primary-inset-shadow: 0 0 transparent;
+  --color-btn-primary-hover-bg: #dc2626;
+  --color-btn-primary-hover-border: #b91c1c;
+  --color-btn-primary-selected-bg: #dc2626;
+  --color-btn-primary-disabled-text: rgba(255, 255, 255, 0.5);
+  --color-btn-primary-disabled-bg: rgba(239, 68, 68, 0.5);
+  --color-btn-primary-disabled-border: transparent;
+
+  --color-fg-default: #e2e8f0;
+  --color-fg-muted: #94a3b8;
+  --color-fg-subtle: #64748b;
+  --color-canvas-default: #0c0d12;
+  --color-canvas-overlay: #141620;
+  --color-canvas-inset: #07080b;
+  --color-canvas-subtle: #13151c;
+  --color-border-default: #272a38;
+  --color-border-muted: #1b1e28;
+  --color-neutral-muted: rgba(148, 163, 184, 0.15);
+  --color-accent-fg: #ef4444;
+  --color-accent-emphasis: #ef4444;
+  --color-attention-subtle: rgba(245, 158, 11, 0.15);
+  --color-danger-fg: #ef4444;
+
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+}
+
+/* Light mode override for Bamboo Scroll & Medicine Pavilion */
+main.light {
+  --color-btn-text: #2d241e;
+  --color-btn-bg: #f4ece1;
+  --color-btn-border: #dcd0c0;
+  --color-btn-hover-bg: #ebe0d1;
+  --color-btn-hover-border: #8b5a2b;
+  --color-btn-active-bg: #dcd0c0;
+  --color-btn-primary-text: #ffffff;
+  --color-btn-primary-bg: #8b5a2b;
+  --color-btn-primary-border: #734a22;
+  --color-btn-primary-hover-bg: #734a22;
+
+  --color-fg-default: #2d241e;
+  --color-fg-muted: #6e5848;
+  --color-fg-subtle: #96806e;
+  --color-canvas-default: #fcf9f2;
+  --color-canvas-overlay: #f7f2e7;
+  --color-canvas-inset: #ede5d5;
+  --color-canvas-subtle: #f4ece1;
+  --color-border-default: #dcd0c0;
+  --color-border-muted: #e7ddce;
+  --color-neutral-muted: rgba(110, 88, 72, 0.15);
+  --color-accent-fg: #8b5a2b;
+  --color-accent-emphasis: #8b5a2b;
+}
+
+.gsc-comment-box-textarea {
+  background-color: var(--color-canvas-subtle) !important;
+  border: 1px solid var(--color-border-default) !important;
+  border-radius: 6px !important;
+  color: var(--color-fg-default) !important;
+}
+
+.gsc-comment-box-textarea:focus {
+  border-color: var(--color-accent-fg) !important;
+}

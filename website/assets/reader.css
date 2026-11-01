@@ -346,6 +346,72 @@ body {
   margin-right: auto;
 }
 
+/* Daoist Assembly (Chapter Giscus Comments) */
+.cultivator-comments-section {
+  margin: 32px 0;
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius);
+  padding: 24px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+}
+
+.comments-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.comments-header h3 {
+  margin: 0;
+  font-size: 1.15rem;
+  color: var(--accent-color);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.comments-badge {
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  padding: 3px 8px;
+  border-radius: 4px;
+  background: var(--bg-tertiary);
+  color: var(--text-muted);
+  border: 1px solid var(--border-color);
+}
+
+.giscus-thread-container {
+  min-height: 160px;
+}
+
+.giscus-skeleton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 36px 16px;
+  color: var(--text-muted);
+  font-size: 0.95rem;
+}
+
+.giscus-spinner {
+  width: 18px;
+  height: 18px;
+  border: 2px solid var(--border-color);
+  border-top-color: var(--accent-color);
+  border-radius: 50%;
+  animation: giscus-spin 0.8s linear infinite;
+}
+
+@keyframes giscus-spin {
+  to { transform: rotate(360deg); }
+}
+
 /* Floating Mobile Quick-Navigation Bar (Bottom Pill) */
 .mobile-bottom-bar {
   display: none;
@@ -661,7 +727,8 @@ select.font-select {
     gap: 6px;
   }
 
-  .cultivator-notes-section {
+  .cultivator-notes-section,
+  .cultivator-comments-section {
     padding: 16px;
   }
 }

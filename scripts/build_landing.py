@@ -1,7 +1,10 @@
 #!/usr/bin/env python3
 """
-Renegade Reader - Landing Page & Download Page Builder (Mobile Optimized)
-Generates website/index.html with 13 Canonical Book accordions and website/download.html
+Renegade Reader - Landing Page & Reader TOC Builder
+Generates:
+  1. website/index.html: Focused homepage displaying novel cover, name, volumes, and Read/Download buttons
+  2. website/read/index.html: Dedicated chapters page categorised in 13 collapsible canonical volumes
+  3. website/download.html: Offline EPUB download page
 """
 
 import os
@@ -40,7 +43,24 @@ def main():
         if b_num in chapters_by_book:
             chapters_by_book[b_num].append(ch)
 
-    # Build Book Accordions HTML
+    # Build Homepage Volume Cards HTML
+    home_volumes_html = []
+    for b in books:
+        b_num = b["book"]
+        b_title = b["title"]
+        b_chapters = chapters_by_book.get(b_num, [])
+        ch_count = len(b_chapters)
+        start_ch = b["start"]
+        end_ch = b["end"]
+        home_volumes_html.append(
+            f'<a href="read/index.html#book-{b_num}" class="home-volume-card">\n'
+            f'  <span class="home-volume-title">Vol. {b_num}: {b_title}</span>\n'
+            f'  <span class="home-volume-meta">Chapters {start_ch}–{end_ch} · {ch_count} chs</span>\n'
+            f'</a>'
+        )
+    home_volumes_rendered = "\n".join(home_volumes_html)
+
+    # Build Chapters Page (TOC) Accordions HTML
     accordions_html = []
     pills_html = []
 
@@ -51,41 +71,50 @@ def main():
         ch_count = len(b_chapters)
         start_ch = b["start"]
         end_ch = b["end"]
-
         b_words = sum(ch.get("word_count", 0) for ch in b_chapters)
+
         pills_html.append(f'<a href="#book-{b_num}" class="book-pill">Book {b_num} ({ch_count} chs)</a>')
 
-        # Open the first book by default
-        open_class = "open" if b_num == 1 else ""
+        # Open the first book by default for immediate preview
+        open_attr = "open" if b_num == 1 else ""
 
         ch_items_html = []
         for ch in b_chapters:
             ch_num = ch["chapter"]
+            title_text = ch["title"]
+            if title_text.lower().startswith(f"chapter {ch_num}"):
+                display_title = title_text
+            else:
+                display_title = f"Ch. {ch_num} – {title_text}"
+
             ch_items_html.append(
-                f'<a href="read/ch_{ch_num}.html" class="chapter-item-link" data-title="{ch["title"].lower()}">'
-                f'Ch. {ch_num} - {ch["title"]}</a>'
+                f'<a href="ch_{ch_num}.html" class="chapter-item-link" data-title="{title_text.lower()}">'
+                f'{display_title}</a>'
             )
 
         accordion_block = f"""
-        <div id="book-{b_num}" class="book-accordion {open_class}" data-book-num="{b_num}">
-          <div class="book-header" onclick="toggleBook({b_num})">
+        <details id="book-{b_num}" class="book-accordion" data-book-num="{b_num}" {open_attr}>
+          <summary class="book-header">
             <div class="book-title-group">
               <h3>Book {b_num}: {b_title}</h3>
               <span class="book-subtitle">Chapters {start_ch} – {end_ch} · {ch_count} chs · {b_words:,} words</span>
             </div>
             <svg class="book-toggle-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
-          </div>
+          </summary>
           <div class="chapter-grid" id="grid-book-{b_num}">
             {"".join(ch_items_html)}
           </div>
-        </div>
+        </details>
         """
         accordions_html.append(accordion_block)
 
     books_rendered = "\n".join(accordions_html)
     pills_rendered = "\n".join(pills_html)
 
-    # Generate website/index.html
+    # =========================================================================
+    # 1. Generate website/index.html (Clean homepage)
+    # Displays ONLY book cover, name, volumes, along with read & download buttons
+    # =========================================================================
     index_html = f"""<!DOCTYPE html>
 <html lang="en" data-theme="slaughter">
 <head>
@@ -93,7 +122,7 @@ def main():
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <meta name="theme-color" content="#0c0d12">
   <title>Renegade Immortal (仙逆) - Complete Web Novel Reader</title>
-  <meta name="description" content="Read Renegade Immortal (仙逆) by Er Gen online. Fast, clean, ad-free reader across all 13 canonical books and 2,088 chapters with custom Xianxia themes.">
+  <meta name="description" content="Read Renegade Immortal (仙逆) by Er Gen online. Fast, clean, ad-free reader across all 13 canonical books and 2,088 chapters.">
   <meta property="og:title" content="Renegade Immortal (仙逆) - Complete Web Novel Reader">
   <meta property="og:description" content="Read all 2,088 chapters of Renegade Immortal (仙逆) online. Ad-free, 13 custom Xianxia themes, instant offline download.">
   <meta property="og:image" content="assets/cover.jpg">
@@ -120,7 +149,7 @@ def main():
     </a>
 
     <div class="nav-links">
-      <a href="read/ch_1.html" class="nav-link">Read</a>
+      <a href="read/index.html" class="nav-link">Read</a>
       <a href="download.html" class="nav-link">EPUB</a>
       <button id="btn-pwa-install" class="nav-link" style="display: none; background: none; border: 1px solid var(--accent-color); color: var(--accent-color); padding: 6px 12px; border-radius: var(--border-radius); cursor: pointer;" aria-label="Install App">
         📥 Install
@@ -131,8 +160,8 @@ def main():
     </div>
   </header>
 
-  <!-- Hero Banner -->
-  <section class="hero-section">
+  <!-- Focused Hero Section: Cover, Name, Volumes, and Read/Download buttons -->
+  <main class="hero-section" style="margin-top: 36px; margin-bottom: 50px;">
     <div class="hero-cover">
       <picture>
         <source srcset="assets/cover.webp" type="image/webp">
@@ -141,75 +170,34 @@ def main():
     </div>
 
     <div class="hero-content">
-      <div class="novel-tagline">Classic Xianxia Cultivation Masterpiece</div>
       <h1 class="novel-title">Renegade Immortal<span class="novel-chinese-title">仙逆</span></h1>
       <div class="novel-author">By <strong>Er Gen (耳根)</strong> · Official Translation</div>
 
-      <div class="novel-stats-row">
-        <div class="stat-item">
-          <div class="stat-val">{stats["total_chapters"]:,}</div>
-          <div class="stat-lbl">Chapters</div>
-        </div>
-        <div class="stat-item">
-          <div class="stat-val">{stats["total_books"]}</div>
-          <div class="stat-lbl">Canonical Books</div>
-        </div>
-        <div class="stat-item">
-          <div class="stat-val">{stats["total_words"] / 1000000:.2f}M</div>
-          <div class="stat-lbl">Words</div>
-        </div>
-        <div class="stat-item">
-          <div class="stat-val">13</div>
-          <div class="stat-lbl">Daoist Themes</div>
+      <!-- Volumes Overview -->
+      <div class="home-volumes-section">
+        <div class="home-volumes-heading">Volumes (13 Canonical Books · {stats["total_chapters"]:,} Chapters)</div>
+        <div class="home-volumes-grid">
+          {home_volumes_rendered}
         </div>
       </div>
 
-      <p class="novel-synopsis">
-        Wang Lin is a very smart boy with loving parents, shunned by relatives. One day, he gains the opportunity to walk the path of immortality, only to find he possesses mediocre talent at best. Watch Wang Lin as he shatters fate, masters the Ji Realm, grasps the Heaven Defying Bead, and walks a ruthless slaughter path toward true immortality.
-      </p>
-
+      <!-- Action Buttons: Read & Download -->
       <div class="hero-cta-buttons">
-        <a href="read/ch_1.html" class="btn-primary">
+        <a href="read/index.html" class="btn-primary">
           <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"/></svg>
-          Begin from Chapter 1
+          Read
         </a>
         <a id="btn-continue-reading" href="read/ch_1.html" class="btn-secondary" style="display: none;">
           <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12h20"/><path d="M20 12l-6-6"/><path d="M20 12l-6 6"/></svg>
-          <span id="continue-reading-text">Continue Reading</span>
+          <span id="continue-reading-text">Resume</span>
         </a>
         <a href="download.html" class="btn-secondary">
           <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" x2="12" y1="15" y2="3"/></svg>
-          Offline EPUB
+          Download
         </a>
       </div>
     </div>
-  </section>
-
-  <!-- Table of Contents Section -->
-  <section class="toc-section">
-    <div class="toc-controls-bar">
-      <h2>Table of Contents</h2>
-      <div class="search-input-wrapper">
-        <svg class="search-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
-        <input type="text" id="toc-search" class="search-input" placeholder="Search chapter title or number (e.g. 359, Ji Realm, Slaughter)..." aria-label="Search chapters">
-      </div>
-    </div>
-
-    <!-- Quick Jump Book Pills -->
-    <div class="book-pills-bar">
-      {pills_rendered}
-    </div>
-
-    <!-- 13 Book Accordions -->
-    <div id="accordions-container">
-      {books_rendered}
-    </div>
-  </section>
-
-  <!-- Floating Back to Top Button -->
-  <button id="btn-back-to-top" class="back-to-top-btn" aria-label="Back to Top" title="Scroll to Top">
-    <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m18 15-6-6-6 6"/></svg>
-  </button>
+  </main>
 
   <!-- Footer -->
   <footer class="landing-footer">
@@ -218,12 +206,6 @@ def main():
   </footer>
 
   <script>
-    // Toggle Book Accordion
-    function toggleBook(bookNum) {{
-      const acc = document.getElementById('book-' + bookNum);
-      if (acc) acc.classList.toggle('open');
-    }}
-
     // Restore last read chapter button
     try {{
       const lastRead = JSON.parse(localStorage.getItem('renegade_last_read'));
@@ -232,66 +214,11 @@ def main():
         const txt = document.getElementById('continue-reading-text');
         if (btn && txt) {{
           btn.href = 'read/ch_' + lastRead.chapter + '.html';
-          txt.textContent = 'Resume Chapter ' + lastRead.chapter;
+          txt.textContent = 'Resume Ch. ' + lastRead.chapter;
           btn.style.display = 'inline-flex';
         }}
       }}
     }} catch(e) {{}}
-
-    // Live search filter across 2088 chapters
-    const searchInput = document.getElementById('toc-search');
-    if (searchInput) {{
-      searchInput.addEventListener('input', (e) => {{
-        const q = e.target.value.toLowerCase().trim();
-        const accordions = document.querySelectorAll('.book-accordion');
-
-        accordions.forEach(acc => {{
-          let hasMatch = false;
-          const links = acc.querySelectorAll('.chapter-item-link');
-          links.forEach(link => {{
-            const text = link.textContent.toLowerCase();
-            if (!q || text.includes(q)) {{
-              link.style.display = 'block';
-              hasMatch = true;
-            }} else {{
-              link.style.display = 'none';
-            }}
-          }});
-
-          if (q) {{
-            if (hasMatch) {{
-              acc.style.display = 'block';
-              acc.classList.add('open');
-            }} else {{
-              acc.style.display = 'none';
-            }}
-          }} else {{
-            acc.style.display = 'block';
-            if (acc.getAttribute('data-book-num') === '1') {{
-              acc.classList.add('open');
-            }} else {{
-              acc.classList.remove('open');
-            }}
-          }}
-        }});
-      }});
-    }}
-
-    // Floating Back to Top Button
-    const btt = document.getElementById('btn-back-to-top');
-    if (btt) {{
-      window.addEventListener('scroll', () => {{
-        if (window.scrollY > 400) {{
-          btt.classList.add('visible');
-        }} else {{
-          btt.classList.remove('visible');
-        }}
-      }}, {{ passive: true }});
-
-      btt.addEventListener('click', () => {{
-        window.scrollTo({{ top: 0, behavior: 'smooth' }});
-      }});
-    }}
 
     // Quick theme toggle
     const THEMES = ['slaughter', 'bead', 'ancient-god', 'life-death', 'karma', 'true-false', 'yellow-springs', 'suzaku', 'allheaven', 'cloud-sea', 'astral', 'bamboo', 'medicine-pavilion'];
@@ -349,9 +276,247 @@ def main():
 
     with open("website/index.html", "w", encoding="utf-8") as f:
         f.write(index_html)
-    print("Generated website/index.html")
+    print("Generated website/index.html (Clean homepage)")
 
-    # Generate website/download.html
+    # =========================================================================
+    # 2. Generate website/read/index.html (Chapters categorized in 13 volumes)
+    # Native collapsible <details> with all chapters populated inside
+    # =========================================================================
+    read_index_html = f"""<!DOCTYPE html>
+<html lang="en" data-theme="slaughter">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="theme-color" content="#0c0d12">
+  <title>Chapters by Volume - Renegade Immortal (仙逆)</title>
+  <meta name="description" content="Browse all 2,088 chapters of Renegade Immortal (仙逆) categorized across all 13 canonical volumes.">
+  <meta property="og:title" content="Chapters by Volume - Renegade Immortal (仙逆)">
+  <meta property="og:description" content="Complete table of contents for Renegade Immortal with chapters categorized in 13 canonical volumes.">
+  <meta property="og:image" content="../assets/cover.jpg">
+  <meta property="og:type" content="website">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="../assets/cover.jpg">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Renegade">
+  <link rel="manifest" href="../manifest.webmanifest">
+  <link rel="stylesheet" href="../assets/themes.css">
+  <link rel="stylesheet" href="../assets/landing.css">
+  <link rel="icon" type="image/png" href="../assets/favicon.png">
+  <link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
+</head>
+<body>
+
+  <!-- Navigation -->
+  <header class="landing-nav">
+    <a href="../index.html" class="brand-title">
+      <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1-2.5-2.5Z"/><path d="M6 6h10"/><path d="M6 10h10"/></svg>
+      <span class="logo-text">Renegade Reader</span>
+      <span class="brand-badge">仙逆</span>
+    </a>
+
+    <div class="nav-links">
+      <a href="../index.html" class="nav-link">Home</a>
+      <a href="../download.html" class="nav-link">EPUB</a>
+      <button id="theme-quick-toggle" class="nav-link" style="background: none; border: 1px solid var(--border-color); padding: 6px 12px; border-radius: var(--border-radius); cursor: pointer;" aria-label="Toggle Theme">
+        ⚔️ Theme
+      </button>
+    </div>
+  </header>
+
+  <!-- Table of Contents Section -->
+  <section class="toc-section" style="margin-top: 24px;">
+    <div style="margin-bottom: 24px;">
+      <h1 style="font-size: clamp(1.8rem, 4vw, 2.5rem); margin: 0 0 8px 0;">Table of Contents</h1>
+      <p style="color: var(--text-muted); margin: 0; font-size: 1rem;">
+        Renegade Immortal (仙逆) · All {stats["total_chapters"]:,} Chapters across 13 Canonical Volumes
+      </p>
+    </div>
+
+    <!-- Continue reading banner if available -->
+    <div id="resume-banner" style="display: none; background: var(--card-bg); border: 1px solid var(--accent-color); border-radius: var(--border-radius); padding: 14px 20px; margin-bottom: 20px; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px;">
+      <div>
+        <span style="color: var(--accent-color); font-weight: 600;">📖 Continue Where You Left Off:</span>
+        <span id="resume-chapter-title" style="color: var(--text-color); margin-left: 8px;"></span>
+      </div>
+      <a id="resume-chapter-link" href="#" class="btn-primary" style="padding: 8px 18px; min-height: 36px; font-size: 0.9rem;">
+        Resume Reading
+      </a>
+    </div>
+
+    <div class="toc-controls-bar">
+      <div class="search-input-wrapper">
+        <svg class="search-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+        <input type="text" id="toc-search" class="search-input" placeholder="Search chapter title or number (e.g. 359, Ji Realm, Slaughter)..." aria-label="Search chapters">
+      </div>
+      <div class="toc-actions">
+        <button id="btn-toggle-all" class="btn-toggle-all" onclick="toggleAllBooks()">Expand All</button>
+      </div>
+    </div>
+
+    <!-- Quick Jump Book Pills -->
+    <div class="book-pills-bar">
+      {pills_rendered}
+    </div>
+
+    <!-- 13 Canonical Volumes (Collapsible Native Details Accordions) -->
+    <div id="accordions-container">
+      {books_rendered}
+    </div>
+  </section>
+
+  <!-- Floating Back to Top Button -->
+  <button id="btn-back-to-top" class="back-to-top-btn" aria-label="Back to Top" title="Scroll to Top">
+    <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m18 15-6-6-6 6"/></svg>
+  </button>
+
+  <!-- Footer -->
+  <footer class="landing-footer">
+    <p>Renegade Reader · Unofficial fan reader platform for <em>Renegade Immortal (仙逆)</em> by Er Gen.</p>
+    <p><a href="../index.html">← Back to Novel Overview</a> · <a href="../download.html">Download Full EPUB</a></p>
+  </footer>
+
+  <script>
+    // Toggle all book accordions between expanded and collapsed
+    let allExpanded = false;
+    function toggleAllBooks() {{
+      allExpanded = !allExpanded;
+      const accordions = document.querySelectorAll('details.book-accordion');
+      accordions.forEach(acc => {{
+        acc.open = allExpanded;
+      }});
+      const btn = document.getElementById('btn-toggle-all');
+      if (btn) btn.textContent = allExpanded ? 'Collapse All' : 'Expand All';
+    }}
+
+    // Restore last read chapter banner
+    try {{
+      const lastRead = JSON.parse(localStorage.getItem('renegade_last_read'));
+      if (lastRead && lastRead.chapter) {{
+        const banner = document.getElementById('resume-banner');
+        const link = document.getElementById('resume-chapter-link');
+        const titleSpan = document.getElementById('resume-chapter-title');
+        if (banner && link && titleSpan) {{
+          link.href = 'ch_' + lastRead.chapter + '.html';
+          titleSpan.textContent = 'Chapter ' + lastRead.chapter + (lastRead.title ? ' – ' + lastRead.title : '');
+          banner.style.display = 'flex';
+        }}
+      }}
+    }} catch(e) {{}}
+
+    // Live search filter across 2088 chapters
+    const searchInput = document.getElementById('toc-search');
+    if (searchInput) {{
+      searchInput.addEventListener('input', (e) => {{
+        const q = e.target.value.toLowerCase().trim();
+        const accordions = document.querySelectorAll('details.book-accordion');
+
+        accordions.forEach(acc => {{
+          let hasMatch = false;
+          const links = acc.querySelectorAll('.chapter-item-link');
+          links.forEach(link => {{
+            const text = link.textContent.toLowerCase();
+            if (!q || text.includes(q)) {{
+              link.style.display = 'block';
+              hasMatch = true;
+            }} else {{
+              link.style.display = 'none';
+            }}
+          }});
+
+          if (q) {{
+            if (hasMatch) {{
+              acc.style.display = 'block';
+              acc.open = true;
+            }} else {{
+              acc.style.display = 'none';
+            }}
+          }} else {{
+            acc.style.display = 'block';
+            if (acc.getAttribute('data-book-num') === '1') {{
+              acc.open = true;
+            }} else {{
+              acc.open = allExpanded;
+            }}
+          }}
+        }});
+      }});
+    }}
+
+    // Floating Back to Top Button
+    const btt = document.getElementById('btn-back-to-top');
+    if (btt) {{
+      window.addEventListener('scroll', () => {{
+        if (window.scrollY > 400) {{
+          btt.classList.add('visible');
+        }} else {{
+          btt.classList.remove('visible');
+        }}
+      }}, {{ passive: true }});
+
+      btt.addEventListener('click', () => {{
+        window.scrollTo({{ top: 0, behavior: 'smooth' }});
+      }});
+    }}
+
+    // Quick theme toggle
+    const THEMES = ['slaughter', 'bead', 'ancient-god', 'life-death', 'karma', 'true-false', 'yellow-springs', 'suzaku', 'allheaven', 'cloud-sea', 'astral', 'bamboo', 'medicine-pavilion'];
+    const themeBtn = document.getElementById('theme-quick-toggle');
+    if (themeBtn) {{
+      themeBtn.addEventListener('click', () => {{
+        const curr = document.documentElement.getAttribute('data-theme') || 'slaughter';
+        const nextIdx = (THEMES.indexOf(curr) + 1) % THEMES.length;
+        const nextTheme = THEMES[nextIdx];
+        document.documentElement.setAttribute('data-theme', nextTheme);
+        try {{
+          const settings = JSON.parse(localStorage.getItem('renegade_reader_settings')) || {{}};
+          settings.theme = nextTheme;
+          localStorage.setItem('renegade_reader_settings', JSON.stringify(settings));
+        }} catch(e) {{}}
+      }});
+    }}
+
+    // Apply saved theme
+    try {{
+      const saved = JSON.parse(localStorage.getItem('renegade_reader_settings'));
+      if (saved && saved.theme) document.documentElement.setAttribute('data-theme', saved.theme);
+    }} catch(e) {{}}
+
+    // Register PWA Service Worker
+    if ('serviceWorker' in navigator) {{
+      window.addEventListener('load', () => {{
+        navigator.serviceWorker.register('../sw.js').catch(err => console.debug('SW reg failed', err));
+      }});
+    }}
+  </script>
+</body>
+</html>
+"""
+
+    os.makedirs("website/read", exist_ok=True)
+    with open("website/read/index.html", "w", encoding="utf-8") as f:
+        f.write(read_index_html)
+    print("Generated website/read/index.html (Chapters categorized in 13 volumes)")
+
+    # Fallback redirect website/read.html -> read/index.html
+    read_redirect_html = """<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="refresh" content="0; url=read/index.html">
+  <title>Redirecting to Chapters...</title>
+  <script>location.replace('read/index.html');</script>
+</head>
+<body>
+  <p>Redirecting to <a href="read/index.html">Chapters</a>...</p>
+</body>
+</html>"""
+    with open("website/read.html", "w", encoding="utf-8") as f:
+        f.write(read_redirect_html)
+
+    # =========================================================================
+    # 3. Generate website/download.html
+    # =========================================================================
     download_html = f"""<!DOCTYPE html>
 <html lang="en" data-theme="slaughter">
 <head>
@@ -466,7 +631,7 @@ def main():
     </a>
     <div class="nav-links">
       <a href="index.html" class="nav-link">Home</a>
-      <a href="read/ch_1.html" class="nav-link">Read Online</a>
+      <a href="read/index.html" class="nav-link">Read Online</a>
     </div>
   </header>
 
