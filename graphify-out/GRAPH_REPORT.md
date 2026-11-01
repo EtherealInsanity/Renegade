@@ -1,17 +1,17 @@
 # Graph Report - Renegade Reader  (2026-11-01)
 
 ## Corpus Check
-- 9 files · ~55,939,340 words
+- 10 files · ~55,965,060 words
 - Verdict: corpus is large enough that graph structure adds value.
-- Unclassified: 5 file(s) not represented in the graph (top: .css 3, (none) 1, .epub 1)
+- Unclassified: 6 file(s) not represented in the graph (top: .css 3, (none) 1, .epub 1)
 
 ## Summary
-- 45 nodes · 55 edges · 7 communities (4 shown, 3 thin omitted)
+- 47 nodes · 56 edges · 8 communities (4 shown, 4 thin omitted)
 - Extraction: 95% EXTRACTED · 5% INFERRED · 0% AMBIGUOUS · INFERRED: 3 edges (avg confidence: 0.85)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `b7dc7b5e`
+- Built from commit: `641db6e8`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -22,6 +22,7 @@
 - package.json
 - Renegade Reader (仙逆)
 - initTouchNavigation
+- sw.js
 
 ## God Nodes (most connected - your core abstractions)
 1. `scripts` - 7 edges
@@ -42,7 +43,7 @@
 ## Import Cycles
 - None detected.
 
-## Communities (7 total, 3 thin omitted)
+## Communities (8 total, 4 thin omitted)
 
 ### Community 2 - "build_chapters.py"
 Cohesion: 0.52
@@ -61,14 +62,14 @@ Cohesion: 0.40
 Nodes (4): 13 Official Cultivation Themes, Architecture Overview, Development & Build Commands, Renegade Reader (仙逆)
 
 ## Knowledge Gaps
-- **3 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
+- **4 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
 - **Why does `scripts` connect `scripts` to `package.json`?**
-  _High betweenness centrality (0.048) - this node is a cross-community bridge._
+  _High betweenness centrality (0.043) - this node is a cross-community bridge._
 - **Why does `main()` connect `build_chapters.py` to `json`?**
-  _High betweenness centrality (0.018) - this node is a cross-community bridge._
+  _High betweenness centrality (0.017) - this node is a cross-community bridge._
 - **Why does `initTouchNavigation()` connect `initTouchNavigation` to `reader.js`?**
-  _High betweenness centrality (0.011) - this node is a cross-community bridge._
+  _High betweenness centrality (0.010) - this node is a cross-community bridge._

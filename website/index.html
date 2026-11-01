@@ -12,10 +12,14 @@
   <meta property="og:type" content="website">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:image" content="assets/cover.jpg">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Renegade">
+  <link rel="manifest" href="manifest.webmanifest">
   <link rel="stylesheet" href="assets/themes.css">
   <link rel="stylesheet" href="assets/landing.css">
   <link rel="icon" type="image/png" href="assets/favicon.png">
-  <link rel="apple-touch-icon" href="assets/icon-192.png">
+  <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
 </head>
 <body>
 
@@ -30,6 +34,9 @@
     <div class="nav-links">
       <a href="read/ch_1.html" class="nav-link">Read</a>
       <a href="download.html" class="nav-link">EPUB</a>
+      <button id="btn-pwa-install" class="nav-link" style="display: none; background: none; border: 1px solid var(--accent-color); color: var(--accent-color); padding: 6px 12px; border-radius: var(--border-radius); cursor: pointer;" aria-label="Install App">
+        📥 Install
+      </button>
       <button id="theme-quick-toggle" class="nav-link" style="background: none; border: 1px solid var(--border-color); padding: 6px 12px; border-radius: var(--border-radius); cursor: pointer;" aria-label="Toggle Theme">
         ⚔️ Theme
       </button>
@@ -413,6 +420,33 @@
       const saved = JSON.parse(localStorage.getItem('renegade_reader_settings'));
       if (saved && saved.theme) document.documentElement.setAttribute('data-theme', saved.theme);
     } catch(e) {}
+
+    // Register PWA Service Worker & Install Handler
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('./sw.js').catch(err => console.debug('SW reg failed', err));
+      });
+    }
+
+    let deferredPrompt;
+    const installBtn = document.getElementById('btn-pwa-install');
+    window.addEventListener('beforeinstallprompt', (e) => {
+      e.preventDefault();
+      deferredPrompt = e;
+      if (installBtn) installBtn.style.display = 'inline-flex';
+    });
+
+    if (installBtn) {
+      installBtn.addEventListener('click', async () => {
+        if (!deferredPrompt) return;
+        deferredPrompt.prompt();
+        const choice = await deferredPrompt.userChoice;
+        if (choice && choice.outcome === 'accepted') {
+          installBtn.style.display = 'none';
+        }
+        deferredPrompt = null;
+      });
+    }
   </script>
 </body>
 </html>

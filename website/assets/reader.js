@@ -351,5 +351,15 @@
     initKeyboardNav();
     initTouchNavigation();
     initImmersiveReading();
+
+    // Register PWA Service Worker
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        const swUrl = window.location.pathname.includes('/read/') ? '../sw.js' : './sw.js';
+        navigator.serviceWorker.register(swUrl).catch(e => {
+          console.debug('ServiceWorker registration skipped:', e);
+        });
+      });
+    }
   });
 })();
