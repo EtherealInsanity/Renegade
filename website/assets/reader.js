@@ -131,29 +131,44 @@
     }
   }
 
-  // Daoist Assembly (Chapter Giscus Comments with Lazy Load)
+  // Chapter Discussions (Giscus Comments with Lazy Load)
   function initGiscusComments() {
     const threadContainer = document.getElementById('giscus-thread-container');
     if (!threadContainer) return;
 
     const term = threadContainer.getAttribute('data-term') || document.title;
 
+    function triggerGiscus() {
+      if (window.loadGiscus) {
+        window.loadGiscus(threadContainer, term);
+      }
+    }
+
+    // Redirect button to chapter discussions: smooth scroll and immediate load
+    const discussButtons = document.querySelectorAll('a[href="#comments-section"]');
+    discussButtons.forEach(btn => {
+      btn.addEventListener('click', e => {
+        const target = document.getElementById('comments-section');
+        if (target) {
+          e.preventDefault();
+          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          triggerGiscus();
+        }
+      });
+    });
+
     if ('IntersectionObserver' in window) {
       const observer = new IntersectionObserver((entries, obs) => {
         entries.forEach(entry => {
           if (entry.isIntersecting) {
             obs.disconnect();
-            if (window.loadGiscus) {
-              window.loadGiscus(threadContainer, term);
-            }
+            triggerGiscus();
           }
         });
       }, { rootMargin: '300px 0px' });
       observer.observe(threadContainer);
     } else {
-      if (window.loadGiscus) {
-        window.loadGiscus(threadContainer, term);
-      }
+      triggerGiscus();
     }
   }
 

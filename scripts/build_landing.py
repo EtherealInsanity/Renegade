@@ -125,14 +125,14 @@ def main():
 
   <!-- Landing Nav -->
   <header class="landing-nav">
-    <a href="index.html" class="brand-title">
+    <a href="./" class="brand-title">
       <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1-2.5-2.5Z"/><path d="M6 6h10"/><path d="M6 10h10"/></svg>
       <span class="logo-text">Renegade Reader</span>
       <span class="brand-badge">仙逆</span>
     </a>
 
     <div class="nav-links">
-      <a href="index.html" class="nav-link">Home</a>
+      <a href="./" class="nav-link">Home</a>
       <a href="read/ch_1.html" class="nav-link">Read</a>
       <a href="chapters.html" class="nav-link">Chapters</a>
       <a href="download.html" class="nav-link">EPUB</a>
@@ -294,14 +294,14 @@ def main():
 
   <!-- Navigation -->
   <header class="landing-nav">
-    <a href="index.html" class="brand-title">
+    <a href="./" class="brand-title">
       <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1-2.5-2.5Z"/><path d="M6 6h10"/><path d="M6 10h10"/></svg>
       <span class="logo-text">Renegade Reader</span>
       <span class="brand-badge">仙逆</span>
     </a>
 
     <div class="nav-links">
-      <a href="index.html" class="nav-link">Home</a>
+      <a href="./" class="nav-link">Home</a>
       <a href="read/ch_1.html" class="nav-link">Read</a>
       <a href="download.html" class="nav-link">EPUB</a>
       <button id="theme-quick-toggle" class="nav-link" style="background: none; border: 1px solid var(--border-color); padding: 6px 12px; border-radius: var(--border-radius); cursor: pointer;" aria-label="Toggle Theme">
@@ -359,7 +359,7 @@ def main():
   <!-- Footer -->
   <footer class="landing-footer">
     <p>Renegade Reader · Unofficial fan reader platform for <em>Renegade Immortal (仙逆)</em> by Er Gen.</p>
-    <p><a href="index.html">← Back to Novel Overview</a> · <a href="download.html">Download Full EPUB</a></p>
+    <p><a href="./">← Back to Novel Overview</a> · <a href="download.html">Download Full EPUB</a></p>
   </footer>
 
   <script>
@@ -483,21 +483,9 @@ def main():
         f.write(chapters_html)
     print("Generated website/chapters.html (Chapters categorized in 13 volumes)")
 
-    # Legacy redirect for website/read/index.html -> ../chapters.html
-    read_index_redirect = """<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="refresh" content="0; url=../chapters.html">
-  <title>Redirecting to Chapters...</title>
-  <script>location.replace('../chapters.html');</script>
-</head>
-<body>
-  <p>Redirecting to <a href="../chapters.html">Chapters</a>...</p>
-</body>
-</html>"""
-    with open("website/read/index.html", "w", encoding="utf-8") as f:
-        f.write(read_index_redirect)
+    # Remove website/read/index.html if it exists to avoid phantom redirect
+    if os.path.exists("website/read/index.html"):
+        os.remove("website/read/index.html")
 
     # Remove website/read.html if it exists to avoid directory collisions
     if os.path.exists("website/read.html"):
@@ -613,13 +601,13 @@ def main():
 </head>
 <body>
   <header class="landing-nav">
-    <a href="index.html" class="brand-title">
+    <a href="./" class="brand-title">
       <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1-2.5-2.5Z"/><path d="M6 6h10"/><path d="M6 10h10"/></svg>
       <span>Renegade Reader</span>
       <span class="brand-badge">仙逆</span>
     </a>
     <div class="nav-links">
-      <a href="index.html" class="nav-link">Home</a>
+      <a href="./" class="nav-link">Home</a>
       <a href="read/ch_1.html" class="nav-link">Read Online</a>
       <a href="chapters.html" class="nav-link">Chapters</a>
     </div>

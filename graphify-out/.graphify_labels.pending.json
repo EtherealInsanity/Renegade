@@ -6,5 +6,6 @@
   "4": "giscus-config.js",
   "5": "Renegade Reader (仙逆)",
   "6": "initTouchNavigation",
-  "7": "sw.js"
+  "7": "sw.js",
+  "8": "initGiscusComments"
 }

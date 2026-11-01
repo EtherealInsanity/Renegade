@@ -347,7 +347,7 @@ body {
   margin-right: auto;
 }
 
-/* Daoist Assembly (Chapter Giscus Comments) */
+/* Chapter Discussions (Giscus Comments) */
 .cultivator-comments-section {
   margin: 32px 0;
   background: var(--card-bg);
@@ -384,6 +384,26 @@ body {
   background: var(--bg-tertiary);
   color: var(--text-muted);
   border: 1px solid var(--border-color);
+}
+
+.comments-redirect-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.8rem;
+  padding: 5px 10px;
+  border-radius: var(--border-radius);
+  background: var(--bg-secondary);
+  color: var(--text-muted);
+  border: 1px solid var(--border-color);
+  text-decoration: none;
+  transition: all var(--transition);
+}
+
+.comments-redirect-btn:hover {
+  color: var(--accent-color);
+  border-color: var(--accent-color);
+  background: var(--card-bg);
 }
 
 .giscus-thread-container {
