@@ -29,14 +29,6 @@ def main():
     total_chapters = len(chapters)
     print(f"Compiling {total_chapters} chapters into static reader pages...")
 
-    # Pre-build dropdown options for quick chapter jumper
-    chapter_options_map = {}
-    options_html = []
-    for ch in chapters:
-        ch_num = ch["chapter"]
-        options_html.append(f'<option value="ch_{ch_num}.html">Ch. {ch_num} - {ch["title"]}</option>')
-    all_options_str = "\n".join(options_html)
-
     for idx, ch in enumerate(chapters):
         ch_num = ch["chapter"]
         txt_path = os.path.join(chapters_dir, f"{ch_num}.txt")
@@ -122,9 +114,6 @@ def main():
             next_label = f"Ch. {next_num}"
             next_disabled = ""
 
-        # Mark selected option in jumper
-        ch_options = all_options_str.replace(f'value="ch_{ch_num}.html"', f'value="ch_{ch_num}.html" selected')
-
         page_html = template
         page_html = page_html.replace("{{TITLE}}", title)
         page_html = page_html.replace("{{CHAPTER_NUM}}", str(ch_num))
@@ -138,7 +127,6 @@ def main():
         page_html = page_html.replace("{{NEXT_HREF}}", next_href)
         page_html = page_html.replace("{{NEXT_LABEL}}", next_label)
         page_html = page_html.replace("{{NEXT_DISABLED}}", next_disabled)
-        page_html = page_html.replace("{{CHAPTER_OPTIONS}}", ch_options)
 
         out_file = os.path.join(output_dir, f"ch_{ch_num}.html")
         with open(out_file, "w", encoding="utf-8") as out_f:

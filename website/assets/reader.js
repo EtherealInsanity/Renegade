@@ -175,13 +175,24 @@
   // Keyboard navigation
   function initKeyboardNav() {
     document.addEventListener('keydown', e => {
-      if (['TEXTAREA', 'INPUT', 'SELECT'].includes(document.activeElement.tagName)) return;
+      if (['TEXTAREA', 'INPUT', 'SELECT'].includes(document.activeElement.tagName)) {
+        if (e.key === 'Escape') {
+          document.activeElement.blur();
+          closeAllDrawers();
+        }
+        return;
+      }
       if (e.key === 'ArrowLeft') {
         const prev = document.getElementById('nav-prev-btn');
         if (prev && prev.getAttribute('href')) window.location.href = prev.getAttribute('href');
       } else if (e.key === 'ArrowRight') {
         const next = document.getElementById('nav-next-btn');
         if (next && next.getAttribute('href')) window.location.href = next.getAttribute('href');
+      } else if (e.key === 'c' || e.key === 'C' || e.key === 't' || e.key === 'T') {
+        e.preventDefault();
+        toggleChaptersDrawer();
+      } else if (e.key === 'Escape') {
+        closeAllDrawers();
       }
     });
   }
@@ -209,19 +220,38 @@
 
     document.addEventListener('touchend', e => {
       if (!startX || !startY) return;
-      // Don't trigger if interacting with controls, inputs, or drawer
       const target = e.target;
-      if (target.closest('.settings-drawer, .reader-header, .mobile-bottom-bar, .cultivator-notes-section, select, button, input, textarea, a')) {
-        return;
-      }
-
       const endX = e.changedTouches[0].clientX;
       const endY = e.changedTouches[0].clientY;
       const diffX = endX - startX;
       const diffY = endY - startY;
       const elapsed = Date.now() - startTime;
 
-      // Swipe threshold: fast (< 450ms), horizontal distance > 75px, angle > 2.5x vertical
+      const chaptersDrawer = document.getElementById('chapters-drawer');
+      const isChaptersOpen = chaptersDrawer && chaptersDrawer.classList.contains('open');
+
+      // Edge swipe right to open chapters drawer (started near left edge: < 40px)
+      if (!isChaptersOpen && startX < 40 && diffX > 60 && Math.abs(diffX) > Math.abs(diffY) * 1.5) {
+        openChaptersDrawer();
+        startX = 0;
+        startY = 0;
+        return;
+      }
+
+      // Swipe left on chapters drawer to close it
+      if (isChaptersOpen && diffX < -60) {
+        closeChaptersDrawer();
+        startX = 0;
+        startY = 0;
+        return;
+      }
+
+      // Don't trigger page swipe navigation if interacting with controls, inputs, or drawers
+      if (target.closest('.chapters-drawer, .settings-drawer, .reader-header, .mobile-bottom-bar, .cultivator-notes-section, select, button, input, textarea, a')) {
+        return;
+      }
+
+      // Swipe threshold: fast (< 450ms), horizontal distance > 75px, angle > 2.2x vertical
       if (elapsed < 450 && Math.abs(diffX) > 75 && Math.abs(diffX) > Math.abs(diffY) * 2.2) {
         if (diffX < 0) {
           // Swipe Left -> Next chapter
@@ -311,29 +341,247 @@
     window.addEventListener('scroll', updateProgress, { passive: true });
     updateProgress();
 
-    // Drawer Open/Close
+    // Drawer Selectors
     const settingsBtn = document.getElementById('btn-open-settings');
     const mobileSettingsBtn = document.getElementById('m-btn-settings');
-    const closeBtn = document.getElementById('btn-close-settings');
-    const drawer = document.getElementById('settings-drawer');
+    const closeSettingsBtn = document.getElementById('btn-close-settings');
+    const settingsDrawer = document.getElementById('settings-drawer');
+
+    const chaptersBtn = document.getElementById('btn-open-chapters');
+    const mobileChaptersBtn = document.getElementById('m-btn-chapters');
+    const closeChaptersBtn = document.getElementById('btn-close-chapters');
+    const chaptersDrawer = document.getElementById('chapters-drawer');
+
     const backdrop = document.getElementById('drawer-backdrop');
     const dragHandle = document.getElementById('drawer-drag-handle');
 
-    function openDrawer() {
-      if (drawer) drawer.classList.add('open');
+    function openSettingsDrawer() {
+      if (chaptersDrawer) chaptersDrawer.classList.remove('open');
+      if (settingsDrawer) settingsDrawer.classList.add('open');
       if (backdrop) backdrop.classList.add('active');
     }
 
-    function closeDrawer() {
-      if (drawer) drawer.classList.remove('open');
+    function closeSettingsDrawer() {
+      if (settingsDrawer) settingsDrawer.classList.remove('open');
+      if ((!chaptersDrawer || !chaptersDrawer.classList.contains('open')) && backdrop) {
+        backdrop.classList.remove('active');
+      }
+    }
+
+    function openChaptersDrawer() {
+      if (settingsDrawer) settingsDrawer.classList.remove('open');
+      if (chaptersDrawer) chaptersDrawer.classList.add('open');
+      if (backdrop) backdrop.classList.add('active');
+      loadChaptersIntoDrawer();
+    }
+
+    function closeChaptersDrawer() {
+      if (chaptersDrawer) chaptersDrawer.classList.remove('open');
+      if ((!settingsDrawer || !settingsDrawer.classList.contains('open')) && backdrop) {
+        backdrop.classList.remove('active');
+      }
+    }
+
+    function toggleChaptersDrawer() {
+      if (chaptersDrawer && chaptersDrawer.classList.contains('open')) {
+        closeChaptersDrawer();
+      } else {
+        openChaptersDrawer();
+      }
+    }
+
+    function closeAllDrawers() {
+      if (chaptersDrawer) chaptersDrawer.classList.remove('open');
+      if (settingsDrawer) settingsDrawer.classList.remove('open');
       if (backdrop) backdrop.classList.remove('active');
     }
 
-    if (settingsBtn) settingsBtn.addEventListener('click', openDrawer);
-    if (mobileSettingsBtn) mobileSettingsBtn.addEventListener('click', openDrawer);
-    if (closeBtn) closeBtn.addEventListener('click', closeDrawer);
-    if (backdrop) backdrop.addEventListener('click', closeDrawer);
-    if (dragHandle) dragHandle.addEventListener('click', closeDrawer);
+    window.openChaptersDrawer = openChaptersDrawer;
+    window.closeChaptersDrawer = closeChaptersDrawer;
+    window.toggleChaptersDrawer = toggleChaptersDrawer;
+    window.closeAllDrawers = closeAllDrawers;
+
+    if (settingsBtn) settingsBtn.addEventListener('click', openSettingsDrawer);
+    if (mobileSettingsBtn) mobileSettingsBtn.addEventListener('click', openSettingsDrawer);
+    if (closeSettingsBtn) closeSettingsBtn.addEventListener('click', closeSettingsDrawer);
+
+    if (chaptersBtn) chaptersBtn.addEventListener('click', openChaptersDrawer);
+    if (mobileChaptersBtn) mobileChaptersBtn.addEventListener('click', openChaptersDrawer);
+    if (closeChaptersBtn) closeChaptersBtn.addEventListener('click', closeChaptersDrawer);
+
+    if (backdrop) backdrop.addEventListener('click', closeAllDrawers);
+    if (dragHandle) dragHandle.addEventListener('click', closeSettingsDrawer);
+
+    // Chapter catalog lazy-loading and dynamic search inside drawer
+    let cachedBooks = null;
+    let cachedChapters = null;
+    let isChapterDrawerLoaded = false;
+    let isChapterDrawerLoading = false;
+
+    async function loadChaptersIntoDrawer() {
+      if (isChapterDrawerLoaded) {
+        focusActiveChapter();
+        return;
+      }
+      if (isChapterDrawerLoading) return;
+      isChapterDrawerLoading = true;
+
+      const volumesContainer = document.getElementById('drawer-volumes-container');
+      const searchInput = document.getElementById('drawer-chapter-search');
+      const clearSearchBtn = document.getElementById('btn-clear-chapter-search');
+      const currentChapterNum = currentChapter || 1;
+
+      try {
+        if (!cachedBooks || !cachedChapters) {
+          const [booksRes, chaptersRes] = await Promise.all([
+            fetch('../meta/books.json').then(r => r.json()),
+            fetch('../meta/chapters.json').then(r => r.json())
+          ]);
+          cachedBooks = booksRes;
+          cachedChapters = chaptersRes;
+        }
+
+        const chaptersByBook = {};
+        cachedBooks.forEach(b => { chaptersByBook[b.book] = []; });
+        cachedChapters.forEach(ch => {
+          if (chaptersByBook[ch.book]) {
+            chaptersByBook[ch.book].push(ch);
+          }
+        });
+
+        // Find current book
+        let currentBookNum = 1;
+        const foundCh = cachedChapters.find(c => c.chapter === currentChapterNum);
+        if (foundCh) currentBookNum = foundCh.book;
+
+        let html = '';
+        cachedBooks.forEach(b => {
+          const bChapters = chaptersByBook[b.book] || [];
+          const isCurrentBook = b.book === currentBookNum;
+          const openAttr = isCurrentBook ? 'open' : '';
+
+          let chListHtml = '';
+          bChapters.forEach(ch => {
+            const isActive = ch.chapter === currentChapterNum;
+            const activeClass = isActive ? ' active' : '';
+            const activeAttr = isActive ? ' id="drawer-active-chapter"' : '';
+            let displayTitle = ch.title;
+            if (!displayTitle.toLowerCase().startsWith('chapter ' + ch.chapter)) {
+              displayTitle = 'Ch. ' + ch.chapter + ' – ' + displayTitle;
+            }
+
+            chListHtml += `<a href="ch_${ch.chapter}.html" class="drawer-ch-item${activeClass}"${activeAttr} data-num="${ch.chapter}" data-title="${ch.title.toLowerCase()}"><span class="drawer-ch-title">${displayTitle}</span><span class="drawer-ch-num">#${ch.chapter}</span></a>`;
+          });
+
+          html += `
+            <details class="drawer-book-group" data-book-num="${b.book}" ${openAttr}>
+              <summary class="drawer-book-summary">
+                <span>Book ${b.book}: ${b.title}</span>
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+              </summary>
+              <div class="drawer-chapter-list">
+                ${chListHtml}
+              </div>
+            </details>
+          `;
+        });
+
+        if (volumesContainer) {
+          volumesContainer.innerHTML = html;
+        }
+        isChapterDrawerLoaded = true;
+        isChapterDrawerLoading = false;
+
+        // Setup live search
+        if (searchInput) {
+          searchInput.addEventListener('input', e => {
+            const q = e.target.value.toLowerCase().trim();
+            if (clearSearchBtn) {
+              clearSearchBtn.style.display = q ? 'block' : 'none';
+            }
+
+            const bookGroups = volumesContainer.querySelectorAll('.drawer-book-group');
+            let totalVisible = 0;
+
+            bookGroups.forEach(group => {
+              const items = group.querySelectorAll('.drawer-ch-item');
+              let groupHasMatch = false;
+
+              items.forEach(item => {
+                if (!q) {
+                  item.style.display = 'flex';
+                  groupHasMatch = true;
+                  totalVisible++;
+                } else {
+                  const title = item.getAttribute('data-title') || '';
+                  const num = item.getAttribute('data-num') || '';
+                  if (title.includes(q) || num === q || ('chapter ' + num).includes(q)) {
+                    item.style.display = 'flex';
+                    groupHasMatch = true;
+                    totalVisible++;
+                  } else {
+                    item.style.display = 'none';
+                  }
+                }
+              });
+
+              if (q) {
+                if (groupHasMatch) {
+                  group.style.display = 'block';
+                  group.open = true;
+                } else {
+                  group.style.display = 'none';
+                }
+              } else {
+                group.style.display = 'block';
+                const bNum = parseInt(group.getAttribute('data-book-num') || '0', 10);
+                group.open = (bNum === currentBookNum);
+              }
+            });
+
+            let emptyMsg = document.getElementById('drawer-no-results');
+            if (totalVisible === 0) {
+              if (!emptyMsg) {
+                emptyMsg = document.createElement('div');
+                emptyMsg.id = 'drawer-no-results';
+                emptyMsg.className = 'drawer-empty-search';
+                emptyMsg.textContent = 'No chapters found matching "' + q + '".';
+                volumesContainer.appendChild(emptyMsg);
+              } else {
+                emptyMsg.textContent = 'No chapters found matching "' + q + '".';
+                emptyMsg.style.display = 'block';
+              }
+            } else if (emptyMsg) {
+              emptyMsg.style.display = 'none';
+            }
+          });
+
+          if (clearSearchBtn) {
+            clearSearchBtn.addEventListener('click', () => {
+              searchInput.value = '';
+              searchInput.dispatchEvent(new Event('input'));
+              searchInput.focus();
+            });
+          }
+        }
+
+        setTimeout(focusActiveChapter, 80);
+
+      } catch (err) {
+        console.error('Failed to load chapters in drawer:', err);
+        isChapterDrawerLoading = false;
+        if (volumesContainer) {
+          volumesContainer.innerHTML = '<div class="drawer-empty-search"><p>Unable to load chapters.</p><a href="../chapters" class="icon-btn" style="display:inline-block; margin-top:8px;">Open Full Catalog</a></div>';
+        }
+      }
+    }
+
+    function focusActiveChapter() {
+      const activeEl = document.getElementById('drawer-active-chapter');
+      if (activeEl) {
+        activeEl.scrollIntoView({ block: 'center', behavior: 'smooth' });
+      }
+    }
 
     // Theme clicks
     document.querySelectorAll('.theme-btn').forEach(btn => {
@@ -381,15 +629,6 @@
         currentSettings.fontFamily = e.target.value;
         saveSettings(currentSettings);
         applySettings(currentSettings);
-      });
-    }
-
-    // Chapter Jumper dropdown
-    const jumper = document.getElementById('chapter-jumper');
-    if (jumper) {
-      jumper.addEventListener('change', e => {
-        const target = e.target.value;
-        if (target) window.location.href = target;
       });
     }
 
