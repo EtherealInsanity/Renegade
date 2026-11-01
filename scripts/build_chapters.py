@@ -165,8 +165,25 @@ def main():
     with open(os.path.join(meta_out, "chapters.json"), "w", encoding="utf-8") as f:
         json.dump(chapters_meta, f, ensure_ascii=False, indent=2)
 
+    # Populate each canonical book with chs and word counts
+    books_data = []
+    for b in CANONICAL_BOOKS:
+        b_chs = [c for c in chapters_meta if c["book"] == b["book"]]
+        b_words = sum(c["word_count"] for c in b_chs)
+        books_data.append({
+            "book": b["book"],
+            "title": b["title"],
+            "start": b["start"],
+            "end": b["end"],
+            "chs": len(b_chs),
+            "words": b_words,
+            "total_chapters": len(b_chs),
+            "total_words": b_words,
+            "chapters": [{"chapter": c["chapter"], "title": c["title"], "word_count": c["word_count"]} for c in b_chs]
+        })
+
     with open(os.path.join(meta_out, "books.json"), "w", encoding="utf-8") as f:
-        json.dump(CANONICAL_BOOKS, f, ensure_ascii=False, indent=2)
+        json.dump(books_data, f, ensure_ascii=False, indent=2)
 
     stats = {
         "title": "Renegade Immortal",
@@ -175,7 +192,8 @@ def main():
         "total_words": total_words_novel,
         "total_books": len(CANONICAL_BOOKS),
         "source": "Official Web Novel Translation",
-        "default_theme": "slaughter"
+        "default_theme": "slaughter",
+        "books": [{"book": b["book"], "title": b["title"], "chs": b["chs"], "words": b["words"]} for b in books_data]
     }
     with open(os.path.join(meta_out, "stats.json"), "w", encoding="utf-8") as f:
         json.dump(stats, f, ensure_ascii=False, indent=2)

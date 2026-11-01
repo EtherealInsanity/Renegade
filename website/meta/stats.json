@@ -5,5 +5,85 @@
   "total_words": 3960189,
   "total_books": 13,
   "source": "Official Web Novel Translation",
-  "default_theme": "slaughter"
+  "default_theme": "slaughter",
+  "books": [
+    {
+      "book": 1,
+      "title": "The Mediocre Youth",
+      "chs": 64,
+      "words": 85615
+    },
+    {
+      "book": 2,
+      "title": "The Bloody Image of Cultivation",
+      "chs": 76,
+      "words": 138377
+    },
+    {
+      "book": 3,
+      "title": "Famous in the Sea of Devils",
+      "chs": 60,
+      "words": 162279
+    },
+    {
+      "book": 4,
+      "title": "Clean Sweep",
+      "chs": 195,
+      "words": 428125
+    },
+    {
+      "book": 5,
+      "title": "Cultivation Planet Crystal",
+      "chs": 78,
+      "words": 149041
+    },
+    {
+      "book": 6,
+      "title": "Arriving on Tian Yun",
+      "chs": 185,
+      "words": 371908
+    },
+    {
+      "book": 7,
+      "title": "Fame Shakes Allheaven Star System",
+      "chs": 263,
+      "words": 491742
+    },
+    {
+      "book": 8,
+      "title": "Alliance's Secret",
+      "chs": 222,
+      "words": 410141
+    },
+    {
+      "book": 9,
+      "title": "Peak of the Cloud Sea",
+      "chs": 338,
+      "words": 629122
+    },
+    {
+      "book": 10,
+      "title": "Rampage Through the Inner Realm",
+      "chs": 135,
+      "words": 242353
+    },
+    {
+      "book": 11,
+      "title": "Mysteries of the Ancient Era",
+      "chs": 181,
+      "words": 316765
+    },
+    {
+      "book": 12,
+      "title": "Tenth Sun of the Immortal Astral Continent",
+      "chs": 209,
+      "words": 378133
+    },
+    {
+      "book": 13,
+      "title": "Light of the Coming End",
+      "chs": 87,
+      "words": 156588
+    }
+  ]
 }

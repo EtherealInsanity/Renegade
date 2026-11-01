@@ -6,15 +6,15 @@
     "semantic_hash": "f83b5e41230ecb5e9cc4c30fe327677e"
   },
   "scripts/build_chapters.py": {
-    "mtime": 1793514683.4928608,
-    "seen": 1793514968.512493,
-    "ast_hash": "fdbd744ceb2d16b49752c13437d698cb",
-    "semantic_hash": "fdbd744ceb2d16b49752c13437d698cb"
+    "mtime": 1793519088.9037392,
+    "seen": 1793519181.1171227,
+    "ast_hash": "a0b9edcd8355cfbaeb5d6e249f83e8d5",
+    "semantic_hash": ""
   },
   "scripts/build_landing.py": {
-    "mtime": 1793518081.3001366,
-    "seen": 1793518134.1354523,
-    "ast_hash": "a42b4e9895e6328065b81fa712a9cbcc",
+    "mtime": 1793519059.9063292,
+    "seen": 1793519181.1171308,
+    "ast_hash": "1fd02a4b4341730bcee7ebc97dacaafd",
     "semantic_hash": ""
   },
   "scripts/html_builder.py": {
@@ -30,11 +30,10 @@
     "semantic_hash": ""
   },
   "website/meta/books.json": {
-    "mtime": 1793514705.1098552,
-    "seen": 1793514968.512981,
-    "ast_hash": "f991a2a535c99f2872f0df65a8b5dca8",
-    "semantic_hash": "f991a2a535c99f2872f0df65a8b5dca8",
-    "ast_empty": true
+    "mtime": 1793519049.8081868,
+    "seen": 1793519181.1171486,
+    "ast_hash": "d32ac830f0fb60a7b3248876e04266b1",
+    "semantic_hash": ""
   },
   "website/meta/chapters.json": {
     "mtime": 1793514705.109225,
@@ -44,11 +43,10 @@
     "ast_empty": true
   },
   "website/meta/stats.json": {
-    "mtime": 1793514705.1099634,
-    "seen": 1793514968.5129998,
-    "ast_hash": "6225c7a509a8b09b515607f38074097c",
-    "semantic_hash": "6225c7a509a8b09b515607f38074097c",
-    "ast_empty": true
+    "mtime": 1793519049.8132362,
+    "seen": 1793519181.1171598,
+    "ast_hash": "93dacedea19d15e8e197ca5eca81caad",
+    "semantic_hash": ""
   },
   "README.md": {
     "mtime": 1793515035.2655542,
@@ -12591,15 +12589,15 @@
     "semantic_hash": ""
   },
   "website/download.html": {
-    "mtime": 1793518085.6922734,
-    "seen": 1793518134.151839,
-    "ast_hash": "27b1df8817dc589879fd679ead980dae",
+    "mtime": 1793519151.9559069,
+    "seen": 1793519181.127206,
+    "ast_hash": "decc97e971edfdf9931db5fc56a9402b",
     "semantic_hash": ""
   },
   "website/index.html": {
-    "mtime": 1793518085.6891778,
-    "seen": 1793518134.1518495,
-    "ast_hash": "08d338a0953d2ea649a488786f0c401a",
+    "mtime": 1793519151.9496348,
+    "seen": 1793519181.1272116,
+    "ast_hash": "9088e78b495bd3e615eac533b9697ef3",
     "semantic_hash": ""
   },
   "website/read/ch_1.html": {

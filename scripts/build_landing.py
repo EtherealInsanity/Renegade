@@ -52,7 +52,8 @@ def main():
         start_ch = b["start"]
         end_ch = b["end"]
 
-        pills_html.append(f'<a href="#book-{b_num}" class="book-pill">Book {b_num}</a>')
+        b_words = sum(ch.get("word_count", 0) for ch in b_chapters)
+        pills_html.append(f'<a href="#book-{b_num}" class="book-pill">Book {b_num} ({ch_count} chs)</a>')
 
         # Open the first book by default
         open_class = "open" if b_num == 1 else ""
@@ -70,7 +71,7 @@ def main():
           <div class="book-header" onclick="toggleBook({b_num})">
             <div class="book-title-group">
               <h3>Book {b_num}: {b_title}</h3>
-              <span class="book-subtitle">Chapters {start_ch} – {end_ch} · {ch_count} chapters</span>
+              <span class="book-subtitle">Chapters {start_ch} – {end_ch} · {ch_count} chs · {b_words:,} words</span>
             </div>
             <svg class="book-toggle-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
           </div>
