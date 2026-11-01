@@ -1,0 +1,317 @@
+/* ==========================================================================
+   Renegade Reader - Xianxia Cultivation Themes (Renegade Immortal / 仙逆)
+   13 Official Thematic Palettes rooted in Wang Lin's Domains and Realms
+   ========================================================================== */
+
+:root {
+  /* Common geometry */
+  --reader-max-width: 780px;
+  --font-family: 'Cinzel', 'Merriweather', Georgia, serif;
+  --font-size: 19px;
+  --line-height: 1.8;
+  --border-radius: 8px;
+  --transition: 0.25s ease;
+}
+
+/* 1. Slaughter Domain / Ji Realm (Default Dark) */
+[data-theme="slaughter"], :root {
+  --bg-color: #0c0d12;
+  --bg-secondary: #13151c;
+  --bg-tertiary: #1b1e28;
+  --text-color: #e2e8f0;
+  --text-muted: #94a3b8;
+  --text-dim: #64748b;
+  --accent-color: #ef4444;       /* Slaughter Crimson */
+  --accent-hover: #dc2626;
+  --accent-glow: rgba(239, 68, 68, 0.25);
+  --border-color: #272a38;
+  --nav-bg: rgba(12, 13, 18, 0.94);
+  --card-bg: #141620;
+  --code-bg: #07080b;
+}
+
+/* 2. Heaven Defying Bead (Spiritual Mist & Emerald Qi) */
+[data-theme="bead"] {
+  --bg-color: #0b1518;
+  --bg-secondary: #102024;
+  --bg-tertiary: #162c32;
+  --text-color: #e2f1ee;
+  --text-muted: #88aba2;
+  --text-dim: #5c7b74;
+  --accent-color: #10b981;       /* Emerald Qi Glow */
+  --accent-hover: #059669;
+  --accent-glow: rgba(16, 185, 129, 0.25);
+  --border-color: #1c3d44;
+  --nav-bg: rgba(11, 21, 24, 0.94);
+  --card-bg: #122429;
+  --code-bg: #070d0f;
+}
+
+/* 3. Royal Ancient God (Tu Si / Starry Void) */
+[data-theme="ancient-god"] {
+  --bg-color: #090a0f;
+  --bg-secondary: #12141f;
+  --bg-tertiary: #1a1e2e;
+  --text-color: #f1f2f6;
+  --text-muted: #a1a6bb;
+  --text-dim: #686d84;
+  --accent-color: #f59e0b;       /* 8-Star Royal Gold */
+  --accent-hover: #d97706;
+  --accent-glow: rgba(245, 158, 11, 0.25);
+  --border-color: #2b2f42;
+  --nav-bg: rgba(9, 10, 15, 0.94);
+  --card-bg: #141724;
+  --code-bg: #05060a;
+}
+
+/* 4. Life & Death Domain (Yin-Yang Slate Balance) */
+[data-theme="life-death"] {
+  --bg-color: #13141a;
+  --bg-secondary: #1b1c24;
+  --bg-tertiary: #252631;
+  --text-color: #e4e4e9;
+  --text-muted: #9c9db2;
+  --text-dim: #696a7d;
+  --accent-color: #818cf8;       /* Lavender Silver Dao */
+  --accent-hover: #6366f1;
+  --accent-glow: rgba(129, 140, 248, 0.25);
+  --border-color: #313240;
+  --nav-bg: rgba(19, 20, 26, 0.94);
+  --card-bg: #1e1f29;
+  --code-bg: #0c0d10;
+}
+
+/* 5. Karma Domain (Threads of Cause and Effect) */
+[data-theme="karma"] {
+  --bg-color: #12101b;
+  --bg-secondary: #1a1727;
+  --bg-tertiary: #262138;
+  --text-color: #f3eff9;
+  --text-muted: #a99ec0;
+  --text-dim: #716687;
+  --accent-color: #f43f5e;       /* Karma Red Thread */
+  --accent-hover: #e11d48;
+  --accent-glow: rgba(244, 63, 94, 0.25);
+  --border-color: #383050;
+  --nav-bg: rgba(18, 16, 27, 0.94);
+  --card-bg: #1f1b30;
+  --code-bg: #0b0911;
+}
+
+/* 6. True & False Domain (Cosmic Illusory Sapphire) */
+[data-theme="true-false"] {
+  --bg-color: #0b1322;
+  --bg-secondary: #111c31;
+  --bg-tertiary: #192742;
+  --text-color: #e5effd;
+  --text-muted: #8ca5c9;
+  --text-dim: #5c7294;
+  --accent-color: #38bdf8;       /* Dream Azure */
+  --accent-hover: #0284c7;
+  --accent-glow: rgba(56, 189, 248, 0.25);
+  --border-color: #233659;
+  --nav-bg: rgba(11, 19, 34, 0.94);
+  --card-bg: #13213a;
+  --code-bg: #060a12;
+}
+
+/* 7. Underworld Yellow Springs (Spectral Moss & Bone) */
+[data-theme="yellow-springs"] {
+  --bg-color: #0a110e;
+  --bg-secondary: #101b17;
+  --bg-tertiary: #172721;
+  --text-color: #e3f0ea;
+  --text-muted: #84a899;
+  --text-dim: #567769;
+  --accent-color: #2dd4bf;       /* Ghost Cyan Glow */
+  --accent-hover: #14b8a6;
+  --accent-glow: rgba(45, 212, 191, 0.25);
+  --border-color: #20372f;
+  --nav-bg: rgba(10, 17, 14, 0.94);
+  --card-bg: #121e1a;
+  --code-bg: #050907;
+}
+
+/* 8. Suzaku Star (Vermilion Phoenix Flame) */
+[data-theme="suzaku"] {
+  --bg-color: #140d0a;
+  --bg-secondary: #1d140f;
+  --bg-tertiary: #2a1d17;
+  --text-color: #f7ede6;
+  --text-muted: #b89f92;
+  --text-dim: #7f695e;
+  --accent-color: #ea580c;       /* Suzaku Blaze */
+  --accent-hover: #c2410c;
+  --accent-glow: rgba(234, 88, 12, 0.25);
+  --border-color: #3d2920;
+  --nav-bg: rgba(20, 13, 10, 0.94);
+  --card-bg: #211611;
+  --code-bg: #0b0705;
+}
+
+/* 9. Allheaven Star System (Thunder Celestial Starlight) */
+[data-theme="allheaven"] {
+  --bg-color: #090e1c;
+  --bg-secondary: #0f162a;
+  --bg-tertiary: #17213d;
+  --text-color: #e8eefd;
+  --text-muted: #95a6cd;
+  --text-dim: #61739c;
+  --accent-color: #60a5fa;       /* Starlight Azure */
+  --accent-hover: #3b82f6;
+  --accent-glow: rgba(96, 165, 250, 0.25);
+  --border-color: #223053;
+  --nav-bg: rgba(9, 14, 28, 0.94);
+  --card-bg: #121b33;
+  --code-bg: #05070e;
+}
+
+/* 10. Cloud Sea Realm (Endless Cosmic Mist) */
+[data-theme="cloud-sea"] {
+  --bg-color: #171c26;
+  --bg-secondary: #1f2533;
+  --bg-tertiary: #2a3243;
+  --text-color: #edf2f7;
+  --text-muted: #a0aec0;
+  --text-dim: #718096;
+  --accent-color: #a78bfa;       /* Purple Qi of Cloud Sea */
+  --accent-hover: #8b5cf6;
+  --accent-glow: rgba(167, 139, 250, 0.25);
+  --border-color: #384257;
+  --nav-bg: rgba(23, 28, 38, 0.94);
+  --card-bg: #222938;
+  --code-bg: #0e1219;
+}
+
+/* 11. Immortal Astral Continent (Grand Empyrean Sun Gold) */
+[data-theme="astral"] {
+  --bg-color: #101522;
+  --bg-secondary: #171e2e;
+  --bg-tertiary: #21293e;
+  --text-color: #f7fafc;
+  --text-muted: #a2afc7;
+  --text-dim: #6b7a97;
+  --accent-color: #fbbf24;       /* 10th Sun Radiant Gold */
+  --accent-hover: #f59e0b;
+  --accent-glow: rgba(251, 191, 36, 0.25);
+  --border-color: #2d3852;
+  --nav-bg: rgba(16, 21, 34, 0.94);
+  --card-bg: #1a2234;
+  --code-bg: #090c13;
+}
+
+/* 12. Bamboo Slip / Mortal Village (Light Parchment) */
+[data-theme="bamboo"] {
+  --bg-color: #f5eee3;
+  --bg-secondary: #ece3d4;
+  --bg-tertiary: #dfd4c1;
+  --text-color: #26211a;
+  --text-muted: #6b6357;
+  --text-dim: #998f82;
+  --accent-color: #b91c1c;       /* Cinnabar Seal Red */
+  --accent-hover: #991b1b;
+  --accent-glow: rgba(185, 28, 28, 0.15);
+  --border-color: #d8cbbb;
+  --nav-bg: rgba(245, 238, 227, 0.96);
+  --card-bg: #faf4eb;
+  --code-bg: #ece3d4;
+}
+
+/* 13. Li Muwan's Medicine Pavilion (Soft Ivory / Herbal Cream) */
+[data-theme="medicine-pavilion"] {
+  --bg-color: #fbf8f2;
+  --bg-secondary: #f3ecdf;
+  --bg-tertiary: #e7ddcb;
+  --text-color: #23221e;
+  --text-muted: #666359;
+  --text-dim: #979386;
+  --accent-color: #4d7c0f;       /* Serene Herbal Jade */
+  --accent-hover: #3f6212;
+  --accent-glow: rgba(77, 124, 15, 0.15);
+  --border-color: #ded4c1;
+  --nav-bg: rgba(251, 248, 242, 0.96);
+  --card-bg: #ffffff;
+  --code-bg: #f3ecdf;
+}
+
+/* ==========================================================================
+   Custom Xianxia Formatting & Tags
+   ========================================================================== */
+
+.dao_divine {
+  background: var(--bg-secondary);
+  border-left: 4px solid var(--accent-color);
+  padding: 12px 18px;
+  margin: 18px 0;
+  border-radius: 0 var(--border-radius) var(--border-radius) 0;
+  color: var(--text-color);
+  font-weight: 500;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+.dao_mantra {
+  color: var(--accent-color);
+  font-style: italic;
+  font-weight: 600;
+  padding: 8px 16px;
+  margin: 14px 0;
+  border-left: 3px solid var(--accent-color);
+  background: var(--bg-secondary);
+  border-radius: 4px;
+}
+
+.dao_slaughter {
+  color: #ff4d4f;
+  background: rgba(239, 68, 68, 0.08);
+  border: 1px dashed rgba(239, 68, 68, 0.35);
+  padding: 12px 18px;
+  margin: 18px 0;
+  border-radius: var(--border-radius);
+  font-weight: 500;
+}
+
+.dao_quote {
+  border-left: 3px solid var(--text-muted);
+  padding-left: 16px;
+  margin: 16px 0;
+  color: var(--text-muted);
+  font-style: italic;
+}
+
+.dao_note {
+  font-size: 0.9em;
+  color: var(--text-dim);
+  background: var(--bg-secondary);
+  padding: 10px 14px;
+  border-radius: var(--border-radius);
+  margin: 14px 0;
+  border: 1px solid var(--border-color);
+}
+
+.dao_divider {
+  border: none;
+  height: 1px;
+  background: linear-gradient(to right, transparent, var(--border-color), var(--accent-color), var(--border-color), transparent);
+  margin: 32px auto;
+  width: 65%;
+  opacity: 0.7;
+}
+
+.dao_window {
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius);
+  padding: 18px 22px;
+  margin: 22px 0;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25);
+}
+
+.dao_window_title {
+  color: var(--accent-color);
+  font-size: 1.1em;
+  margin-top: 0;
+  margin-bottom: 12px;
+  border-bottom: 1px solid var(--border-color);
+  padding-bottom: 6px;
+  letter-spacing: 0.05em;
+}

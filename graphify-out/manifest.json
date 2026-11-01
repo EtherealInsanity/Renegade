@@ -1,0 +1,53 @@
+{
+  "package.json": {
+    "mtime": 1793514909.3525665,
+    "seen": 1793514968.5122917,
+    "ast_hash": "f83b5e41230ecb5e9cc4c30fe327677e",
+    "semantic_hash": "f83b5e41230ecb5e9cc4c30fe327677e"
+  },
+  "scripts/build_chapters.py": {
+    "mtime": 1793514683.4928608,
+    "seen": 1793514968.512493,
+    "ast_hash": "fdbd744ceb2d16b49752c13437d698cb",
+    "semantic_hash": "fdbd744ceb2d16b49752c13437d698cb"
+  },
+  "scripts/build_landing.py": {
+    "mtime": 1793514894.1133227,
+    "seen": 1793514968.5126374,
+    "ast_hash": "66788c2245b164344fd2cc11e5eb0baa",
+    "semantic_hash": "66788c2245b164344fd2cc11e5eb0baa"
+  },
+  "scripts/html_builder.py": {
+    "mtime": 1793514813.54802,
+    "seen": 1793514968.5127532,
+    "ast_hash": "c82d88c37940da33c98cc32230d85f11",
+    "semantic_hash": "c82d88c37940da33c98cc32230d85f11"
+  },
+  "website/assets/reader.js": {
+    "mtime": 1793514778.415444,
+    "seen": 1793514968.5128648,
+    "ast_hash": "b28af057ef7b359cea76b01cb8f729f1",
+    "semantic_hash": "b28af057ef7b359cea76b01cb8f729f1"
+  },
+  "website/meta/books.json": {
+    "mtime": 1793514705.1098552,
+    "seen": 1793514968.512981,
+    "ast_hash": "f991a2a535c99f2872f0df65a8b5dca8",
+    "semantic_hash": "f991a2a535c99f2872f0df65a8b5dca8",
+    "ast_empty": true
+  },
+  "website/meta/chapters.json": {
+    "mtime": 1793514705.109225,
+    "seen": 1793514968.5129912,
+    "ast_hash": "464d410e32faa420abb86f033bc13270",
+    "semantic_hash": "464d410e32faa420abb86f033bc13270",
+    "ast_empty": true
+  },
+  "website/meta/stats.json": {
+    "mtime": 1793514705.1099634,
+    "seen": 1793514968.5129998,
+    "ast_hash": "6225c7a509a8b09b515607f38074097c",
+    "semantic_hash": "6225c7a509a8b09b515607f38074097c",
+    "ast_empty": true
+  }
+}

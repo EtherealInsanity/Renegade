@@ -1,0 +1,14 @@
+{
+  "name": "renegade-reader",
+  "version": "1.0.0",
+  "description": "Static web publishing platform and reader for Renegade Immortal (仙逆) by Er Gen.",
+  "private": true,
+  "scripts": {
+    "dev": "wrangler pages dev website",
+    "deploy": "wrangler pages deploy website",
+    "build:chapters": "python3 scripts/build_chapters.py",
+    "build:pages": "python3 scripts/html_builder.py",
+    "build:landing": "python3 scripts/build_landing.py",
+    "build": "python3 scripts/build_chapters.py && python3 scripts/html_builder.py && python3 scripts/build_landing.py"
+  }
+}

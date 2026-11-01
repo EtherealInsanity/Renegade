@@ -1,0 +1,80 @@
+[
+  {
+    "book": 1,
+    "title": "The Mediocre Youth",
+    "start": 1,
+    "end": 64
+  },
+  {
+    "book": 2,
+    "title": "The Bloody Image of Cultivation",
+    "start": 65,
+    "end": 140
+  },
+  {
+    "book": 3,
+    "title": "Famous in the Sea of Devils",
+    "start": 141,
+    "end": 200
+  },
+  {
+    "book": 4,
+    "title": "Clean Sweep",
+    "start": 201,
+    "end": 395
+  },
+  {
+    "book": 5,
+    "title": "Cultivation Planet Crystal",
+    "start": 396,
+    "end": 473
+  },
+  {
+    "book": 6,
+    "title": "Arriving on Tian Yun",
+    "start": 474,
+    "end": 658
+  },
+  {
+    "book": 7,
+    "title": "Fame Shakes Allheaven Star System",
+    "start": 659,
+    "end": 920
+  },
+  {
+    "book": 8,
+    "title": "Alliance's Secret",
+    "start": 921,
+    "end": 1140
+  },
+  {
+    "book": 9,
+    "title": "Peak of the Cloud Sea",
+    "start": 1141,
+    "end": 1478
+  },
+  {
+    "book": 10,
+    "title": "Rampage Through the Inner Realm",
+    "start": 1479,
+    "end": 1613
+  },
+  {
+    "book": 11,
+    "title": "Mysteries of the Ancient Era",
+    "start": 1614,
+    "end": 1793
+  },
+  {
+    "book": 12,
+    "title": "Tenth Sun of the Immortal Astral Continent",
+    "start": 1794,
+    "end": 2002
+  },
+  {
+    "book": 13,
+    "title": "Light of the Coming End",
+    "start": 2003,
+    "end": 2088
+  }
+]

@@ -1,0 +1,415 @@
+/* ==========================================================================
+   Renegade Reader - Landing Page & Table of Contents Stylesheet
+   Xianxia dark aesthetic with 13-Book accordion TOC & real-time search
+   ========================================================================== */
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  font-family: var(--font-family);
+  transition: background-color var(--transition), color var(--transition);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Landing Navigation Header */
+.landing-nav {
+  position: sticky;
+  top: 0;
+  width: 100%;
+  background: var(--nav-bg);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border-color);
+  z-index: 800;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 28px;
+}
+
+.brand-title {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--text-color);
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.brand-title:hover {
+  color: var(--accent-color);
+}
+
+.brand-badge {
+  font-size: 0.75rem;
+  padding: 3px 8px;
+  background: var(--card-bg);
+  color: var(--accent-color);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+}
+
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.nav-link {
+  color: var(--text-color);
+  text-decoration: none;
+  font-size: 0.95rem;
+  font-weight: 500;
+  transition: color var(--transition);
+}
+
+.nav-link:hover {
+  color: var(--accent-color);
+}
+
+/* Hero Section */
+.hero-section {
+  max-width: 1100px;
+  margin: 40px auto 30px auto;
+  padding: 0 24px;
+  display: flex;
+  gap: 48px;
+  align-items: center;
+}
+
+.hero-cover {
+  flex: 0 0 260px;
+}
+
+.hero-cover img {
+  width: 100%;
+  height: auto;
+  border-radius: var(--border-radius);
+  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.45);
+  border: 1px solid var(--border-color);
+}
+
+.hero-content {
+  flex: 1;
+}
+
+.novel-tagline {
+  color: var(--accent-color);
+  font-size: 0.95rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+
+.novel-title {
+  font-size: 2.75rem;
+  font-weight: 800;
+  margin: 0 0 8px 0;
+  line-height: 1.15;
+  color: var(--text-color);
+}
+
+.novel-chinese-title {
+  font-size: 1.2rem;
+  color: var(--text-muted);
+  font-weight: normal;
+  margin-left: 8px;
+}
+
+.novel-author {
+  font-size: 1.1rem;
+  color: var(--text-muted);
+  margin-bottom: 20px;
+}
+
+.novel-stats-row {
+  display: flex;
+  gap: 24px;
+  margin-bottom: 24px;
+  flex-wrap: wrap;
+}
+
+.stat-item {
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius);
+  padding: 10px 16px;
+}
+
+.stat-val {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--accent-color);
+}
+
+.stat-lbl {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.novel-synopsis {
+  font-size: 1.05rem;
+  line-height: 1.7;
+  color: var(--text-muted);
+  margin-bottom: 28px;
+  max-width: 720px;
+}
+
+.hero-cta-buttons {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.btn-primary {
+  background: var(--accent-color);
+  color: #ffffff;
+  padding: 12px 28px;
+  border-radius: var(--border-radius);
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 1rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  transition: all var(--transition);
+  box-shadow: 0 4px 16px var(--accent-glow);
+}
+
+.btn-primary:hover {
+  background: var(--accent-hover);
+  transform: translateY(-2px);
+}
+
+.btn-secondary {
+  background: var(--bg-secondary);
+  color: var(--text-color);
+  border: 1px solid var(--border-color);
+  padding: 12px 24px;
+  border-radius: var(--border-radius);
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 1rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  transition: all var(--transition);
+}
+
+.btn-secondary:hover {
+  border-color: var(--accent-color);
+  color: var(--accent-color);
+  background: var(--card-bg);
+}
+
+/* Table of Contents Section */
+.toc-section {
+  max-width: 1100px;
+  margin: 30px auto 80px auto;
+  padding: 0 24px;
+}
+
+.toc-controls-bar {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 24px;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.search-input-wrapper {
+  position: relative;
+  flex: 1;
+  min-width: 280px;
+}
+
+.search-input {
+  width: 100%;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  color: var(--text-color);
+  padding: 12px 16px 12px 42px;
+  border-radius: var(--border-radius);
+  font-size: 0.95rem;
+  font-family: inherit;
+  transition: border-color var(--transition);
+}
+
+.search-input:focus {
+  outline: none;
+  border-color: var(--accent-color);
+  box-shadow: 0 0 8px var(--accent-glow);
+}
+
+.search-icon {
+  position: absolute;
+  left: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--text-muted);
+}
+
+/* Book Quick Pills */
+.book-pills-bar {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 24px;
+}
+
+.book-pill {
+  padding: 6px 12px;
+  background: var(--bg-secondary);
+  color: var(--text-muted);
+  border: 1px solid var(--border-color);
+  border-radius: 16px;
+  font-size: 0.8rem;
+  cursor: pointer;
+  text-decoration: none;
+  transition: all var(--transition);
+}
+
+.book-pill:hover, .book-pill.active {
+  border-color: var(--accent-color);
+  color: var(--accent-color);
+  background: var(--card-bg);
+}
+
+/* Canonical 13 Books Accordions */
+.book-accordion {
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius);
+  margin-bottom: 16px;
+  overflow: hidden;
+  transition: border-color var(--transition);
+}
+
+.book-header {
+  padding: 18px 24px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: var(--bg-secondary);
+  border-bottom: 1px solid transparent;
+  transition: background var(--transition);
+  user-select: none;
+}
+
+.book-header:hover {
+  background: var(--bg-tertiary);
+}
+
+.book-accordion.open .book-header {
+  border-bottom-color: var(--border-color);
+}
+
+.book-title-group h3 {
+  margin: 0 0 4px 0;
+  font-size: 1.15rem;
+  color: var(--text-color);
+}
+
+.book-title-group .book-subtitle {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+
+.book-toggle-icon {
+  color: var(--text-muted);
+  transition: transform 0.25s ease;
+}
+
+.book-accordion.open .book-toggle-icon {
+  transform: rotate(180deg);
+}
+
+/* Chapter Grid */
+.chapter-grid {
+  display: none;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 8px;
+  padding: 20px 24px;
+}
+
+.book-accordion.open .chapter-grid {
+  display: grid;
+}
+
+.chapter-item-link {
+  display: block;
+  padding: 10px 14px;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  color: var(--text-color);
+  text-decoration: none;
+  font-size: 0.9rem;
+  transition: all var(--transition);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.chapter-item-link:hover {
+  border-color: var(--accent-color);
+  color: var(--accent-color);
+  background: var(--bg-tertiary);
+  transform: translateX(3px);
+}
+
+/* Landing Footer */
+.landing-footer {
+  text-align: center;
+  padding: 40px 24px;
+  border-top: 1px solid var(--border-color);
+  color: var(--text-dim);
+  font-size: 0.85rem;
+}
+
+.landing-footer a {
+  color: var(--text-muted);
+  text-decoration: none;
+}
+
+.landing-footer a:hover {
+  color: var(--accent-color);
+}
+
+/* Responsive */
+@media (max-width: 840px) {
+  .hero-section {
+    flex-direction: column;
+    text-align: center;
+    gap: 28px;
+  }
+  .hero-cover {
+    flex: 0 0 auto;
+    max-width: 200px;
+    margin: 0 auto;
+  }
+  .novel-title {
+    font-size: 2rem;
+  }
+  .novel-stats-row {
+    justify-content: center;
+  }
+  .hero-cta-buttons {
+    justify-content: center;
+  }
+  .chapter-grid {
+    grid-template-columns: 1fr;
+  }
+}
