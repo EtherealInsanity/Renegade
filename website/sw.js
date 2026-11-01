@@ -7,6 +7,7 @@ const CACHE_NAME = 'renegade-reader-v5';
 
 // Base core assets to precache for offline shell
 const PRECACHE_ASSETS = [
+  './',
   './index.html',
   './download.html',
   './chapters.html',
@@ -53,7 +54,7 @@ const OFFLINE_PAGE_HTML = `<!DOCTYPE html>
     <p style="color: var(--text-muted); line-height: 1.6; margin-bottom: 24px;">
       You are currently offline. You can still read any chapters you previously opened, or access the offline EPUB library.
     </p>
-    <a href="./index.html" class="btn-primary" style="text-decoration:none;">Return to Library</a>
+    <a href="./" class="btn-primary" style="text-decoration:none;">Return to Library</a>
   </div>
 </body>
 </html>`;
