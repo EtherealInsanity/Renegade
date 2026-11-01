@@ -671,3 +671,234 @@ details.book-accordion[open] .chapter-grid {
     font-size: 0.9rem;
   }
 }
+
+/* ==========================================================================
+   Cultivator Reviews Section & Assembly
+   ========================================================================== */
+.reviews-section {
+  max-width: 1100px;
+  margin: 20px auto 80px auto;
+  padding: 0 24px;
+}
+
+.reviews-header-block {
+  text-align: center;
+  margin-bottom: 36px;
+}
+
+.reviews-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  padding: 4px 12px;
+  border-radius: 20px;
+  background: var(--card-bg);
+  border: 1px solid var(--accent-color);
+  color: var(--accent-color);
+  margin-bottom: 12px;
+}
+
+.reviews-title {
+  font-size: clamp(1.8rem, 3.5vw, 2.4rem);
+  margin: 0 0 10px 0;
+  color: var(--text-color);
+}
+
+.reviews-subtitle {
+  color: var(--text-muted);
+  font-size: 1.05rem;
+  max-width: 650px;
+  margin: 0 auto;
+}
+
+/* Rating Score Summary Card */
+.reviews-score-card {
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius);
+  padding: 24px 30px;
+  margin-bottom: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 20px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+}
+
+.score-main {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+}
+
+.score-num {
+  font-size: 3rem;
+  font-weight: 800;
+  color: var(--accent-color);
+  line-height: 1;
+}
+
+.score-stars-area {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.score-stars {
+  color: #ffb800;
+  font-size: 1.35rem;
+  letter-spacing: 2px;
+}
+
+.score-subtext {
+  font-size: 0.88rem;
+  color: var(--text-muted);
+}
+
+.score-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.score-tag-pill {
+  font-size: 0.82rem;
+  padding: 6px 12px;
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--border-color);
+  color: var(--text-color);
+}
+
+/* Review Cards Grid */
+.review-cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(310px, 1fr));
+  gap: 22px;
+  margin-bottom: 40px;
+}
+
+.review-card {
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius);
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.review-card:hover {
+  transform: translateY(-3px);
+  border-color: var(--accent-color);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+}
+
+.review-card-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 14px;
+}
+
+.reviewer-meta {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.reviewer-avatar {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--border-color);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.25rem;
+  flex-shrink: 0;
+}
+
+.reviewer-details {
+  display: flex;
+  flex-direction: column;
+}
+
+.reviewer-name {
+  font-weight: 600;
+  font-size: 0.95rem;
+  color: var(--text-color);
+}
+
+.reviewer-realm {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+}
+
+.review-card-stars {
+  color: #ffb800;
+  font-size: 0.95rem;
+  letter-spacing: 1px;
+}
+
+.review-highlight-tag {
+  display: inline-block;
+  font-size: 0.76rem;
+  font-weight: 600;
+  color: var(--accent-color);
+  background: rgba(255, 255, 255, 0.03);
+  border-left: 2px solid var(--accent-color);
+  padding: 3px 8px;
+  margin-bottom: 12px;
+  border-radius: 0 4px 4px 0;
+}
+
+.review-text {
+  font-size: 0.92rem;
+  line-height: 1.65;
+  color: var(--text-color);
+  font-style: italic;
+  margin: 0;
+  opacity: 0.92;
+}
+
+/* Daoist Assembly Reviews Container (Giscus) */
+.landing-assembly-container {
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius);
+  padding: 32px;
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.25);
+}
+
+.landing-assembly-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 24px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--border-color);
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.landing-assembly-header h3 {
+  margin: 0;
+  font-size: 1.2rem;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--text-color);
+}
+
+.landing-assembly-sub {
+  color: var(--text-muted);
+  font-size: 0.9rem;
+}

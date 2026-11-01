@@ -2,7 +2,7 @@
   "name": "Renegade Reader (仙逆)",
   "short_name": "Renegade",
   "description": "Renegade Immortal (仙逆) by Er Gen - Complete Web Novel Reader & Offline Library",
-  "start_url": "./index.html",
+  "start_url": "./",
   "scope": "./",
   "display": "standalone",
   "orientation": "any",

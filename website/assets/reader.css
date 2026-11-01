@@ -884,21 +884,22 @@ select.font-select {
   }
 
   .chapter-nav-bar {
-    flex-direction: column;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
     gap: 12px;
   }
 
   .chapter-nav-btn {
     width: 100%;
-    padding: 14px;
+    padding: 12px 14px;
     min-height: 48px;
-    font-size: 1rem;
+    font-size: 0.95rem;
   }
 
-  .chapter-index-btn {
-    order: 3;
-    background: transparent;
-  }
+  #nav-prev-btn { order: 1; }
+  #nav-next-btn { order: 2; }
+  #nav-home-btn { order: 3; }
+  #nav-toc-btn { order: 4; }
 
   /* Bottom Sheet Drawer on Mobile */
   .settings-drawer {

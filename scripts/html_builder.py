@@ -95,9 +95,9 @@ def main():
 
         # Navigation target links
         if idx == 0:
-            prev_href = "../"
-            prev_label = "Home"
-            prev_disabled = ""
+            prev_href = "#"
+            prev_label = "First Chapter"
+            prev_disabled = "disabled"
         else:
             prev_num = chapters[idx - 1]["chapter"]
             prev_href = f"ch_{prev_num}.html"
@@ -105,9 +105,9 @@ def main():
             prev_disabled = ""
 
         if idx == total_chapters - 1:
-            next_href = "../"
-            next_label = "Finished (Home)"
-            next_disabled = ""
+            next_href = "#"
+            next_label = "Final Chapter"
+            next_disabled = "disabled"
         else:
             next_num = chapters[idx + 1]["chapter"]
             next_href = f"ch_{next_num}.html"
