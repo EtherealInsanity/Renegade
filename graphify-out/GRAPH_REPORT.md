@@ -1,17 +1,17 @@
 # Graph Report - Renegade Reader  (2026-11-01)
 
 ## Corpus Check
-- 10 files · ~55,992,986 words
+- 11 files · ~56,155,168 words
 - Verdict: corpus is large enough that graph structure adds value.
-- Unclassified: 6 file(s) not represented in the graph (top: .css 3, (none) 1, .epub 1)
+- Unclassified: 7 file(s) not represented in the graph (top: .css 4, (none) 1, .epub 1)
 
 ## Summary
-- 47 nodes · 57 edges · 8 communities (4 shown, 4 thin omitted)
+- 50 nodes · 59 edges · 8 communities (3 shown, 5 thin omitted)
 - Extraction: 95% EXTRACTED · 5% INFERRED · 0% AMBIGUOUS · INFERRED: 3 edges (avg confidence: 0.85)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `c9832f03`
+- Built from commit: `5cc865db`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -19,7 +19,6 @@
 - json
 - build_chapters.py
 - scripts
-- package.json
 - Renegade Reader (仙逆)
 - initTouchNavigation
 - sw.js
@@ -43,33 +42,27 @@
 ## Import Cycles
 - None detected.
 
-## Communities (8 total, 4 thin omitted)
+## Communities (8 total, 5 thin omitted)
 
 ### Community 2 - "build_chapters.py"
 Cohesion: 0.52
 Nodes (3): clean_text(), get_book_info(), main()
 
 ### Community 3 - "scripts"
-Cohesion: 0.29
-Nodes (7): scripts, build, build:chapters, build:landing, build:pages, deploy, dev
-
-### Community 4 - "package.json"
-Cohesion: 0.40
-Nodes (4): description, name, private, version
+Cohesion: 0.17
+Nodes (11): description, name, private, scripts, build, build:chapters, build:landing, build:pages (+3 more)
 
 ### Community 5 - "Renegade Reader (仙逆)"
 Cohesion: 0.40
 Nodes (4): 13 Official Cultivation Themes, Architecture Overview, Development & Build Commands, Renegade Reader (仙逆)
 
 ## Knowledge Gaps
-- **4 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
+- **5 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
-- **Why does `scripts` connect `scripts` to `package.json`?**
-  _High betweenness centrality (0.043) - this node is a cross-community bridge._
 - **Why does `main()` connect `build_chapters.py` to `json`?**
-  _High betweenness centrality (0.016) - this node is a cross-community bridge._
+  _High betweenness centrality (0.015) - this node is a cross-community bridge._
 - **Why does `initTouchNavigation()` connect `initTouchNavigation` to `reader.js`?**
-  _High betweenness centrality (0.010) - this node is a cross-community bridge._
+  _High betweenness centrality (0.009) - this node is a cross-community bridge._

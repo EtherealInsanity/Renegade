@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 """
-Renegade Reader - Landing Page & Reader TOC Builder
+Renegade Reader - Landing Page & Chapters Catalog Builder
 Generates:
-  1. website/index.html: Focused homepage displaying novel cover, name, volumes, and Read/Download buttons
-  2. website/read/index.html: Dedicated chapters page categorised in 13 collapsible canonical volumes
+  1. website/index.html: Clean homepage displaying novel cover, name, volumes, and Read/Download buttons
+  2. website/chapters.html: Dedicated chapters page categorised in 13 collapsible canonical volumes
   3. website/download.html: Offline EPUB download page
 """
 
@@ -53,7 +53,7 @@ def main():
         start_ch = b["start"]
         end_ch = b["end"]
         home_volumes_html.append(
-            f'<a href="read/index.html#book-{b_num}" class="home-volume-card">\n'
+            f'<a href="chapters.html#book-{b_num}" class="home-volume-card">\n'
             f'  <span class="home-volume-title">Vol. {b_num}: {b_title}</span>\n'
             f'  <span class="home-volume-meta">Chapters {start_ch}–{end_ch} · {ch_count} chs</span>\n'
             f'</a>'
@@ -88,7 +88,7 @@ def main():
                 display_title = f"Ch. {ch_num} – {title_text}"
 
             ch_items_html.append(
-                f'<a href="ch_{ch_num}.html" class="chapter-item-link" data-title="{title_text.lower()}">'
+                f'<a href="read/ch_{ch_num}.html" class="chapter-item-link" data-title="{title_text.lower()}">'
                 f'{display_title}</a>'
             )
 
@@ -149,7 +149,7 @@ def main():
     </a>
 
     <div class="nav-links">
-      <a href="read/index.html" class="nav-link">Read</a>
+      <a href="chapters.html" class="nav-link">Read</a>
       <a href="download.html" class="nav-link">EPUB</a>
       <button id="btn-pwa-install" class="nav-link" style="display: none; background: none; border: 1px solid var(--accent-color); color: var(--accent-color); padding: 6px 12px; border-radius: var(--border-radius); cursor: pointer;" aria-label="Install App">
         📥 Install
@@ -183,7 +183,7 @@ def main():
 
       <!-- Action Buttons: Read & Download -->
       <div class="hero-cta-buttons">
-        <a href="read/index.html" class="btn-primary">
+        <a href="chapters.html" class="btn-primary">
           <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"/></svg>
           Read
         </a>
@@ -279,10 +279,10 @@ def main():
     print("Generated website/index.html (Clean homepage)")
 
     # =========================================================================
-    # 2. Generate website/read/index.html (Chapters categorized in 13 volumes)
+    # 2. Generate website/chapters.html (Dedicated chapters page)
     # Native collapsible <details> with all chapters populated inside
     # =========================================================================
-    read_index_html = f"""<!DOCTYPE html>
+    chapters_html = f"""<!DOCTYPE html>
 <html lang="en" data-theme="slaughter">
 <head>
   <meta charset="UTF-8">
@@ -292,32 +292,32 @@ def main():
   <meta name="description" content="Browse all 2,088 chapters of Renegade Immortal (仙逆) categorized across all 13 canonical volumes.">
   <meta property="og:title" content="Chapters by Volume - Renegade Immortal (仙逆)">
   <meta property="og:description" content="Complete table of contents for Renegade Immortal with chapters categorized in 13 canonical volumes.">
-  <meta property="og:image" content="../assets/cover.jpg">
+  <meta property="og:image" content="assets/cover.jpg">
   <meta property="og:type" content="website">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:image" content="../assets/cover.jpg">
+  <meta name="twitter:image" content="assets/cover.jpg">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="apple-mobile-web-app-title" content="Renegade">
-  <link rel="manifest" href="../manifest.webmanifest">
-  <link rel="stylesheet" href="../assets/themes.css">
-  <link rel="stylesheet" href="../assets/landing.css">
-  <link rel="icon" type="image/png" href="../assets/favicon.png">
-  <link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="stylesheet" href="assets/themes.css">
+  <link rel="stylesheet" href="assets/landing.css">
+  <link rel="icon" type="image/png" href="assets/favicon.png">
+  <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
 </head>
 <body>
 
   <!-- Navigation -->
   <header class="landing-nav">
-    <a href="../index.html" class="brand-title">
+    <a href="index.html" class="brand-title">
       <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1-2.5-2.5Z"/><path d="M6 6h10"/><path d="M6 10h10"/></svg>
       <span class="logo-text">Renegade Reader</span>
       <span class="brand-badge">仙逆</span>
     </a>
 
     <div class="nav-links">
-      <a href="../index.html" class="nav-link">Home</a>
-      <a href="../download.html" class="nav-link">EPUB</a>
+      <a href="index.html" class="nav-link">Home</a>
+      <a href="download.html" class="nav-link">EPUB</a>
       <button id="theme-quick-toggle" class="nav-link" style="background: none; border: 1px solid var(--border-color); padding: 6px 12px; border-radius: var(--border-radius); cursor: pointer;" aria-label="Toggle Theme">
         ⚔️ Theme
       </button>
@@ -373,7 +373,7 @@ def main():
   <!-- Footer -->
   <footer class="landing-footer">
     <p>Renegade Reader · Unofficial fan reader platform for <em>Renegade Immortal (仙逆)</em> by Er Gen.</p>
-    <p><a href="../index.html">← Back to Novel Overview</a> · <a href="../download.html">Download Full EPUB</a></p>
+    <p><a href="index.html">← Back to Novel Overview</a> · <a href="download.html">Download Full EPUB</a></p>
   </footer>
 
   <script>
@@ -397,7 +397,7 @@ def main():
         const link = document.getElementById('resume-chapter-link');
         const titleSpan = document.getElementById('resume-chapter-title');
         if (banner && link && titleSpan) {{
-          link.href = 'ch_' + lastRead.chapter + '.html';
+          link.href = 'read/ch_' + lastRead.chapter + '.html';
           titleSpan.textContent = 'Chapter ' + lastRead.chapter + (lastRead.title ? ' – ' + lastRead.title : '');
           banner.style.display = 'flex';
         }}
@@ -485,7 +485,7 @@ def main():
     // Register PWA Service Worker
     if ('serviceWorker' in navigator) {{
       window.addEventListener('load', () => {{
-        navigator.serviceWorker.register('../sw.js').catch(err => console.debug('SW reg failed', err));
+        navigator.serviceWorker.register('./sw.js').catch(err => console.debug('SW reg failed', err));
       }});
     }}
   </script>
@@ -493,26 +493,29 @@ def main():
 </html>
 """
 
-    os.makedirs("website/read", exist_ok=True)
-    with open("website/read/index.html", "w", encoding="utf-8") as f:
-        f.write(read_index_html)
-    print("Generated website/read/index.html (Chapters categorized in 13 volumes)")
+    with open("website/chapters.html", "w", encoding="utf-8") as f:
+        f.write(chapters_html)
+    print("Generated website/chapters.html (Chapters categorized in 13 volumes)")
 
-    # Fallback redirect website/read.html -> read/index.html
-    read_redirect_html = """<!DOCTYPE html>
+    # Legacy redirect for website/read/index.html -> ../chapters.html
+    read_index_redirect = """<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta http-equiv="refresh" content="0; url=read/index.html">
+  <meta http-equiv="refresh" content="0; url=../chapters.html">
   <title>Redirecting to Chapters...</title>
-  <script>location.replace('read/index.html');</script>
+  <script>location.replace('../chapters.html');</script>
 </head>
 <body>
-  <p>Redirecting to <a href="read/index.html">Chapters</a>...</p>
+  <p>Redirecting to <a href="../chapters.html">Chapters</a>...</p>
 </body>
 </html>"""
-    with open("website/read.html", "w", encoding="utf-8") as f:
-        f.write(read_redirect_html)
+    with open("website/read/index.html", "w", encoding="utf-8") as f:
+        f.write(read_index_redirect)
+
+    # Remove website/read.html if it exists to avoid directory collisions
+    if os.path.exists("website/read.html"):
+        os.remove("website/read.html")
 
     # =========================================================================
     # 3. Generate website/download.html
@@ -631,7 +634,7 @@ def main():
     </a>
     <div class="nav-links">
       <a href="index.html" class="nav-link">Home</a>
-      <a href="read/index.html" class="nav-link">Read Online</a>
+      <a href="chapters.html" class="nav-link">Read Online</a>
     </div>
   </header>
 

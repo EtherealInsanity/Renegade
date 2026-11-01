@@ -3,7 +3,7 @@
   "1": "reader.js",
   "2": "build_chapters.py",
   "3": "scripts",
-  "4": "package.json",
+  "4": "giscus-config.js",
   "5": "Renegade Reader (仙逆)",
   "6": "initTouchNavigation",
   "7": "sw.js"
