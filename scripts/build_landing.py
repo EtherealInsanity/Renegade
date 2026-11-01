@@ -43,23 +43,6 @@ def main():
         if b_num in chapters_by_book:
             chapters_by_book[b_num].append(ch)
 
-    # Build Homepage Volume Cards HTML
-    home_volumes_html = []
-    for b in books:
-        b_num = b["book"]
-        b_title = b["title"]
-        b_chapters = chapters_by_book.get(b_num, [])
-        ch_count = len(b_chapters)
-        start_ch = b["start"]
-        end_ch = b["end"]
-        home_volumes_html.append(
-            f'<a href="chapters.html#book-{b_num}" class="home-volume-card">\n'
-            f'  <span class="home-volume-title">Vol. {b_num}: {b_title}</span>\n'
-            f'  <span class="home-volume-meta">Chapters {start_ch}–{end_ch} · {ch_count} chs</span>\n'
-            f'</a>'
-        )
-    home_volumes_rendered = "\n".join(home_volumes_html)
-
     # Build Chapters Page (TOC) Accordions HTML
     accordions_html = []
     pills_html = []
@@ -149,7 +132,9 @@ def main():
     </a>
 
     <div class="nav-links">
-      <a href="chapters.html" class="nav-link">Read</a>
+      <a href="index.html" class="nav-link">Home</a>
+      <a href="read/ch_1.html" class="nav-link">Read</a>
+      <a href="chapters.html" class="nav-link">Chapters</a>
       <a href="download.html" class="nav-link">EPUB</a>
       <button id="btn-pwa-install" class="nav-link" style="display: none; background: none; border: 1px solid var(--accent-color); color: var(--accent-color); padding: 6px 12px; border-radius: var(--border-radius); cursor: pointer;" aria-label="Install App">
         📥 Install
@@ -173,19 +158,19 @@ def main():
       <h1 class="novel-title">Renegade Immortal<span class="novel-chinese-title">仙逆</span></h1>
       <div class="novel-author">By <strong>Er Gen (耳根)</strong> · Official Translation</div>
 
-      <!-- Volumes Overview -->
-      <div class="home-volumes-section">
-        <div class="home-volumes-heading">Volumes (13 Canonical Books · {stats["total_chapters"]:,} Chapters)</div>
-        <div class="home-volumes-grid">
-          {home_volumes_rendered}
-        </div>
+      <div class="novel-meta-text" style="color: var(--text-muted); font-size: 1.05rem; margin-top: 14px; margin-bottom: 26px;">
+        13 Canonical Volumes · {stats["total_chapters"]:,} Chapters · {stats["total_words"]:,} Words · Complete
       </div>
 
       <!-- Action Buttons: Read & Download -->
       <div class="hero-cta-buttons">
-        <a href="chapters.html" class="btn-primary">
+        <a href="read/ch_1.html" class="btn-primary">
           <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"/></svg>
           Read
+        </a>
+        <a href="chapters.html" class="btn-secondary">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
+          Chapters
         </a>
         <a id="btn-continue-reading" href="read/ch_1.html" class="btn-secondary" style="display: none;">
           <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12h20"/><path d="M20 12l-6-6"/><path d="M20 12l-6 6"/></svg>
@@ -317,6 +302,7 @@ def main():
 
     <div class="nav-links">
       <a href="index.html" class="nav-link">Home</a>
+      <a href="read/ch_1.html" class="nav-link">Read</a>
       <a href="download.html" class="nav-link">EPUB</a>
       <button id="theme-quick-toggle" class="nav-link" style="background: none; border: 1px solid var(--border-color); padding: 6px 12px; border-radius: var(--border-radius); cursor: pointer;" aria-label="Toggle Theme">
         ⚔️ Theme
@@ -634,7 +620,8 @@ def main():
     </a>
     <div class="nav-links">
       <a href="index.html" class="nav-link">Home</a>
-      <a href="chapters.html" class="nav-link">Read Online</a>
+      <a href="read/ch_1.html" class="nav-link">Read Online</a>
+      <a href="chapters.html" class="nav-link">Chapters</a>
     </div>
   </header>
 
