@@ -103,7 +103,7 @@ def main():
 
         # Navigation target links
         if idx == 0:
-            prev_href = "../index.html"
+            prev_href = "../"
             prev_label = "Home"
             prev_disabled = ""
         else:
@@ -113,7 +113,7 @@ def main():
             prev_disabled = ""
 
         if idx == total_chapters - 1:
-            next_href = "../index.html"
+            next_href = "../"
             next_label = "Finished (Home)"
             next_disabled = ""
         else:
