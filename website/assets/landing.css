@@ -35,7 +35,7 @@ body {
   z-index: 800;
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: flex-end;
   padding: 14px 28px;
   transition: background var(--transition);
 }
@@ -573,6 +573,7 @@ details.book-accordion[open] .chapter-grid {
 @media (max-width: 640px) {
   .landing-nav {
     padding: 12px 16px;
+    justify-content: center;
   }
 
   .brand-title {

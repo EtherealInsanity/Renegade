@@ -125,12 +125,6 @@ def main():
 
   <!-- Landing Nav -->
   <header class="landing-nav">
-    <a href="./" class="brand-title">
-      <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1-2.5-2.5Z"/><path d="M6 6h10"/><path d="M6 10h10"/></svg>
-      <span class="logo-text">Renegade Reader</span>
-      <span class="brand-badge">仙逆</span>
-    </a>
-
     <div class="nav-links">
       <a href="./" class="nav-link">Home</a>
       <a href="read/ch_1.html" class="nav-link" id="nav-read-link">Read</a>
@@ -323,12 +317,6 @@ def main():
 
   <!-- Navigation -->
   <header class="landing-nav">
-    <a href="./" class="brand-title">
-      <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1-2.5-2.5Z"/><path d="M6 6h10"/><path d="M6 10h10"/></svg>
-      <span class="logo-text">Renegade Reader</span>
-      <span class="brand-badge">仙逆</span>
-    </a>
-
     <div class="nav-links">
       <a href="./" class="nav-link">Home</a>
       <a href="read/ch_1.html" class="nav-link">Read</a>
@@ -646,11 +634,6 @@ def main():
 </head>
 <body>
   <header class="landing-nav">
-    <a href="./" class="brand-title">
-      <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1-2.5-2.5Z"/><path d="M6 6h10"/><path d="M6 10h10"/></svg>
-      <span>Renegade Reader</span>
-      <span class="brand-badge">仙逆</span>
-    </a>
     <div class="nav-links">
       <a href="./" class="nav-link">Home</a>
       <a href="read/ch_1.html" class="nav-link">Read Online</a>
