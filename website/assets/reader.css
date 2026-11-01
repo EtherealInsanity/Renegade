@@ -580,46 +580,100 @@ body {
   -webkit-overflow-scrolling: touch;
 }
 
-.drawer-book-group {
-  margin-bottom: 8px;
-  border: 1px solid var(--border-color);
-  border-radius: var(--border-radius);
-  background: var(--card-bg);
-  overflow: hidden;
-}
-
-.drawer-book-summary {
-  padding: 10px 14px;
-  cursor: pointer;
+/* Drawer Tab Switcher */
+.drawer-tabs {
+  position: sticky;
+  top: -12px;
+  z-index: 5;
+  background: var(--nav-bg);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
   display: flex;
-  align-items: center;
-  justify-content: space-between;
-  font-weight: 600;
+  margin: -4px -4px 10px -4px;
+  padding: 4px 4px 0 4px;
+  border-bottom: 1px solid var(--border-color);
+  gap: 6px;
+}
+
+.drawer-tab-btn {
+  flex: 1;
+  background: none;
+  border: none;
+  border-bottom: 2px solid transparent;
+  padding: 8px 12px;
   font-size: 0.86rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: color 0.15s, border-color 0.15s;
+}
+
+.drawer-tab-btn:hover {
   color: var(--text-color);
-  background: rgba(255, 255, 255, 0.02);
-  user-select: none;
-  list-style: none;
 }
 
-.drawer-book-summary::-webkit-details-marker {
-  display: none;
+.drawer-tab-btn.active {
+  color: var(--accent-color);
+  border-bottom-color: var(--accent-color);
 }
 
-.drawer-book-summary svg {
-  transition: transform 0.2s ease;
-  flex-shrink: 0;
-}
-
-details[open] > .drawer-book-summary svg {
-  transform: rotate(180deg);
-}
-
-.drawer-chapter-list {
+.drawer-view-panel {
   display: flex;
   flex-direction: column;
-  padding: 4px 0;
+}
+
+/* Volume Section Divider in Chapters List */
+.drawer-book-divider {
+  padding: 10px 12px 6px 12px;
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-weight: 700;
+  color: var(--accent-color);
+  background: rgba(255, 255, 255, 0.02);
   border-top: 1px solid var(--border-color);
+  margin-top: 10px;
+  margin-bottom: 4px;
+  border-radius: 4px;
+}
+
+.drawer-book-divider:first-child {
+  margin-top: 0;
+  border-top: none;
+}
+
+/* Volume Cards in Volumes View */
+.drawer-volume-card {
+  padding: 12px 14px;
+  margin-bottom: 8px;
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius);
+  cursor: pointer;
+  transition: border-color 0.15s, transform 0.15s, background 0.15s;
+}
+
+.drawer-volume-card:hover {
+  border-color: var(--accent-color);
+  background: rgba(255, 255, 255, 0.03);
+  transform: translateX(2px);
+}
+
+.drawer-volume-card.active {
+  border-color: var(--accent-color);
+  background: rgba(160, 50, 50, 0.1);
+}
+
+.drawer-volume-title {
+  font-weight: 600;
+  font-size: 0.88rem;
+  color: var(--text-color);
+  margin-bottom: 4px;
+}
+
+.drawer-volume-meta {
+  font-size: 0.78rem;
+  color: var(--text-muted);
 }
 
 .drawer-ch-item {

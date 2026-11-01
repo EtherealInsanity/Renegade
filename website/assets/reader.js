@@ -454,13 +454,16 @@
         const foundCh = cachedChapters.find(c => c.chapter === currentChapterNum);
         if (foundCh) currentBookNum = foundCh.book;
 
-        let html = '';
+        // Build Chapters View and Volumes View
+        let chListHtml = '';
+        let volListHtml = '';
+
         cachedBooks.forEach(b => {
           const bChapters = chaptersByBook[b.book] || [];
           const isCurrentBook = b.book === currentBookNum;
-          const openAttr = isCurrentBook ? 'open' : '';
 
-          let chListHtml = '';
+          chListHtml += `<div class="drawer-book-divider" id="drawer-book-anchor-${b.book}">Book ${b.book}: ${b.title} (${bChapters.length} chs)</div>`;
+
           bChapters.forEach(ch => {
             const isActive = ch.chapter === currentChapterNum;
             const activeClass = isActive ? ' active' : '';
@@ -473,24 +476,71 @@
             chListHtml += `<a href="ch_${ch.chapter}.html" class="drawer-ch-item${activeClass}"${activeAttr} data-num="${ch.chapter}" data-title="${ch.title.toLowerCase()}"><span class="drawer-ch-title">${displayTitle}</span><span class="drawer-ch-num">#${ch.chapter}</span></a>`;
           });
 
-          html += `
-            <details class="drawer-book-group" data-book-num="${b.book}" ${openAttr}>
-              <summary class="drawer-book-summary">
-                <span>Book ${b.book}: ${b.title}</span>
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
-              </summary>
-              <div class="drawer-chapter-list">
-                ${chListHtml}
-              </div>
-            </details>
+          const activeVolClass = isCurrentBook ? ' active' : '';
+          const startCh = b.start || (bChapters[0] ? bChapters[0].chapter : 1);
+          const endCh = b.end || (bChapters[bChapters.length - 1] ? bChapters[bChapters.length - 1].chapter : bChapters.length);
+          volListHtml += `
+            <div class="drawer-volume-card${activeVolClass}" data-book-num="${b.book}">
+              <div class="drawer-volume-title">Book ${b.book}: ${b.title}</div>
+              <div class="drawer-volume-meta">Chapters ${startCh} – ${endCh} · ${bChapters.length} chapters</div>
+            </div>
           `;
         });
+
+        const html = `
+          <div class="drawer-tabs">
+            <button type="button" class="drawer-tab-btn active" id="drawer-tab-btn-chapters">Chapters</button>
+            <button type="button" class="drawer-tab-btn" id="drawer-tab-btn-volumes">Volumes</button>
+          </div>
+          <div id="drawer-chapters-view" class="drawer-view-panel">
+            ${chListHtml}
+          </div>
+          <div id="drawer-volumes-view" class="drawer-view-panel" style="display: none;">
+            ${volListHtml}
+          </div>
+        `;
 
         if (volumesContainer) {
           volumesContainer.innerHTML = html;
         }
         isChapterDrawerLoaded = true;
         isChapterDrawerLoading = false;
+
+        // Tab Switching logic
+        const tabBtnChapters = document.getElementById('drawer-tab-btn-chapters');
+        const tabBtnVolumes = document.getElementById('drawer-tab-btn-volumes');
+        const chaptersView = document.getElementById('drawer-chapters-view');
+        const volumesView = document.getElementById('drawer-volumes-view');
+
+        function switchTab(target) {
+          if (target === 'chapters') {
+            tabBtnChapters.classList.add('active');
+            tabBtnVolumes.classList.remove('active');
+            chaptersView.style.display = 'flex';
+            volumesView.style.display = 'none';
+            focusActiveChapter();
+          } else {
+            tabBtnVolumes.classList.add('active');
+            tabBtnChapters.classList.remove('active');
+            volumesView.style.display = 'block';
+            chaptersView.style.display = 'none';
+          }
+        }
+
+        if (tabBtnChapters) tabBtnChapters.addEventListener('click', () => switchTab('chapters'));
+        if (tabBtnVolumes) tabBtnVolumes.addEventListener('click', () => switchTab('volumes'));
+
+        // Volume card click: switch to Chapters view and scroll to volume anchor
+        volumesContainer.querySelectorAll('.drawer-volume-card').forEach(card => {
+          card.addEventListener('click', () => {
+            const bNum = card.getAttribute('data-book-num');
+            switchTab('chapters');
+            const anchor = document.getElementById('drawer-book-anchor-' + bNum);
+            if (anchor) {
+              anchor.scrollIntoView({ block: 'start', behavior: 'smooth' });
+            }
+          });
+        });
 
         // Setup live search
         if (searchInput) {
@@ -500,43 +550,30 @@
               clearSearchBtn.style.display = q ? 'block' : 'none';
             }
 
-            const bookGroups = volumesContainer.querySelectorAll('.drawer-book-group');
+            if (q) switchTab('chapters');
+
+            const items = chaptersView.querySelectorAll('.drawer-ch-item');
+            const dividers = chaptersView.querySelectorAll('.drawer-book-divider');
             let totalVisible = 0;
 
-            bookGroups.forEach(group => {
-              const items = group.querySelectorAll('.drawer-ch-item');
-              let groupHasMatch = false;
-
-              items.forEach(item => {
-                if (!q) {
+            items.forEach(item => {
+              if (!q) {
+                item.style.display = 'flex';
+                totalVisible++;
+              } else {
+                const title = item.getAttribute('data-title') || '';
+                const num = item.getAttribute('data-num') || '';
+                if (title.includes(q) || num === q || ('chapter ' + num).includes(q)) {
                   item.style.display = 'flex';
-                  groupHasMatch = true;
                   totalVisible++;
                 } else {
-                  const title = item.getAttribute('data-title') || '';
-                  const num = item.getAttribute('data-num') || '';
-                  if (title.includes(q) || num === q || ('chapter ' + num).includes(q)) {
-                    item.style.display = 'flex';
-                    groupHasMatch = true;
-                    totalVisible++;
-                  } else {
-                    item.style.display = 'none';
-                  }
+                  item.style.display = 'none';
                 }
-              });
-
-              if (q) {
-                if (groupHasMatch) {
-                  group.style.display = 'block';
-                  group.open = true;
-                } else {
-                  group.style.display = 'none';
-                }
-              } else {
-                group.style.display = 'block';
-                const bNum = parseInt(group.getAttribute('data-book-num') || '0', 10);
-                group.open = (bNum === currentBookNum);
               }
+            });
+
+            dividers.forEach(div => {
+              div.style.display = q ? 'none' : 'block';
             });
 
             let emptyMsg = document.getElementById('drawer-no-results');
@@ -546,7 +583,7 @@
                 emptyMsg.id = 'drawer-no-results';
                 emptyMsg.className = 'drawer-empty-search';
                 emptyMsg.textContent = 'No chapters found matching "' + q + '".';
-                volumesContainer.appendChild(emptyMsg);
+                chaptersView.appendChild(emptyMsg);
               } else {
                 emptyMsg.textContent = 'No chapters found matching "' + q + '".';
                 emptyMsg.style.display = 'block';
