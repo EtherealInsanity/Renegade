@@ -1,7 +1,6 @@
 // Renegade Reader - Waline Comments Configuration & Dynamic Loader
 window.WALINE_CONFIG = {
-  // Step 2: Paste your deployed Waline backend URL here (e.g. 'https://renegade-comments.vercel.app')
-  serverURL: '',
+  serverURL: 'https://waline-on-worker.anc1ent-0.workers.dev',
   lang: 'en',
   reaction: true,
   pageview: true,
