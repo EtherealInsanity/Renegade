@@ -1,6 +1,7 @@
 /* ==========================================================================
    Renegade Reader - Xianxia Cultivation Themes (Renegade Immortal / 仙逆)
    13 Official Thematic Palettes rooted in Wang Lin's Domains and Realms
+   Updated with Minimalist ORV-Style Soft Translucent Surfaces & Shadows
    ========================================================================== */
 
 :root {
@@ -11,6 +12,9 @@
   --line-height: 1.8;
   --border-radius: 8px;
   --transition: 0.25s ease;
+  --shadow-sm: 0 4px 16px rgba(0, 0, 0, 0.2);
+  --shadow-md: 0 10px 30px rgba(0, 0, 0, 0.35);
+  --shadow-lg: 0 16px 48px rgba(0, 0, 0, 0.45);
 }
 
 /* 1. Slaughter Domain / Ji Realm (Default Dark) */
@@ -24,7 +28,7 @@
   --accent-color: #ef4444;       /* Slaughter Crimson */
   --accent-hover: #dc2626;
   --accent-glow: rgba(239, 68, 68, 0.25);
-  --border-color: #272a38;
+  --border-color: rgba(255, 255, 255, 0.08);
   --nav-bg: rgba(12, 13, 18, 0.94);
   --card-bg: #141620;
   --code-bg: #07080b;
@@ -41,7 +45,7 @@
   --accent-color: #10b981;       /* Emerald Qi Glow */
   --accent-hover: #059669;
   --accent-glow: rgba(16, 185, 129, 0.25);
-  --border-color: #1c3d44;
+  --border-color: rgba(16, 185, 129, 0.12);
   --nav-bg: rgba(11, 21, 24, 0.94);
   --card-bg: #122429;
   --code-bg: #070d0f;
@@ -58,7 +62,7 @@
   --accent-color: #f59e0b;       /* 8-Star Royal Gold */
   --accent-hover: #d97706;
   --accent-glow: rgba(245, 158, 11, 0.25);
-  --border-color: #2b2f42;
+  --border-color: rgba(245, 158, 11, 0.10);
   --nav-bg: rgba(9, 10, 15, 0.94);
   --card-bg: #141724;
   --code-bg: #05060a;
@@ -75,7 +79,7 @@
   --accent-color: #818cf8;       /* Lavender Silver Dao */
   --accent-hover: #6366f1;
   --accent-glow: rgba(129, 140, 248, 0.25);
-  --border-color: #313240;
+  --border-color: rgba(129, 140, 248, 0.10);
   --nav-bg: rgba(19, 20, 26, 0.94);
   --card-bg: #1e1f29;
   --code-bg: #0c0d10;
@@ -92,7 +96,7 @@
   --accent-color: #f43f5e;       /* Karma Red Thread */
   --accent-hover: #e11d48;
   --accent-glow: rgba(244, 63, 94, 0.25);
-  --border-color: #383050;
+  --border-color: rgba(244, 63, 94, 0.10);
   --nav-bg: rgba(18, 16, 27, 0.94);
   --card-bg: #1f1b30;
   --code-bg: #0b0911;
@@ -109,7 +113,7 @@
   --accent-color: #38bdf8;       /* Dream Azure */
   --accent-hover: #0284c7;
   --accent-glow: rgba(56, 189, 248, 0.25);
-  --border-color: #233659;
+  --border-color: rgba(56, 189, 248, 0.10);
   --nav-bg: rgba(11, 19, 34, 0.94);
   --card-bg: #13213a;
   --code-bg: #060a12;
@@ -126,7 +130,7 @@
   --accent-color: #2dd4bf;       /* Ghost Cyan Glow */
   --accent-hover: #14b8a6;
   --accent-glow: rgba(45, 212, 191, 0.25);
-  --border-color: #20372f;
+  --border-color: rgba(45, 212, 191, 0.10);
   --nav-bg: rgba(10, 17, 14, 0.94);
   --card-bg: #121e1a;
   --code-bg: #050907;
@@ -143,7 +147,7 @@
   --accent-color: #ea580c;       /* Suzaku Blaze */
   --accent-hover: #c2410c;
   --accent-glow: rgba(234, 88, 12, 0.25);
-  --border-color: #3d2920;
+  --border-color: rgba(234, 88, 12, 0.12);
   --nav-bg: rgba(20, 13, 10, 0.94);
   --card-bg: #211611;
   --code-bg: #0b0705;
@@ -160,7 +164,7 @@
   --accent-color: #60a5fa;       /* Starlight Azure */
   --accent-hover: #3b82f6;
   --accent-glow: rgba(96, 165, 250, 0.25);
-  --border-color: #223053;
+  --border-color: rgba(96, 165, 250, 0.10);
   --nav-bg: rgba(9, 14, 28, 0.94);
   --card-bg: #121b33;
   --code-bg: #05070e;
@@ -177,7 +181,7 @@
   --accent-color: #a78bfa;       /* Purple Qi of Cloud Sea */
   --accent-hover: #8b5cf6;
   --accent-glow: rgba(167, 139, 250, 0.25);
-  --border-color: #384257;
+  --border-color: rgba(167, 139, 250, 0.10);
   --nav-bg: rgba(23, 28, 38, 0.94);
   --card-bg: #222938;
   --code-bg: #0e1219;
@@ -194,7 +198,7 @@
   --accent-color: #fbbf24;       /* 10th Sun Radiant Gold */
   --accent-hover: #f59e0b;
   --accent-glow: rgba(251, 191, 36, 0.25);
-  --border-color: #2d3852;
+  --border-color: rgba(251, 191, 36, 0.12);
   --nav-bg: rgba(16, 21, 34, 0.94);
   --card-bg: #1a2234;
   --code-bg: #090c13;
@@ -211,7 +215,7 @@
   --accent-color: #b91c1c;       /* Cinnabar Seal Red */
   --accent-hover: #991b1b;
   --accent-glow: rgba(185, 28, 28, 0.15);
-  --border-color: #d8cbbb;
+  --border-color: rgba(0, 0, 0, 0.07);
   --nav-bg: rgba(245, 238, 227, 0.96);
   --card-bg: #faf4eb;
   --code-bg: #ece3d4;
@@ -228,14 +232,14 @@
   --accent-color: #4d7c0f;       /* Serene Herbal Jade */
   --accent-hover: #3f6212;
   --accent-glow: rgba(77, 124, 15, 0.15);
-  --border-color: #ded4c1;
+  --border-color: rgba(0, 0, 0, 0.06);
   --nav-bg: rgba(251, 248, 242, 0.96);
   --card-bg: #ffffff;
   --code-bg: #f3ecdf;
 }
 
 /* ==========================================================================
-   Custom Xianxia Formatting & Tags
+   Custom Xianxia Formatting & Tags (ORV System Messages Style)
    ========================================================================== */
 
 .dao_divine {
@@ -246,28 +250,30 @@
   border-radius: 0 var(--border-radius) var(--border-radius) 0;
   color: var(--text-color);
   font-weight: 500;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  box-shadow: var(--shadow-sm);
 }
 
 .dao_mantra {
   color: var(--accent-color);
   font-style: italic;
   font-weight: 600;
-  padding: 8px 16px;
-  margin: 14px 0;
+  padding: 10px 18px;
+  margin: 16px 0;
   border-left: 3px solid var(--accent-color);
   background: var(--bg-secondary);
-  border-radius: 4px;
+  border-radius: 0 var(--border-radius) var(--border-radius) 0;
+  box-shadow: var(--shadow-sm);
 }
 
 .dao_slaughter {
   color: #ff4d4f;
-  background: rgba(239, 68, 68, 0.08);
-  border: 1px dashed rgba(239, 68, 68, 0.35);
+  background: rgba(239, 68, 68, 0.09);
+  border-left: 4px solid #ef4444;
   padding: 12px 18px;
   margin: 18px 0;
-  border-radius: var(--border-radius);
+  border-radius: 0 var(--border-radius) var(--border-radius) 0;
   font-weight: 500;
+  box-shadow: var(--shadow-sm);
 }
 
 .dao_quote {
@@ -282,10 +288,11 @@
   font-size: 0.9em;
   color: var(--text-dim);
   background: var(--bg-secondary);
-  padding: 10px 14px;
+  padding: 10px 16px;
   border-radius: var(--border-radius);
   margin: 14px 0;
-  border: 1px solid var(--border-color);
+  border: none;
+  box-shadow: var(--shadow-sm);
 }
 
 .dao_divider {
@@ -297,21 +304,24 @@
   opacity: 0.7;
 }
 
+/* ORV Constellation / System Window Style */
 .dao_window {
-  background: var(--card-bg);
-  border: 1px solid var(--border-color);
-  border-radius: var(--border-radius);
-  padding: 18px 22px;
+  background: var(--bg-secondary);
+  border: none;
+  border-left: 4px solid var(--accent-color);
+  border-radius: 0 var(--border-radius) var(--border-radius) 0;
+  padding: 16px 20px;
   margin: 22px 0;
-  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25);
+  box-shadow: var(--shadow-sm);
 }
 
 .dao_window_title {
   color: var(--accent-color);
-  font-size: 1.1em;
+  font-size: 1.05em;
+  font-weight: 700;
   margin-top: 0;
-  margin-bottom: 12px;
-  border-bottom: 1px solid var(--border-color);
-  padding-bottom: 6px;
+  margin-bottom: 8px;
+  border-bottom: none;
+  padding-bottom: 0;
   letter-spacing: 0.05em;
 }

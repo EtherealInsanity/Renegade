@@ -38,21 +38,22 @@ body {
   will-change: width;
 }
 
-/* Sticky Header */
+/* Sticky Header - Seamless ORV Frosted Glass */
 .reader-header {
   position: sticky;
   top: 0;
   left: 0;
   width: 100%;
   background: var(--nav-bg);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
-  border-bottom: 1px solid var(--border-color);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  border-bottom: none;
   z-index: 900;
   display: flex;
   align-items: center;
   justify-content: flex-end;
   padding: 10px 20px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
   transition: transform 0.28s cubic-bezier(0.16, 1, 0.3, 1), background var(--transition);
 }
 
@@ -64,7 +65,7 @@ body {
 .reader-header .header-right {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 8px;
 }
 
 .reader-header a.logo-link {
@@ -83,20 +84,56 @@ body {
 
 .logo-badge {
   font-size: 0.72rem;
-  padding: 2px 7px;
+  padding: 2px 8px;
   background: var(--bg-secondary);
   color: var(--accent-color);
-  border: 1px solid var(--border-color);
-  border-radius: 10px;
+  border: none;
+  border-radius: 12px;
+  box-shadow: var(--shadow-sm);
+}
+
+/* Minimalist Circular Borderless Icon Buttons for Reader Header */
+.reader-header .icon-btn,
+.chapters-drawer-header .icon-btn,
+.settings-drawer .drawer-header .icon-btn {
+  background: transparent;
+  color: var(--text-color);
+  text-decoration: none;
+  border: none;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  min-height: 40px;
+  min-width: 40px;
+  padding: 0;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  touch-action: manipulation;
+  transition: background var(--transition), color var(--transition), transform var(--transition);
+  box-shadow: none;
+}
+
+.reader-header .icon-btn:hover,
+.reader-header .icon-btn:active,
+.reader-header .icon-btn:focus-visible,
+.chapters-drawer-header .icon-btn:hover,
+.chapters-drawer-header .icon-btn:active,
+.settings-drawer .drawer-header .icon-btn:hover,
+.settings-drawer .drawer-header .icon-btn:active {
+  border: none;
+  color: var(--accent-color);
+  background: var(--bg-secondary);
 }
 
 .icon-btn {
   background: var(--bg-secondary);
   color: var(--text-color);
   text-decoration: none;
-  border: 1px solid var(--border-color);
-  border-radius: var(--border-radius);
-  padding: 8px 12px;
+  border: none;
+  border-radius: 18px;
+  padding: 8px 16px;
   cursor: pointer;
   display: inline-flex;
   align-items: center;
@@ -105,33 +142,36 @@ body {
   font-size: 0.9rem;
   min-height: 38px;
   touch-action: manipulation;
+  box-shadow: var(--shadow-sm);
   transition: all var(--transition);
 }
 
 .icon-btn:hover, .icon-btn:active {
-  border-color: var(--accent-color);
   color: var(--accent-color);
   background: var(--bg-tertiary);
+  transform: translateY(-1px);
 }
 
 /* Chapter Jump Dropdown */
 .chapter-jump-select {
-  padding: 8px 12px;
+  padding: 8px 14px;
   background: var(--bg-secondary);
   color: var(--text-color);
-  border: 1px solid var(--border-color);
-  border-radius: var(--border-radius);
+  border: none;
+  border-radius: 18px;
   font-size: 0.88rem;
   max-width: 180px;
   min-height: 38px;
   cursor: pointer;
   font-family: inherit;
-  transition: border-color var(--transition);
+  box-shadow: var(--shadow-sm);
+  outline: none;
+  transition: box-shadow var(--transition);
 }
 
 .chapter-jump-select:focus {
   outline: none;
-  border-color: var(--accent-color);
+  box-shadow: 0 0 0 2px var(--accent-color);
 }
 
 /* Reader Container */
@@ -142,15 +182,15 @@ body {
 }
 
 .chapter-title-area {
-  margin-bottom: 36px;
+  margin-bottom: 40px;
   text-align: center;
-  border-bottom: 1px solid var(--border-color);
-  padding-bottom: 24px;
+  border-bottom: none;
+  padding-bottom: 8px;
 }
 
 .chapter-title-area h1 {
   font-size: 1.85em;
-  margin: 0 0 12px 0;
+  margin: 0 0 16px 0;
   line-height: 1.35;
   color: var(--text-color);
   letter-spacing: 0.02em;
@@ -160,8 +200,19 @@ body {
   font-size: 0.85em;
   color: var(--text-muted);
   display: inline-flex;
-  gap: 16px;
+  gap: 10px;
   align-items: center;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.chapter-meta-badge span {
+  background: var(--bg-secondary);
+  border: none;
+  border-radius: 18px;
+  padding: 5px 14px;
+  font-weight: 500;
+  box-shadow: var(--shadow-sm);
 }
 
 .chapter-body {
@@ -175,14 +226,15 @@ body {
   text-justify: inter-word;
 }
 
-/* Xianxia Cultivation Special Blocks */
+/* Xianxia Cultivation Special Blocks (ORV Constellation / System Callout Style) */
 .dao_window {
   margin: 24px 0;
   padding: 16px 20px;
-  background: var(--card-bg);
+  background: var(--bg-secondary);
+  border: none;
   border-left: 4px solid var(--accent-color);
-  border-radius: var(--border-radius);
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25);
+  border-radius: 0 var(--border-radius) var(--border-radius) 0;
+  box-shadow: var(--shadow-sm);
 }
 
 .dao_window_title {
@@ -237,15 +289,15 @@ body {
   margin: 32px 0;
 }
 
-/* In-Page Navigation Buttons */
+/* In-Page Navigation Buttons (ORV Borderless Floating Pills) */
 .chapter-nav-bar {
   display: flex;
   justify-content: space-between;
   align-items: center;
   gap: 16px;
-  margin: 40px 0;
-  padding-top: 24px;
-  border-top: 1px solid var(--border-color);
+  margin: 48px 0 32px 0;
+  padding-top: 16px;
+  border-top: none;
 }
 
 .chapter-nav-btn {
@@ -254,9 +306,9 @@ body {
   text-decoration: none;
   background: var(--card-bg);
   color: var(--text-color);
-  border: 1px solid var(--border-color);
-  padding: 14px 20px;
-  border-radius: var(--border-radius);
+  border: none;
+  padding: 14px 22px;
+  border-radius: 28px;
   font-weight: 600;
   font-size: 0.95rem;
   display: inline-flex;
@@ -265,14 +317,15 @@ body {
   gap: 8px;
   min-height: 48px;
   touch-action: manipulation;
+  box-shadow: var(--shadow-sm);
   transition: all var(--transition);
 }
 
 .chapter-nav-btn:hover, .chapter-nav-btn:active {
-  background: var(--bg-secondary);
-  border-color: var(--accent-color);
+  background: var(--bg-tertiary);
   color: var(--accent-color);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
 }
 
 .chapter-nav-btn.disabled {
@@ -285,14 +338,14 @@ body {
   flex: 0 0 auto;
 }
 
-/* Cultivator's Insights (Local Chapter Notes) */
+/* Cultivator's Insights (Seamless Card) */
 .cultivator-notes-section {
   margin: 48px 0 20px 0;
   background: var(--card-bg);
-  border: 1px solid var(--border-color);
+  border: none;
   border-radius: var(--border-radius);
   padding: 24px;
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+  box-shadow: var(--shadow-sm);
 }
 
 .notes-header {
@@ -317,21 +370,22 @@ body {
   width: 100%;
   min-height: 110px;
   background: var(--bg-secondary);
-  border: 1px solid var(--border-color);
+  border: none;
   border-radius: var(--border-radius);
   color: var(--text-color);
   font-family: inherit;
   font-size: 0.95rem;
   line-height: 1.5;
-  padding: 12px;
+  padding: 14px;
   resize: vertical;
   margin-bottom: 12px;
-  transition: border-color var(--transition);
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.15);
+  transition: box-shadow var(--transition);
 }
 
 .notes-textarea:focus {
   outline: none;
-  border-color: var(--accent-color);
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.2), 0 0 0 2px var(--accent-glow);
 }
 
 .notes-actions {
@@ -347,14 +401,14 @@ body {
   margin-right: auto;
 }
 
-/* Chapter Discussions (Giscus Comments) */
+/* Chapter Discussions (Seamless Card) */
 .cultivator-comments-section {
   margin: 32px 0;
   background: var(--card-bg);
-  border: 1px solid var(--border-color);
+  border: none;
   border-radius: var(--border-radius);
   padding: 24px;
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+  box-shadow: var(--shadow-sm);
 }
 
 .comments-header {
@@ -379,11 +433,11 @@ body {
   font-size: 0.78rem;
   text-transform: uppercase;
   letter-spacing: 0.06em;
-  padding: 3px 8px;
-  border-radius: 4px;
+  padding: 4px 10px;
+  border-radius: 12px;
   background: var(--bg-tertiary);
   color: var(--text-muted);
-  border: 1px solid var(--border-color);
+  border: none;
 }
 
 .comments-redirect-btn {
@@ -391,19 +445,20 @@ body {
   align-items: center;
   gap: 6px;
   font-size: 0.8rem;
-  padding: 5px 10px;
-  border-radius: var(--border-radius);
+  padding: 6px 14px;
+  border-radius: 20px;
   background: var(--bg-secondary);
   color: var(--text-muted);
-  border: 1px solid var(--border-color);
+  border: none;
   text-decoration: none;
+  box-shadow: var(--shadow-sm);
   transition: all var(--transition);
 }
 
 .comments-redirect-btn:hover {
   color: var(--accent-color);
-  border-color: var(--accent-color);
-  background: var(--card-bg);
+  background: var(--bg-tertiary);
+  transform: translateY(-1px);
 }
 
 .giscus-thread-container {
@@ -434,7 +489,7 @@ body {
 }
 
 
-/* Chapters Sidebar Drawer (Left Off-Canvas) */
+/* Chapters Sidebar Drawer (Left Off-Canvas - Borderless ORV Style) */
 .chapters-drawer {
   position: fixed;
   top: 0;
@@ -445,11 +500,11 @@ body {
   background: var(--nav-bg);
   backdrop-filter: blur(18px);
   -webkit-backdrop-filter: blur(18px);
-  border-right: 1px solid var(--border-color);
+  border-right: none;
   z-index: 1000;
   display: flex;
   flex-direction: column;
-  box-shadow: 6px 0 28px rgba(0, 0, 0, 0.45);
+  box-shadow: 8px 0 35px rgba(0, 0, 0, 0.5);
   transition: left 0.3s cubic-bezier(0.16, 1, 0.3, 1);
   -webkit-overflow-scrolling: touch;
 }
@@ -463,7 +518,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  border-bottom: 1px solid var(--border-color);
+  border-bottom: none;
 }
 
 .chapters-drawer-header h2 {
@@ -476,8 +531,8 @@ body {
 }
 
 .drawer-search-wrapper {
-  padding: 12px 18px;
-  border-bottom: 1px solid var(--border-color);
+  padding: 10px 18px 14px 18px;
+  border-bottom: none;
   position: relative;
   display: flex;
   align-items: center;
@@ -492,20 +547,20 @@ body {
 
 .drawer-search-input {
   width: 100%;
-  background: var(--card-bg);
-  border: 1px solid var(--border-color);
-  border-radius: var(--border-radius);
+  background: var(--bg-secondary);
+  border: none;
+  border-radius: 20px;
   color: var(--text-color);
   font-family: inherit;
   font-size: 0.9rem;
-  padding: 9px 34px 9px 36px;
+  padding: 10px 34px 10px 38px;
   outline: none;
-  transition: border-color 0.2s, box-shadow 0.2s;
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.2);
+  transition: box-shadow 0.2s;
 }
 
 .drawer-search-input:focus {
-  border-color: var(--accent-color);
-  box-shadow: 0 0 0 2px rgba(160, 50, 50, 0.2);
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.2), 0 0 0 2px var(--accent-glow);
 }
 
 .drawer-search-clear {
@@ -538,7 +593,7 @@ body {
   display: flex;
   margin: -4px -4px 10px -4px;
   padding: 4px 4px 0 4px;
-  border-bottom: 1px solid var(--border-color);
+  border-bottom: none;
   gap: 6px;
 }
 
@@ -571,17 +626,18 @@ body {
 
 /* Volume Section Divider in Chapters List */
 .drawer-book-divider {
-  padding: 10px 12px 6px 12px;
+  padding: 10px 14px;
   font-size: 0.78rem;
   text-transform: uppercase;
   letter-spacing: 0.05em;
   font-weight: 700;
   color: var(--accent-color);
-  background: rgba(255, 255, 255, 0.02);
-  border-top: 1px solid var(--border-color);
+  background: var(--bg-secondary);
+  border-top: none;
   margin-top: 10px;
-  margin-bottom: 4px;
-  border-radius: 4px;
+  margin-bottom: 6px;
+  border-radius: 8px;
+  box-shadow: var(--shadow-sm);
 }
 
 .drawer-book-divider:first-child {
@@ -591,19 +647,25 @@ body {
 
 /* Volume Cards in Volumes View */
 .drawer-volume-card {
-  padding: 12px 14px;
+  padding: 14px 16px;
   margin-bottom: 8px;
-  background: var(--card-bg);
-  border: 1px solid var(--border-color);
+  background: var(--bg-secondary);
+  border: none;
   border-radius: var(--border-radius);
   cursor: pointer;
-  transition: border-color 0.15s, transform 0.15s, background 0.15s;
+  box-shadow: var(--shadow-sm);
+  transition: transform 0.15s, background 0.15s, box-shadow 0.15s;
 }
 
 .drawer-volume-card:hover {
-  border-color: var(--accent-color);
-  background: rgba(255, 255, 255, 0.03);
-  transform: translateX(2px);
+  background: var(--card-bg);
+  transform: translateX(3px);
+  box-shadow: var(--shadow-md);
+}
+
+.drawer-volume-card.active {
+  background: var(--card-bg);
+  box-shadow: inset 3px 0 0 var(--accent-color), var(--shadow-sm);
 }
 
 .drawer-volume-card.active {
@@ -669,7 +731,7 @@ body {
   font-size: 0.9rem;
 }
 
-/* Reader Settings Drawer (Desktop Modal + Mobile Bottom Sheet) */
+/* Reader Settings Drawer (Desktop Modal + Mobile Bottom Sheet - Borderless ORV Style) */
 .settings-drawer {
   position: fixed;
   top: 0;
@@ -679,11 +741,11 @@ body {
   background: var(--nav-bg);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
-  border-left: 1px solid var(--border-color);
+  border-left: none;
   z-index: 1000;
   padding: 24px;
   overflow-y: auto;
-  box-shadow: -6px 0 24px rgba(0, 0, 0, 0.4);
+  box-shadow: -8px 0 32px rgba(0, 0, 0, 0.45);
   transition: right 0.3s cubic-bezier(0.16, 1, 0.3, 1), bottom 0.3s cubic-bezier(0.16, 1, 0.3, 1);
   -webkit-overflow-scrolling: touch;
 }
@@ -696,7 +758,7 @@ body {
   display: none;
   width: 44px;
   height: 5px;
-  background: var(--border-color);
+  background: var(--bg-tertiary);
   border-radius: 3px;
   margin: 0 auto 16px auto;
 }
@@ -705,9 +767,9 @@ body {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  border-bottom: 1px solid var(--border-color);
-  padding-bottom: 14px;
-  margin-bottom: 20px;
+  border-bottom: none;
+  padding-bottom: 8px;
+  margin-bottom: 24px;
 }
 
 .drawer-header h2 {
@@ -735,17 +797,23 @@ body {
 }
 
 .theme-btn {
-  padding: 10px 12px;
+  padding: 10px 14px;
   font-size: 0.82rem;
-  border: 1px solid var(--border-color);
+  border: none;
   background: var(--bg-secondary);
   color: var(--text-color);
-  border-radius: var(--border-radius);
+  border-radius: 20px;
   cursor: pointer;
   text-align: left;
   min-height: 42px;
   touch-action: manipulation;
+  box-shadow: var(--shadow-sm);
   transition: all var(--transition);
+}
+
+.theme-btn:hover {
+  background: var(--bg-tertiary);
+  transform: translateY(-1px);
 }
 
 .theme-btn:active {
@@ -753,10 +821,10 @@ body {
 }
 
 .theme-btn.active {
-  border-color: var(--accent-color);
   background: var(--card-bg);
+  color: var(--accent-color);
   font-weight: bold;
-  box-shadow: 0 0 8px var(--accent-glow);
+  box-shadow: 0 0 0 2px var(--accent-color), var(--shadow-sm);
 }
 
 .slider-container {
@@ -775,15 +843,22 @@ body {
 
 select.font-select {
   width: 100%;
-  padding: 12px;
+  padding: 12px 16px;
   background: var(--bg-secondary);
-  border: 1px solid var(--border-color);
+  border: none;
   color: var(--text-color);
-  border-radius: var(--border-radius);
+  border-radius: 14px;
   font-size: 0.92rem;
   min-height: 44px;
   cursor: pointer;
   font-family: inherit;
+  box-shadow: var(--shadow-sm);
+  outline: none;
+  transition: box-shadow var(--transition);
+}
+
+select.font-select:focus {
+  box-shadow: 0 0 0 2px var(--accent-color);
 }
 
 /* Backdrop */
@@ -808,13 +883,13 @@ select.font-select {
   left: 50%;
   transform: translate(-50%, -50%) scale(0.8);
   background: var(--nav-bg);
-  border: 1px solid var(--accent-color);
+  border: none;
   color: var(--text-color);
   padding: 12px 24px;
   border-radius: 24px;
   font-weight: 600;
   font-size: 0.95rem;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5), 0 0 16px var(--accent-glow);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5), 0 0 20px var(--accent-glow);
   opacity: 0;
   pointer-events: none;
   z-index: 1200;
@@ -839,14 +914,6 @@ select.font-select {
     max-width: 140px;
     font-size: 0.82rem;
     padding: 6px 8px;
-  }
-
-  .icon-btn .btn-text {
-    display: none;
-  }
-
-  .icon-btn {
-    padding: 8px 10px;
   }
 
   .reader-container {
@@ -905,7 +972,7 @@ select.font-select {
     width: 100%;
     max-height: 82vh;
     border-left: none;
-    border-top: 1px solid var(--border-color);
+    border-top: none;
     border-radius: 20px 20px 0 0;
     padding: 12px 20px max(24px, env(safe-area-inset-bottom, 24px)) 20px;
     box-shadow: 0 -8px 32px rgba(0, 0, 0, 0.5);
