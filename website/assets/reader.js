@@ -305,10 +305,13 @@
           const currentScrollY = window.scrollY;
           const delta = currentScrollY - lastScrollY;
 
-          // Auto hide when scrolling down, show when scrolling up
-          if (delta > 15 && currentScrollY > 120) {
-            if (header) header.classList.add('immersive-hidden');
-          } else if (delta < -10 || currentScrollY < 80) {
+          // Hide when scrolling in either direction away from top (non-persistent)
+          if (currentScrollY > 60) {
+            if (Math.abs(delta) > 5) {
+              if (header) header.classList.add('immersive-hidden');
+            }
+          } else {
+            // Only show at the very top of the chapter
             if (header) header.classList.remove('immersive-hidden');
           }
 
@@ -323,7 +326,7 @@
     const readerContent = document.getElementById('reader-content');
     if (readerContent) {
       readerContent.addEventListener('click', e => {
-        if (e.target.closest('a, button, input, textarea, select, .cultivator-notes-section')) return;
+        if (e.target.closest('a, button, input, textarea, select, .cultivator-notes-section, .cultivator-comments-section, .giscus-thread-container')) return;
         if (header) header.classList.toggle('immersive-hidden');
       });
     }

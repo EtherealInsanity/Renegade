@@ -3,7 +3,7 @@
    Precaches core app shell and dynamically caches read chapters for offline use
    ========================================================================== */
 
-const CACHE_NAME = 'renegade-reader-v11';
+const CACHE_NAME = 'renegade-reader-v12';
 
 // Base core assets to precache for offline shell
 const PRECACHE_ASSETS = [

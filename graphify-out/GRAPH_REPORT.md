@@ -1,7 +1,7 @@
 # Graph Report - Renegade Reader  (2026-11-04)
 
 ## Corpus Check
-- 14 files · ~10,098,285 words
+- 14 files · ~10,098,292 words
 - Verdict: corpus is large enough that graph structure adds value.
 - Unclassified: 8 file(s) not represented in the graph (top: .css 5, (none) 1, .epub 1)
 
@@ -11,7 +11,7 @@
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `1c990ac9`
+- Built from commit: `7eb0c040`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 

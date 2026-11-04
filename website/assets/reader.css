@@ -59,6 +59,7 @@ body {
 
 .reader-header.immersive-hidden {
   transform: translateY(-100%);
+  pointer-events: none;
 }
 
 .reader-header .header-left,
