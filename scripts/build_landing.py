@@ -162,7 +162,7 @@ def main():
           <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
           Chapters
         </a>
-        <a href="account.html" class="btn-secondary">
+        <a href="account" class="btn-secondary">
           <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
           Profile
         </a>
@@ -387,7 +387,7 @@ def main():
       <a href="./" class="nav-link">Home</a>
       <a href="read/ch_1.html" class="nav-link">Read</a>
       <a href="download.html" class="nav-link">EPUB</a>
-      <a href="account.html" class="nav-link">Profile</a>
+      <a href="account" class="nav-link">Profile</a>
       <button id="theme-quick-toggle" class="nav-link" style="background: none; border: 1px solid var(--border-color); padding: 6px 12px; border-radius: var(--border-radius); cursor: pointer;" aria-label="Toggle Theme">
         ⚔️ Theme
       </button>
@@ -621,6 +621,7 @@ def main():
     chapters_subfolder_html = chapters_subfolder_html.replace('href="./"', 'href="../"')
     chapters_subfolder_html = chapters_subfolder_html.replace('href="read/', 'href="../read/')
     chapters_subfolder_html = chapters_subfolder_html.replace('href="download.html"', 'href="../download.html"')
+    chapters_subfolder_html = chapters_subfolder_html.replace('href="account"', 'href="../account"')
     chapters_subfolder_html = chapters_subfolder_html.replace("link.href = 'read/ch_'", "link.href = '../read/ch_'")
     chapters_subfolder_html = chapters_subfolder_html.replace("navigator.serviceWorker.register('./sw.js')", "navigator.serviceWorker.register('../sw.js')")
 
@@ -631,6 +632,21 @@ def main():
     with open("website/chapters.html", "w", encoding="utf-8") as f:
         f.write(chapters_html)
     print("Generated website/chapters.html (Chapters categorized in 13 volumes)")
+
+    # Generate clean route website/account/index.html
+    if os.path.exists("website/account.html"):
+        os.makedirs("website/account", exist_ok=True)
+        with open("website/account.html", "r", encoding="utf-8") as f:
+            account_src_html = f.read()
+        account_sub_html = account_src_html
+        account_sub_html = account_sub_html.replace('href="assets/', 'href="../assets/')
+        account_sub_html = account_sub_html.replace('src="assets/', 'src="../assets/')
+        account_sub_html = account_sub_html.replace('href="manifest.webmanifest"', 'href="../manifest.webmanifest"')
+        account_sub_html = account_sub_html.replace('href="./"', 'href="../"')
+        account_sub_html = account_sub_html.replace('href="read/', 'href="../read/')
+        with open("website/account/index.html", "w", encoding="utf-8") as f:
+            f.write(account_sub_html)
+        print("Generated website/account/index.html (Clean route /account)")
 
     # Remove website/read/index.html if it exists to avoid phantom redirect
     if os.path.exists("website/read/index.html"):
@@ -754,7 +770,7 @@ def main():
       <a href="./" class="nav-link">Home</a>
       <a href="read/ch_1.html" class="nav-link">Read Online</a>
       <a href="chapters.html" class="nav-link">Chapters</a>
-      <a href="account.html" class="nav-link">Profile</a>
+      <a href="account" class="nav-link">Profile</a>
     </div>
   </header>
 

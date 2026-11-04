@@ -178,3 +178,36 @@
 .wl-reaction-votes {
   display: none !important;
 }
+
+/* Privacy: Hide device, browser, operating system, and IP/location badges */
+.wl-card .wl-browser,
+.wl-card .wl-os,
+.wl-card .wl-addr,
+.wl-card .wl-user-agent,
+.wl-browser,
+.wl-os,
+.wl-addr,
+.wl-user-agent {
+  display: none !important;
+}
+
+/* Performance Optimization: Virtual offscreen comment rendering and smooth fade-in */
+.wl-card-item {
+  content-visibility: auto;
+  contain-intrinsic-size: 80px;
+}
+
+.wl-cards {
+  animation: walineFadeIn 0.2s ease-out;
+}
+
+@keyframes walineFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

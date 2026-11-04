@@ -3,14 +3,17 @@
    Precaches core app shell and dynamically caches read chapters for offline use
    ========================================================================== */
 
-const CACHE_NAME = 'renegade-reader-v14';
+const CACHE_NAME = 'renegade-reader-v15';
 
 // Base core assets to precache for offline shell
 const PRECACHE_ASSETS = [
   './',
   './index.html',
+  './download',
   './download.html',
+  './chapters',
   './chapters.html',
+  './account',
   './account.html',
   './manifest.webmanifest',
   './assets/themes.css',
@@ -88,7 +91,7 @@ self.addEventListener('activate', event => {
   );
 });
 
-// Fetch event: Stale-While-Revalidate for chapters & Cache-First for static assets
+// Fetch event: Network-first with follow redirects for navigation, Cache-First for static assets
 self.addEventListener('fetch', event => {
   const request = event.request;
   if (request.method !== 'GET') return;
@@ -98,10 +101,40 @@ self.addEventListener('fetch', event => {
   // Avoid intercepting browser extensions or external analytics
   if (url.origin !== self.location.origin) return;
 
+  // Handle navigation requests (HTML pages)
+  // fetch(request.url) follows 301/308 redirects from Cloudflare Pages without returning opaqueredirect, preventing ERR_FAILED
+  if (request.mode === 'navigate') {
+    event.respondWith(
+      fetch(request.url, { credentials: request.credentials }).then(networkResponse => {
+        if (networkResponse && networkResponse.ok) {
+          const responseToCache = networkResponse.clone();
+          caches.open(CACHE_NAME).then(cache => {
+            cache.put(request, responseToCache);
+          });
+        }
+        return networkResponse;
+      }).catch(async () => {
+        const cached = await caches.match(request);
+        if (cached) return cached;
+        const altPath = url.pathname.endsWith('.html')
+          ? url.pathname.replace(/\.html$/, '')
+          : `${url.pathname}.html`;
+        const altCached = await caches.match(altPath);
+        if (altCached) return altCached;
+
+        return new Response(OFFLINE_PAGE_HTML, {
+          headers: { 'Content-Type': 'text/html; charset=utf-8' }
+        });
+      })
+    );
+    return;
+  }
+
+  // Handle static assets (CSS, JS, images, fonts)
   event.respondWith(
     caches.match(request).then(cachedResponse => {
-      // If found in cache, return cached response while fetching fresh in background
-      const fetchPromise = fetch(request).then(networkResponse => {
+      if (cachedResponse) return cachedResponse;
+      return fetch(request).then(networkResponse => {
         if (networkResponse && networkResponse.status === 200) {
           const responseToCache = networkResponse.clone();
           caches.open(CACHE_NAME).then(cache => {
@@ -109,17 +142,7 @@ self.addEventListener('fetch', event => {
           });
         }
         return networkResponse;
-      }).catch(() => {
-        // Network failed (offline)
-        if (cachedResponse) return cachedResponse;
-        if (request.headers.get('accept') && request.headers.get('accept').includes('text/html')) {
-          return new Response(OFFLINE_PAGE_HTML, {
-            headers: { 'Content-Type': 'text/html; charset=utf-8' }
-          });
-        }
       });
-
-      return cachedResponse || fetchPromise;
     })
   );
 });
