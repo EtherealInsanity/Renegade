@@ -12588,14 +12588,14 @@
     "semantic_hash": ""
   },
   "website/download.html": {
-    "mtime": 1793823935.9106083,
-    "seen": 1793823963.0467246,
+    "mtime": 1793824251.2781956,
+    "seen": 1793824269.2376194,
     "ast_hash": "7e82d0b812bd07d903fd836952062dd3",
     "semantic_hash": ""
   },
   "website/index.html": {
-    "mtime": 1793823935.8865666,
-    "seen": 1793823963.0467288,
+    "mtime": 1793824251.2436507,
+    "seen": 1793824269.2376237,
     "ast_hash": "3628de56b24de26fb67043379b66aa01",
     "semantic_hash": ""
   },
@@ -25188,14 +25188,14 @@
     "semantic_hash": ""
   },
   "website/chapters.html": {
-    "mtime": 1793823935.9054642,
-    "seen": 1793823963.0467155,
+    "mtime": 1793824251.2681363,
+    "seen": 1793824269.2376096,
     "ast_hash": "79ec2e5166c6d1f496d776a35b9d7acc",
     "semantic_hash": ""
   },
   "website/chapters/index.html": {
-    "mtime": 1793823935.9024642,
-    "seen": 1793823963.04672,
+    "mtime": 1793824251.2621362,
+    "seen": 1793824269.2376146,
     "ast_hash": "bb08e903ad1cd16a50b9ae12688dad21",
     "semantic_hash": ""
   },
@@ -25212,9 +25212,9 @@
     "semantic_hash": ""
   },
   "website/assets/waline-config.js": {
-    "mtime": 1793824027.9666753,
-    "seen": 1793824147.3578544,
-    "ast_hash": "0bbb7c4275c61d5369ff2c33216f1408",
+    "mtime": 1793824240.824116,
+    "seen": 1793824269.226281,
+    "ast_hash": "af1d6a5241662ca1ad8be16337b3b618",
     "semantic_hash": ""
   },
   "functions/api/highlights.js": {
@@ -25236,8 +25236,8 @@
     "semantic_hash": ""
   },
   "website/account/index.html": {
-    "mtime": 1793823935.9094641,
-    "seen": 1793823963.0467103,
+    "mtime": 1793824251.2771785,
+    "seen": 1793824269.2376034,
     "ast_hash": "df68c0e6fb28f01b3c4e9fedf883dc33",
     "semantic_hash": ""
   }

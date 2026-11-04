@@ -228,7 +228,7 @@ window.showCultivatorPreview = function(data) {
 
   if (linkTarget) {
     const isSubdir = window.location.pathname.includes('/read/') || window.location.pathname.includes('/chapters/');
-    linkTarget.href = `${isSubdir ? '../' : ''}account.html?user=${encodeURIComponent(nick)}`;
+    linkTarget.href = `${isSubdir ? '../' : ''}account?user=${encodeURIComponent(nick)}`;
   }
 
   modalEl.style.display = 'flex';
