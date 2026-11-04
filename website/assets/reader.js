@@ -197,10 +197,14 @@
       }
       if (e.key === 'ArrowLeft') {
         const prev = document.getElementById('nav-prev-btn');
-        if (prev && prev.getAttribute('href')) window.location.href = prev.getAttribute('href');
+        if (prev && prev.getAttribute('href') && !prev.classList.contains('disabled') && prev.getAttribute('href') !== '#') {
+          window.location.href = prev.getAttribute('href');
+        }
       } else if (e.key === 'ArrowRight') {
         const next = document.getElementById('nav-next-btn');
-        if (next && next.getAttribute('href')) window.location.href = next.getAttribute('href');
+        if (next && next.getAttribute('href') && !next.classList.contains('disabled') && next.getAttribute('href') !== '#') {
+          window.location.href = next.getAttribute('href');
+        }
       } else if (e.key === 'c' || e.key === 'C' || e.key === 't' || e.key === 'T') {
         e.preventDefault();
         toggleChaptersDrawer();
@@ -269,14 +273,14 @@
         if (diffX < 0) {
           // Swipe Left -> Next chapter
           const nextBtn = document.getElementById('nav-next-btn');
-          if (nextBtn && nextBtn.getAttribute('href') && !nextBtn.classList.contains('disabled')) {
+          if (nextBtn && nextBtn.getAttribute('href') && !nextBtn.classList.contains('disabled') && nextBtn.getAttribute('href') !== '#') {
             showSwipeHint('Next Chapter →');
             setTimeout(() => { window.location.href = nextBtn.getAttribute('href'); }, 150);
           }
         } else {
           // Swipe Right -> Prev chapter
           const prevBtn = document.getElementById('nav-prev-btn');
-          if (prevBtn && prevBtn.getAttribute('href') && !prevBtn.classList.contains('disabled')) {
+          if (prevBtn && prevBtn.getAttribute('href') && !prevBtn.classList.contains('disabled') && prevBtn.getAttribute('href') !== '#') {
             showSwipeHint('← Previous Chapter');
             setTimeout(() => { window.location.href = prevBtn.getAttribute('href'); }, 150);
           }
@@ -671,19 +675,19 @@
     initImmersiveReading();
     initGiscusComments();
 
-    // Anime.js entrance animation for bars
+    // Anime.js entrance animation for header
     if (window.anime && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
       anime({
-        targets: ['.reader-header', '.chapter-nav-bar'],
+        targets: '.reader-header',
         opacity: [0, 1],
-        translateY: (el) => el.classList.contains('reader-header') ? [-16, 0] : [16, 0],
+        translateY: [-16, 0],
         duration: 500,
         easing: 'easeOutQuad'
       });
     }
 
     // Button micro-interactions with Anime.js
-    document.querySelectorAll('.chapter-nav-btn, .icon-btn').forEach(btn => {
+    document.querySelectorAll('.icon-btn').forEach(btn => {
       btn.addEventListener('pointerdown', () => {
         if (window.anime) {
           anime({ targets: btn, scale: 0.94, duration: 80, easing: 'easeOutQuad' });

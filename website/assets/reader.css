@@ -66,6 +66,7 @@ body {
   display: flex;
   align-items: center;
   gap: 8px;
+  flex-wrap: nowrap;
 }
 
 .reader-header a.logo-link {
@@ -125,6 +126,13 @@ body {
   border: none;
   color: var(--accent-color);
   background: var(--bg-secondary);
+}
+
+.reader-header .icon-btn.disabled,
+.icon-btn.disabled {
+  opacity: 0.3;
+  pointer-events: none;
+  cursor: default;
 }
 
 .icon-btn {
@@ -289,54 +297,6 @@ body {
   margin: 32px 0;
 }
 
-/* In-Page Navigation Buttons (ORV Borderless Floating Pills) */
-.chapter-nav-bar {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 16px;
-  margin: 48px 0 32px 0;
-  padding-top: 16px;
-  border-top: none;
-}
-
-.chapter-nav-btn {
-  flex: 1;
-  text-align: center;
-  text-decoration: none;
-  background: var(--card-bg);
-  color: var(--text-color);
-  border: none;
-  padding: 14px 22px;
-  border-radius: 28px;
-  font-weight: 600;
-  font-size: 0.95rem;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  min-height: 48px;
-  touch-action: manipulation;
-  box-shadow: var(--shadow-sm);
-  transition: all var(--transition);
-}
-
-.chapter-nav-btn:hover, .chapter-nav-btn:active {
-  background: var(--bg-tertiary);
-  color: var(--accent-color);
-  transform: translateY(-2px);
-  box-shadow: var(--shadow-md);
-}
-
-.chapter-nav-btn.disabled {
-  opacity: 0.4;
-  pointer-events: none;
-  cursor: default;
-}
-
-.chapter-index-btn {
-  flex: 0 0 auto;
-}
 
 /* Cultivator's Insights (Seamless Card) */
 .cultivator-notes-section {
@@ -910,6 +870,17 @@ select.font-select:focus {
     padding: 8px 12px;
   }
 
+  .reader-header .header-right {
+    gap: 4px;
+  }
+
+  .reader-header .icon-btn {
+    width: 36px;
+    height: 36px;
+    min-width: 36px;
+    min-height: 36px;
+  }
+
   .chapter-jump-select {
     max-width: 140px;
     font-size: 0.82rem;
@@ -944,24 +915,6 @@ select.font-select:focus {
     word-break: break-word;
     margin: 1.15em 0;
   }
-
-  .chapter-nav-bar {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 12px;
-  }
-
-  .chapter-nav-btn {
-    width: 100%;
-    padding: 12px 14px;
-    min-height: 48px;
-    font-size: 0.95rem;
-  }
-
-  #nav-prev-btn { order: 1; }
-  #nav-next-btn { order: 2; }
-  #nav-home-btn { order: 3; }
-  #nav-toc-btn { order: 4; }
 
   /* Bottom Sheet Drawer on Mobile */
   .settings-drawer {
@@ -1004,5 +957,15 @@ select.font-select:focus {
   }
   .chapter-jump-select {
     max-width: 115px;
+  }
+  .reader-header .icon-btn {
+    width: 34px;
+    height: 34px;
+    min-width: 34px;
+    min-height: 34px;
+  }
+  .reader-header .icon-btn svg {
+    width: 17px;
+    height: 17px;
   }
 }
