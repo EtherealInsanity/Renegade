@@ -433,59 +433,6 @@ body {
   to { transform: rotate(360deg); }
 }
 
-/* Floating Mobile Quick-Navigation Bar (Bottom Pill) */
-.mobile-bottom-bar {
-  display: none;
-  position: fixed;
-  bottom: max(16px, env(safe-area-inset-bottom, 16px));
-  left: 50%;
-  transform: translateX(-50%);
-  background: var(--nav-bg);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border: 1px solid var(--border-color);
-  border-radius: 40px;
-  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.45), 0 0 15px var(--accent-glow);
-  z-index: 850;
-  padding: 6px 10px;
-  gap: 6px;
-  align-items: center;
-  transition: transform 0.28s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.25s ease;
-}
-
-.mobile-bottom-bar.immersive-hidden {
-  transform: translate(-50%, 150%);
-  opacity: 0;
-  pointer-events: none;
-}
-
-.m-bar-btn {
-  background: transparent;
-  color: var(--text-color);
-  border: none;
-  padding: 10px 14px;
-  border-radius: 20px;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  min-width: 44px;
-  min-height: 44px;
-  text-decoration: none;
-  touch-action: manipulation;
-  transition: all var(--transition);
-}
-
-.m-bar-btn:active, .m-bar-btn:hover {
-  background: var(--card-bg);
-  color: var(--accent-color);
-  transform: scale(1.08);
-}
-
-.m-bar-btn.disabled {
-  opacity: 0.3;
-  pointer-events: none;
-}
 
 /* Chapters Sidebar Drawer (Left Off-Canvas) */
 .chapters-drawer {
@@ -883,12 +830,6 @@ select.font-select {
    Mobile Responsive Rules (< 768px and < 640px)
    ========================================================================== */
 
-@media (max-width: 768px) {
-  .mobile-bottom-bar {
-    display: flex;
-  }
-}
-
 @media (max-width: 640px) {
   .reader-header {
     padding: 8px 12px;
@@ -909,7 +850,7 @@ select.font-select {
   }
 
   .reader-container {
-    padding: 20px 16px 110px 16px;
+    padding: 20px 16px 60px 16px;
   }
 
   .chapter-title-area {

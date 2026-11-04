@@ -247,7 +247,7 @@
       }
 
       // Don't trigger page swipe navigation if interacting with controls, inputs, or drawers
-      if (target.closest('.chapters-drawer, .settings-drawer, .reader-header, .mobile-bottom-bar, .cultivator-notes-section, select, button, input, textarea, a')) {
+      if (target.closest('.chapters-drawer, .settings-drawer, .reader-header, .cultivator-notes-section, select, button, input, textarea, a')) {
         return;
       }
 
@@ -277,7 +277,6 @@
   // Immersive Auto-Hide on scroll & tap
   function initImmersiveReading() {
     const header = document.getElementById('reader-header');
-    const mobileBar = document.getElementById('mobile-bar');
     let lastScrollY = window.scrollY;
     let ticking = false;
 
@@ -290,10 +289,8 @@
           // Auto hide when scrolling down, show when scrolling up
           if (delta > 15 && currentScrollY > 120) {
             if (header) header.classList.add('immersive-hidden');
-            if (mobileBar) mobileBar.classList.add('immersive-hidden');
           } else if (delta < -10 || currentScrollY < 80) {
             if (header) header.classList.remove('immersive-hidden');
-            if (mobileBar) mobileBar.classList.remove('immersive-hidden');
           }
 
           lastScrollY = currentScrollY;
@@ -303,21 +300,12 @@
       }
     }, { passive: true });
 
-    // Center screen tap toggles header and toolbar
+    // Center screen tap toggles header
     const readerContent = document.getElementById('reader-content');
     if (readerContent) {
       readerContent.addEventListener('click', e => {
         if (e.target.closest('a, button, input, textarea, select, .cultivator-notes-section')) return;
         if (header) header.classList.toggle('immersive-hidden');
-        if (mobileBar) mobileBar.classList.toggle('immersive-hidden');
-      });
-    }
-
-    // Scroll to top button
-    const topBtn = document.getElementById('m-btn-top');
-    if (topBtn) {
-      topBtn.addEventListener('click', () => {
-        window.scrollTo({ top: 0, behavior: 'smooth' });
       });
     }
   }
@@ -343,12 +331,10 @@
 
     // Drawer Selectors
     const settingsBtn = document.getElementById('btn-open-settings');
-    const mobileSettingsBtn = document.getElementById('m-btn-settings');
     const closeSettingsBtn = document.getElementById('btn-close-settings');
     const settingsDrawer = document.getElementById('settings-drawer');
 
     const chaptersBtn = document.getElementById('btn-open-chapters');
-    const mobileChaptersBtn = document.getElementById('m-btn-chapters');
     const closeChaptersBtn = document.getElementById('btn-close-chapters');
     const chaptersDrawer = document.getElementById('chapters-drawer');
 
@@ -402,11 +388,9 @@
     window.closeAllDrawers = closeAllDrawers;
 
     if (settingsBtn) settingsBtn.addEventListener('click', openSettingsDrawer);
-    if (mobileSettingsBtn) mobileSettingsBtn.addEventListener('click', openSettingsDrawer);
     if (closeSettingsBtn) closeSettingsBtn.addEventListener('click', closeSettingsDrawer);
 
     if (chaptersBtn) chaptersBtn.addEventListener('click', openChaptersDrawer);
-    if (mobileChaptersBtn) mobileChaptersBtn.addEventListener('click', openChaptersDrawer);
     if (closeChaptersBtn) closeChaptersBtn.addEventListener('click', closeChaptersDrawer);
 
     if (backdrop) backdrop.addEventListener('click', closeAllDrawers);

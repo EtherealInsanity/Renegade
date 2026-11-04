@@ -24,17 +24,10 @@
 <body>
 
   <!-- Landing Nav -->
-  <header class="landing-nav">
+  <header class="landing-nav" id="landing-nav" style="display: none;">
     <div class="nav-links">
-      <a href="./" class="nav-link">Home</a>
-      <a href="read/ch_1.html" class="nav-link" id="nav-read-link">Read</a>
-      <a href="#reviews" class="nav-link">Reviews</a>
-      <a href="download.html" class="nav-link">EPUB</a>
       <button id="btn-pwa-install" class="nav-link" style="display: none; background: none; border: 1px solid var(--accent-color); color: var(--accent-color); padding: 6px 12px; border-radius: var(--border-radius); cursor: pointer;" aria-label="Install App">
         📥 Install
-      </button>
-      <button id="theme-quick-toggle" class="nav-link" style="background: none; border: 1px solid var(--border-color); padding: 6px 12px; border-radius: var(--border-radius); cursor: pointer;" aria-label="Toggle Theme">
-        ⚔️ Theme
       </button>
     </div>
   </header>
@@ -107,35 +100,12 @@
       if (lastRead && lastRead.chapter) {
         const primaryBtn = document.getElementById('btn-hero-primary');
         const primaryTxt = document.getElementById('hero-primary-text');
-        const navRead = document.getElementById('nav-read-link');
         if (primaryBtn && primaryTxt) {
           primaryBtn.href = 'read/ch_' + lastRead.chapter + '.html';
           primaryTxt.textContent = 'Resume Ch. ' + lastRead.chapter;
         }
-        if (navRead) {
-          navRead.href = 'read/ch_' + lastRead.chapter + '.html';
-          navRead.textContent = 'Resume';
-        }
       }
     } catch(e) {}
-
-    // Quick theme toggle
-    const THEMES = ['slaughter', 'bead', 'ancient-god', 'life-death', 'karma', 'true-false', 'yellow-springs', 'suzaku', 'allheaven', 'cloud-sea', 'astral', 'bamboo', 'medicine-pavilion'];
-    const themeBtn = document.getElementById('theme-quick-toggle');
-    if (themeBtn) {
-      themeBtn.addEventListener('click', () => {
-        const curr = document.documentElement.getAttribute('data-theme') || 'slaughter';
-        const nextIdx = (THEMES.indexOf(curr) + 1) % THEMES.length;
-        const nextTheme = THEMES[nextIdx];
-        document.documentElement.setAttribute('data-theme', nextTheme);
-        try {
-          const settings = JSON.parse(localStorage.getItem('renegade_reader_settings')) || {};
-          settings.theme = nextTheme;
-          localStorage.setItem('renegade_reader_settings', JSON.stringify(settings));
-        } catch(e) {}
-        if (window.updateGiscusTheme) window.updateGiscusTheme(nextTheme);
-      });
-    }
 
     // Apply saved theme on landing page
     try {
@@ -160,10 +130,12 @@
 
     let deferredPrompt;
     const installBtn = document.getElementById('btn-pwa-install');
+    const landingNav = document.getElementById('landing-nav');
     window.addEventListener('beforeinstallprompt', (e) => {
       e.preventDefault();
       deferredPrompt = e;
       if (installBtn) installBtn.style.display = 'inline-flex';
+      if (landingNav) landingNav.style.display = 'flex';
     });
 
     if (installBtn) {
@@ -173,6 +145,7 @@
         const choice = await deferredPrompt.userChoice;
         if (choice && choice.outcome === 'accepted') {
           installBtn.style.display = 'none';
+          if (landingNav) landingNav.style.display = 'none';
         }
         deferredPrompt = null;
       });
