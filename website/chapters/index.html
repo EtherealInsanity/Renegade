@@ -280,7 +280,26 @@
     <p><a href="../">← Back to Novel Overview</a> · <a href="../download.html">Download Full EPUB</a></p>
   </footer>
 
+  <script src="../assets/anime.min.js"></script>
   <script>
+    // Anime.js Staggered Entrance Animation
+    if (window.anime && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      anime({
+        targets: [
+          'header.landing-nav',
+          '.toc-section > div',
+          '.toc-controls-bar',
+          '.book-pills-bar',
+          '#accordions-container .book-accordion'
+        ],
+        opacity: [0, 1],
+        translateY: [18, 0],
+        delay: anime.stagger(50, { start: 60 }),
+        duration: 600,
+        easing: 'easeOutCubic'
+      });
+    }
+
     // Toggle all book accordions between expanded and collapsed
     let allExpanded = false;
     function toggleAllBooks() {
@@ -292,6 +311,36 @@
       const btn = document.getElementById('btn-toggle-all');
       if (btn) btn.textContent = allExpanded ? 'Collapse All' : 'Expand All';
     }
+
+    // Smooth Accordion Open Animation
+    document.querySelectorAll('.book-accordion').forEach(acc => {
+      acc.addEventListener('toggle', () => {
+        if (acc.open && window.anime && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+          const grid = acc.querySelector('.chapter-grid');
+          if (grid) {
+            anime({
+              targets: grid,
+              opacity: [0, 1],
+              translateY: [-8, 0],
+              duration: 320,
+              easing: 'easeOutQuad'
+            });
+          }
+        }
+      });
+    });
+
+    // Button & Pill Micro-interactions
+    document.querySelectorAll('.book-pill, .btn-primary, .btn-toggle-all, .nav-link').forEach(btn => {
+      btn.addEventListener('pointerdown', () => {
+        if (window.anime) anime({ targets: btn, scale: 0.95, duration: 80, easing: 'easeOutQuad' });
+      });
+      const reset = () => {
+        if (window.anime) anime({ targets: btn, scale: 1, duration: 160, easing: 'easeOutElastic(1, .5)' });
+      };
+      btn.addEventListener('pointerup', reset);
+      btn.addEventListener('pointerleave', reset);
+    });
 
     // Restore last read chapter banner
     try {

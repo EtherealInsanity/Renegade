@@ -133,12 +133,15 @@ def main():
   </header>
 
   <!-- Focused Hero Section: Cover, Name, Volumes, and Read/Download buttons -->
-  <main class="hero-section" style="margin-top: 36px; margin-bottom: 50px;">
+  <main class="hero-section">
     <div class="hero-cover">
-      <picture>
-        <source srcset="assets/cover.webp" type="image/webp">
-        <img src="assets/cover.jpg" alt="Renegade Immortal (仙逆) Novel Cover Art" width="260" height="346" class="hero-cover-img" loading="eager">
-      </picture>
+      <div class="hero-cover-tilt-wrap" id="hero-cover-wrap">
+        <div class="hero-cover-sheen" id="hero-cover-sheen"></div>
+        <picture>
+          <source srcset="assets/cover.webp" type="image/webp">
+          <img src="assets/cover.jpg" alt="Renegade Immortal (仙逆) Novel Cover Art" width="340" height="452" class="hero-cover-img" loading="eager">
+        </picture>
+      </div>
     </div>
 
     <div class="hero-content">
@@ -192,6 +195,7 @@ def main():
     <p>Ad-free, zero trackers, 100% static client-side architecture. Optimized for desktop & mobile.</p>
   </footer>
 
+  <script src="assets/anime.min.js"></script>
   <script src="assets/giscus-config.js"></script>
   <script>
     // Restore last read chapter button
@@ -212,6 +216,85 @@ def main():
       const saved = JSON.parse(localStorage.getItem('renegade_reader_settings'));
       if (saved && saved.theme) document.documentElement.setAttribute('data-theme', saved.theme);
     }} catch(e) {{}}
+
+    // 3D Cover Tilt & Glare Hover Animation
+    const coverWrap = document.getElementById('hero-cover-wrap');
+    const coverSheen = document.getElementById('hero-cover-sheen');
+    if (coverWrap && window.matchMedia('(hover: hover)').matches) {{
+      let bounds = null;
+      coverWrap.addEventListener('pointerenter', () => {{
+        bounds = coverWrap.getBoundingClientRect();
+        if (coverSheen) coverSheen.style.opacity = '1';
+      }});
+      coverWrap.addEventListener('pointermove', (e) => {{
+        if (!bounds) bounds = coverWrap.getBoundingClientRect();
+        const x = (e.clientX - bounds.left) / bounds.width - 0.5;
+        const y = (e.clientY - bounds.top) / bounds.height - 0.5;
+        const rotX = -y * 18;
+        const rotY = x * 18;
+        coverWrap.style.transform = `perspective(1000px) rotateX(${{rotX.toFixed(2)}}deg) rotateY(${{rotY.toFixed(2)}}deg) scale3d(1.04, 1.04, 1.04)`;
+        if (coverSheen) {{
+          const px = ((x + 0.5) * 100).toFixed(1);
+          const py = ((y + 0.5) * 100).toFixed(1);
+          coverSheen.style.background = `radial-gradient(circle at ${{px}}% ${{py}}%, rgba(255, 255, 255, 0.28) 0%, rgba(255, 255, 255, 0) 65%)`;
+        }}
+      }});
+      coverWrap.addEventListener('pointerleave', () => {{
+        bounds = null;
+        if (window.anime) {{
+          anime({{
+            targets: coverWrap,
+            rotateX: 0,
+            rotateY: 0,
+            scale: 1,
+            duration: 800,
+            easing: 'easeOutElastic(1, .5)'
+          }});
+          anime({{
+            targets: coverSheen,
+            opacity: 0,
+            duration: 350,
+            easing: 'easeOutQuad'
+          }});
+        }} else {{
+          coverWrap.style.transform = 'none';
+          if (coverSheen) coverSheen.style.opacity = '0';
+        }}
+      }});
+    }}
+
+    // Anime.js Staggered Entrance Animation
+    if (window.anime && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {{
+      anime({{
+        targets: [
+          '#landing-nav',
+          '.hero-cover',
+          '.novel-title',
+          '.novel-author',
+          '.novel-meta-text',
+          '.hero-cta-buttons .btn-primary',
+          '.hero-cta-buttons .btn-secondary',
+          '.landing-assembly-container'
+        ],
+        opacity: [0, 1],
+        translateY: [24, 0],
+        delay: anime.stagger(90, {{ start: 80 }}),
+        duration: 700,
+        easing: 'easeOutCubic'
+      }});
+    }}
+
+    // Button Micro-interactions
+    document.querySelectorAll('.btn-primary, .btn-secondary').forEach(btn => {{
+      btn.addEventListener('pointerdown', () => {{
+        if (window.anime) anime({{ targets: btn, scale: 0.96, duration: 80, easing: 'easeOutQuad' }});
+      }});
+      const resetBtn = () => {{
+        if (window.anime) anime({{ targets: btn, scale: 1, duration: 180, easing: 'easeOutElastic(1, .5)' }});
+      }};
+      btn.addEventListener('pointerup', resetBtn);
+      btn.addEventListener('pointerleave', resetBtn);
+    }});
 
     // Load Giscus for Reviews Section
     if (window.loadGiscus) {{
@@ -352,7 +435,26 @@ def main():
     <p><a href="./">← Back to Novel Overview</a> · <a href="download.html">Download Full EPUB</a></p>
   </footer>
 
+  <script src="assets/anime.min.js"></script>
   <script>
+    // Anime.js Staggered Entrance Animation
+    if (window.anime && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {{
+      anime({{
+        targets: [
+          'header.landing-nav',
+          '.toc-section > div',
+          '.toc-controls-bar',
+          '.book-pills-bar',
+          '#accordions-container .book-accordion'
+        ],
+        opacity: [0, 1],
+        translateY: [18, 0],
+        delay: anime.stagger(50, {{ start: 60 }}),
+        duration: 600,
+        easing: 'easeOutCubic'
+      }});
+    }}
+
     // Toggle all book accordions between expanded and collapsed
     let allExpanded = false;
     function toggleAllBooks() {{
@@ -364,6 +466,36 @@ def main():
       const btn = document.getElementById('btn-toggle-all');
       if (btn) btn.textContent = allExpanded ? 'Collapse All' : 'Expand All';
     }}
+
+    // Smooth Accordion Open Animation
+    document.querySelectorAll('.book-accordion').forEach(acc => {{
+      acc.addEventListener('toggle', () => {{
+        if (acc.open && window.anime && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {{
+          const grid = acc.querySelector('.chapter-grid');
+          if (grid) {{
+            anime({{
+              targets: grid,
+              opacity: [0, 1],
+              translateY: [-8, 0],
+              duration: 320,
+              easing: 'easeOutQuad'
+            }});
+          }}
+        }}
+      }});
+    }});
+
+    // Button & Pill Micro-interactions
+    document.querySelectorAll('.book-pill, .btn-primary, .btn-toggle-all, .nav-link').forEach(btn => {{
+      btn.addEventListener('pointerdown', () => {{
+        if (window.anime) anime({{ targets: btn, scale: 0.95, duration: 80, easing: 'easeOutQuad' }});
+      }});
+      const reset = () => {{
+        if (window.anime) anime({{ targets: btn, scale: 1, duration: 160, easing: 'easeOutElastic(1, .5)' }});
+      }};
+      btn.addEventListener('pointerup', reset);
+      btn.addEventListener('pointerleave', reset);
+    }});
 
     // Restore last read chapter banner
     try {{
@@ -681,11 +813,44 @@ def main():
     <p>Renegade Reader · Unofficial fan reader platform for <em>Renegade Immortal (仙逆)</em> by Er Gen.</p>
   </footer>
 
+  <script src="assets/anime.min.js"></script>
   <script>
     try {{
       const saved = JSON.parse(localStorage.getItem('renegade_reader_settings'));
       if (saved && saved.theme) document.documentElement.setAttribute('data-theme', saved.theme);
     }} catch(e) {{}}
+
+    // Anime.js Staggered Entrance Animation
+    if (window.anime && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {{
+      anime({{
+        targets: [
+          '.landing-nav',
+          '.download-cover',
+          '.download-card h1',
+          '.download-card p',
+          '.download-card .btn-primary',
+          '.download-table',
+          '.apps-grid .app-item'
+        ],
+        opacity: [0, 1],
+        translateY: [20, 0],
+        delay: anime.stagger(60, {{ start: 80 }}),
+        duration: 650,
+        easing: 'easeOutCubic'
+      }});
+    }}
+
+    // Button Micro-interactions
+    document.querySelectorAll('.btn-primary, .nav-link').forEach(btn => {{
+      btn.addEventListener('pointerdown', () => {{
+        if (window.anime) anime({{ targets: btn, scale: 0.95, duration: 80, easing: 'easeOutQuad' }});
+      }});
+      const reset = () => {{
+        if (window.anime) anime({{ targets: btn, scale: 1, duration: 160, easing: 'easeOutElastic(1, .5)' }});
+      }};
+      btn.addEventListener('pointerup', reset);
+      btn.addEventListener('pointerleave', reset);
+    }});
   </script>
 </body>
 </html>

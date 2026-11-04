@@ -75,16 +75,29 @@
     }
   }
 
-  // Reading progress tracking
+  // Reading progress tracking with Anime.js smooth interpolation
+  let progressAnim = null;
   function updateProgress() {
     const h = document.documentElement;
     const b = document.body;
     const st = 'scrollTop';
     const sh = 'scrollHeight';
-    const percent = ((h[st] || b[st]) / ((h[sh] || b[sh]) - h.clientHeight)) * 100;
+    const scrollMax = (h[sh] || b[sh]) - h.clientHeight;
+    const percent = scrollMax > 0 ? ((h[st] || b[st]) / scrollMax) * 100 : 0;
     const bar = document.getElementById('progress-bar');
     if (bar) {
-      bar.style.width = Math.min(100, Math.max(0, percent)) + '%';
+      const clamped = Math.min(100, Math.max(0, percent));
+      if (window.anime) {
+        if (progressAnim) progressAnim.pause();
+        progressAnim = anime({
+          targets: bar,
+          width: clamped + '%',
+          duration: 120,
+          easing: 'easeOutQuad'
+        });
+      } else {
+        bar.style.width = clamped + '%';
+      }
     }
   }
 
@@ -657,6 +670,33 @@
     initTouchNavigation();
     initImmersiveReading();
     initGiscusComments();
+
+    // Anime.js entrance animation for bars
+    if (window.anime && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      anime({
+        targets: ['.reader-header', '.chapter-nav-bar'],
+        opacity: [0, 1],
+        translateY: (el) => el.classList.contains('reader-header') ? [-16, 0] : [16, 0],
+        duration: 500,
+        easing: 'easeOutQuad'
+      });
+    }
+
+    // Button micro-interactions with Anime.js
+    document.querySelectorAll('.chapter-nav-btn, .icon-btn').forEach(btn => {
+      btn.addEventListener('pointerdown', () => {
+        if (window.anime) {
+          anime({ targets: btn, scale: 0.94, duration: 80, easing: 'easeOutQuad' });
+        }
+      });
+      const resetScale = () => {
+        if (window.anime) {
+          anime({ targets: btn, scale: 1, duration: 160, easing: 'easeOutElastic(1, .5)' });
+        }
+      };
+      btn.addEventListener('pointerup', resetScale);
+      btn.addEventListener('pointerleave', resetScale);
+    });
 
     // Register PWA Service Worker
     if ('serviceWorker' in navigator) {

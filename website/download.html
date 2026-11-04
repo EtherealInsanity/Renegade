@@ -179,11 +179,44 @@
     <p>Renegade Reader · Unofficial fan reader platform for <em>Renegade Immortal (仙逆)</em> by Er Gen.</p>
   </footer>
 
+  <script src="assets/anime.min.js"></script>
   <script>
     try {
       const saved = JSON.parse(localStorage.getItem('renegade_reader_settings'));
       if (saved && saved.theme) document.documentElement.setAttribute('data-theme', saved.theme);
     } catch(e) {}
+
+    // Anime.js Staggered Entrance Animation
+    if (window.anime && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      anime({
+        targets: [
+          '.landing-nav',
+          '.download-cover',
+          '.download-card h1',
+          '.download-card p',
+          '.download-card .btn-primary',
+          '.download-table',
+          '.apps-grid .app-item'
+        ],
+        opacity: [0, 1],
+        translateY: [20, 0],
+        delay: anime.stagger(60, { start: 80 }),
+        duration: 650,
+        easing: 'easeOutCubic'
+      });
+    }
+
+    // Button Micro-interactions
+    document.querySelectorAll('.btn-primary, .nav-link').forEach(btn => {
+      btn.addEventListener('pointerdown', () => {
+        if (window.anime) anime({ targets: btn, scale: 0.95, duration: 80, easing: 'easeOutQuad' });
+      });
+      const reset = () => {
+        if (window.anime) anime({ targets: btn, scale: 1, duration: 160, easing: 'easeOutElastic(1, .5)' });
+      };
+      btn.addEventListener('pointerup', reset);
+      btn.addEventListener('pointerleave', reset);
+    });
   </script>
 </body>
 </html>

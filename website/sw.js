@@ -3,7 +3,7 @@
    Precaches core app shell and dynamically caches read chapters for offline use
    ========================================================================== */
 
-const CACHE_NAME = 'renegade-reader-v9';
+const CACHE_NAME = 'renegade-reader-v10';
 
 // Base core assets to precache for offline shell
 const PRECACHE_ASSETS = [
@@ -16,6 +16,7 @@ const PRECACHE_ASSETS = [
   './assets/landing.css',
   './assets/reader.css',
   './assets/reader.js',
+  './assets/anime.min.js',
   './assets/giscus.css',
   './assets/giscus-config.js',
   './assets/cover.webp',

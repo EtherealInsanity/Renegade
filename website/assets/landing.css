@@ -84,38 +84,67 @@ body {
 
 /* Hero Section */
 .hero-section {
-  max-width: 1100px;
-  margin: 40px auto 30px auto;
+  max-width: 900px;
+  margin: 44px auto 36px auto;
   padding: 0 24px;
   display: flex;
-  gap: 48px;
+  flex-direction: column;
   align-items: center;
+  text-align: center;
+  gap: 32px;
 }
 
 .hero-cover {
-  flex: 0 0 260px;
+  flex: 0 0 auto;
+  width: 100%;
+  max-width: 340px;
+  margin: 0 auto;
+  perspective: 1000px;
+}
+
+.hero-cover-tilt-wrap {
+  position: relative;
+  width: 100%;
+  border-radius: var(--border-radius);
+  transform-style: preserve-3d;
+  will-change: transform;
+  display: block;
+  cursor: pointer;
 }
 
 .hero-cover img,
 .hero-cover-img {
   width: 100%;
-  max-width: 260px;
+  max-width: 340px;
   height: auto;
   aspect-ratio: 600 / 798;
   object-fit: cover;
   border-radius: var(--border-radius);
-  box-shadow: 0 14px 40px rgba(0, 0, 0, 0.5), 0 0 24px var(--accent-glow);
+  box-shadow: 0 18px 48px rgba(0, 0, 0, 0.55), 0 0 28px var(--accent-glow);
   border: 1px solid var(--border-color);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  display: block;
 }
 
-.hero-cover img:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 18px 48px rgba(0, 0, 0, 0.6), 0 0 32px var(--accent-glow);
+.hero-cover-sheen {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border-radius: var(--border-radius);
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  z-index: 2;
 }
 
 .hero-content {
-  flex: 1;
+  width: 100%;
+  max-width: 720px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
 }
 
 .novel-tagline {
@@ -187,6 +216,8 @@ body {
 .hero-cta-buttons {
   display: flex;
   gap: 14px;
+  justify-content: center;
+  align-items: center;
   flex-wrap: wrap;
 }
 
@@ -541,16 +572,19 @@ details.book-accordion[open] .chapter-grid {
 
 @media (max-width: 840px) {
   .hero-section {
-    flex-direction: column;
-    text-align: center;
-    gap: 28px;
+    gap: 24px;
     margin: 24px auto 20px auto;
   }
 
   .hero-cover {
     flex: 0 0 auto;
-    max-width: 220px;
+    max-width: 280px;
     margin: 0 auto;
+  }
+
+  .hero-cover img,
+  .hero-cover-img {
+    max-width: 280px;
   }
 
   .novel-title {
@@ -587,7 +621,12 @@ details.book-accordion[open] .chapter-grid {
   }
 
   .hero-cover {
-    max-width: 175px;
+    max-width: 220px;
+  }
+
+  .hero-cover img,
+  .hero-cover-img {
+    max-width: 220px;
   }
 
   .novel-title {
