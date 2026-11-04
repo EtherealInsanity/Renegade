@@ -22,7 +22,6 @@
       <a href="./" class="account-brand-link">
         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
         <span>Renegade Immortal</span>
-        <span class="chinese">仙逆</span>
       </a>
     </div>
     <div class="account-nav-right">
@@ -44,9 +43,11 @@
     <section class="profile-card">
       <div class="profile-card-top">
         <div class="profile-identity">
-          <div class="profile-avatar-wrap">
+          <div class="profile-avatar-wrap" id="profile-avatar-wrap" title="Click to change avatar portrait">
             <div id="profile-avatar" class="profile-avatar">☯️</div>
+            <div class="avatar-edit-badge" title="Upload Portrait">📷</div>
           </div>
+          <input type="file" id="avatar-file-input" accept="image/*" style="display: none;">
           <div class="profile-info">
             <div class="profile-name-row">
               <h1 id="profile-name" class="profile-name">Loading Cultivator...</h1>
@@ -158,23 +159,8 @@
 
     <!-- Tab 3: Cultivator Realm & Data Backup -->
     <section id="tab-stats" class="tab-panel" role="tabpanel">
-      <!-- Realm Progression Card -->
-      <div class="realm-progress-card">
-        <div style="display: flex; justify-content: space-between; align-items: center;">
-          <h3 style="margin: 0;">Cultivation Dao Progression</h3>
-          <span id="realm-progress-label" style="font-size: 0.88rem; color: var(--accent-color); font-weight: 600;">Chapter 1 of 2088</span>
-        </div>
-        <div class="realm-progress-bar-wrap">
-          <div id="realm-progress-fill" class="realm-progress-fill" style="width: 0%;"></div>
-        </div>
-        <div class="realm-stages-timeline">
-          <span>Qi Condensation</span>
-          <span>Core Formation</span>
-          <span>Soul Formation</span>
-          <span>Ascendant</span>
-          <span>Heaven Trampling</span>
-        </div>
-      </div>
+      <!-- 4-Tier Cultivation Dao Roadmap (1st, 2nd, 3rd Step & Heaven Trampling) -->
+      <div id="dao-roadmap-container"></div>
 
       <!-- Data Backup & Cloud Card -->
       <div class="backup-card">

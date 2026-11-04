@@ -91,6 +91,28 @@
 
 .profile-avatar-wrap {
   position: relative;
+  cursor: pointer;
+}
+
+.avatar-edit-badge {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 24px;
+  height: 24px;
+  background: var(--bg-surface);
+  border: 1.5px solid var(--accent-color);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+  transition: transform 0.2s;
+}
+
+.profile-avatar-wrap:hover .avatar-edit-badge {
+  transform: scale(1.15);
 }
 
 .profile-avatar {
@@ -570,13 +592,336 @@
   color: var(--text-color);
 }
 
-/* Realm Progress Tab */
-.realm-progress-card {
+/* Cultivation Dao Progression Roadmap */
+.active-realm-hero-card {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.03), rgba(220, 38, 38, 0.06));
+  border: 1px solid var(--accent-color);
+  box-shadow: 0 0 24px var(--accent-glow, rgba(220, 38, 38, 0.15));
+  border-radius: 12px;
+  padding: 22px;
+  margin-bottom: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.active-step-pill {
+  display: inline-block;
+  background: var(--accent-glow, rgba(220, 38, 38, 0.2));
+  color: var(--accent-color);
+  padding: 3px 10px;
+  border-radius: 14px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  margin-bottom: 6px;
+}
+
+.active-realm-title {
+  margin: 0;
+  font-size: 1.55rem;
+  color: var(--text-color);
+  font-weight: 800;
+}
+
+.active-realm-desc {
+  margin: 6px 0 0 0;
+  font-size: 0.94rem;
+  color: var(--text-muted);
+  line-height: 1.5;
+}
+
+.active-realm-progress-box {
+  background: rgba(0, 0, 0, 0.25);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 8px;
+  padding: 14px 16px;
+}
+
+.active-progress-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.88rem;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+.active-progress-pct {
+  color: var(--accent-color);
+  font-size: 1rem;
+  font-weight: 700;
+}
+
+.active-progress-subtext {
+  font-size: 0.82rem;
+  color: var(--text-muted);
+  margin-top: 6px;
+}
+
+/* 4 Great Steps Ladder */
+.dao-steps-ladder {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.dao-step-card {
   background: var(--bg-surface);
   border: 1px solid var(--border-color);
   border-radius: 12px;
-  padding: 24px;
-  margin-bottom: 24px;
+  overflow: hidden;
+  transition: all 0.2s;
+}
+
+.dao-step-card.step-active {
+  border-color: var(--accent-color);
+  box-shadow: 0 4px 16px var(--accent-glow, rgba(220, 38, 38, 0.12));
+}
+
+.dao-step-card.step-conquered {
+  border-color: rgba(16, 185, 129, 0.35);
+}
+
+.dao-step-card.step-locked {
+  opacity: 0.65;
+}
+
+.dao-step-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 20px;
+  cursor: pointer;
+  user-select: none;
+  background: rgba(255, 255, 255, 0.015);
+}
+
+.dao-step-header:hover {
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.dao-step-title-group {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.dao-step-num {
+  font-size: 1.1rem;
+  font-weight: 800;
+  color: var(--accent-color);
+  background: rgba(255, 255, 255, 0.04);
+  padding: 6px 12px;
+  border-radius: 8px;
+  border: 1px solid var(--border-color);
+}
+
+.dao-step-names h3 {
+  margin: 0;
+  font-size: 1.1rem;
+  color: var(--text-color);
+}
+
+.dao-step-subtitle {
+  font-size: 0.82rem;
+  color: var(--text-muted);
+}
+
+.dao-step-meta-right {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.step-status-tag {
+  font-size: 0.8rem;
+  font-weight: 600;
+  padding: 4px 10px;
+  border-radius: 14px;
+}
+
+.step-status-tag.step-conquered {
+  background: rgba(16, 185, 129, 0.15);
+  color: #10b981;
+}
+
+.step-status-tag.step-active {
+  background: var(--accent-glow, rgba(220, 38, 38, 0.2));
+  color: var(--accent-color);
+}
+
+.step-status-tag.step-locked {
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--text-muted);
+}
+
+.step-toggle-btn {
+  background: none;
+  border: none;
+  color: var(--text-muted);
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+.dao-step-card.expanded .step-toggle-btn {
+  transform: rotate(180deg);
+}
+
+/* Sub-realms List */
+.dao-subrealms-list {
+  display: none;
+  padding: 8px 18px 18px 18px;
+  border-top: 1px solid var(--border-color);
+  background: rgba(0, 0, 0, 0.15);
+  flex-direction: column;
+  gap: 10px;
+}
+
+.dao-step-card.expanded .dao-subrealms-list,
+.dao-step-card.step-active .dao-subrealms-list {
+  display: flex;
+}
+
+.dao-subrealm-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 12px 14px;
+  border-radius: 8px;
+  border: 1px solid transparent;
+  transition: all 0.15s;
+}
+
+.dao-subrealm-item.realm-passed {
+  background: rgba(16, 185, 129, 0.04);
+  border-color: rgba(16, 185, 129, 0.2);
+}
+
+.dao-subrealm-item.realm-active {
+  background: rgba(255, 255, 255, 0.04);
+  border-color: var(--accent-color);
+  box-shadow: 0 0 14px var(--accent-glow, rgba(220, 38, 38, 0.15));
+}
+
+.dao-subrealm-item.realm-locked {
+  background: rgba(0, 0, 0, 0.1);
+  opacity: 0.6;
+}
+
+.subrealm-icon-wrap {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.06);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.85rem;
+  font-weight: 700;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.realm-passed .subrealm-icon-wrap {
+  background: #10b981;
+  color: #fff;
+}
+
+.realm-active .subrealm-icon-wrap {
+  background: var(--accent-color);
+  color: #fff;
+  box-shadow: 0 0 10px var(--accent-glow);
+}
+
+.subrealm-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.subrealm-top-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.subrealm-name {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--text-color);
+}
+
+.subrealm-desc {
+  margin: 0;
+  font-size: 0.84rem;
+  color: var(--text-muted);
+  line-height: 1.4;
+}
+
+.realm-special-tag {
+  font-size: 0.72rem;
+  font-weight: 700;
+  padding: 2px 7px;
+  border-radius: 10px;
+}
+
+.realm-special-tag.blight {
+  background: rgba(239, 68, 68, 0.2);
+  color: #ef4444;
+  border: 1px solid rgba(239, 68, 68, 0.35);
+}
+
+.realm-special-tag.trial {
+  background: rgba(6, 182, 212, 0.2);
+  color: #06b6d4;
+  border: 1px solid rgba(6, 182, 212, 0.35);
+}
+
+.realm-special-tag.bridge {
+  background: rgba(168, 85, 247, 0.2);
+  color: #a855f7;
+  border: 1px solid rgba(168, 85, 247, 0.35);
+}
+
+.realm-special-tag.sovereign {
+  background: rgba(245, 158, 11, 0.2);
+  color: #f59e0b;
+  border: 1px solid rgba(245, 158, 11, 0.35);
+}
+
+.active-beacon-pill {
+  font-size: 0.74rem;
+  font-weight: 700;
+  color: var(--accent-color);
+  background: var(--accent-glow, rgba(220, 38, 38, 0.18));
+  padding: 2px 8px;
+  border-radius: 10px;
+  border: 1px solid var(--accent-color);
+  animation: pulseBeacon 2s infinite ease-in-out;
+}
+
+@keyframes pulseBeacon {
+  0%, 100% { opacity: 0.9; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.04); }
+}
+
+.realm-mini-progress-bar {
+  background: rgba(255, 255, 255, 0.08);
+  height: 6px;
+  border-radius: 3px;
+  overflow: hidden;
+  margin-top: 6px;
+}
+
+.realm-mini-progress-fill {
+  background: var(--accent-color);
+  height: 100%;
+  border-radius: 3px;
 }
 
 .realm-progress-bar-wrap {
@@ -584,7 +929,7 @@
   height: 12px;
   border-radius: 6px;
   overflow: hidden;
-  margin: 16px 0 8px 0;
+  margin: 12px 0 6px 0;
 }
 
 .realm-progress-fill {
@@ -592,14 +937,6 @@
   height: 100%;
   border-radius: 6px;
   transition: width 0.5s ease-out;
-}
-
-.realm-stages-timeline {
-  display: flex;
-  justify-content: space-between;
-  font-size: 0.75rem;
-  color: var(--text-muted);
-  margin-top: 4px;
 }
 
 /* Data Backup Card */

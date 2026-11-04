@@ -2,11 +2,12 @@
 window.WALINE_CONFIG = {
   serverURL: 'https://waline-on-worker.anc1ent-0.workers.dev',
   lang: 'en',
-  reaction: true,
+  reaction: false,
   pageview: true,
   commentSorting: 'latest',
   locale: {
     placeholder: 'Write a comment...',
+    admin: 'Heavenly Dao'
   }
 };
 
@@ -63,7 +64,7 @@ window.loadWaline = async function(container, customPath) {
       serverURL: serverURL,
       path: targetPath,
       lang: window.WALINE_CONFIG.lang || 'en',
-      reaction: window.WALINE_CONFIG.reaction ?? true,
+      reaction: window.WALINE_CONFIG.reaction ?? false,
       pageview: window.WALINE_CONFIG.pageview ?? true,
       commentSorting: window.WALINE_CONFIG.commentSorting || 'latest',
       dark: 'html:not([data-theme="bamboo"]):not([data-theme="medicine-pavilion"])',

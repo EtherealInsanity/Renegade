@@ -11,75 +11,108 @@
   const STORAGE_KEY_HIGHLIGHTS = 'renegade_highlights';
   const TOTAL_CHAPTERS = 2088;
 
-  // Cultivation Realms mapped by chapter progress
-  const REALMS = [
-    { maxChapter: 50, title: 'Qi Condensation (Early)', icon: '🌱' },
-    { maxChapter: 100, title: 'Qi Condensation (Great Circle)', icon: '🌿' },
-    { maxChapter: 250, title: 'Foundation Establishment', icon: '🏛️' },
-    { maxChapter: 450, title: 'Core Formation', icon: '🔮' },
-    { maxChapter: 700, title: 'Nascent Soul', icon: '⚡' },
-    { maxChapter: 1050, title: 'Soul Formation (Domain)', icon: '🌊' },
-    { maxChapter: 1350, title: 'Soul Transformation', icon: '🌌' },
-    { maxChapter: 1650, title: 'Ascendant (Spirit Realm)', icon: '⚔️' },
-    { maxChapter: 1850, title: 'Nirvana Shatterer', icon: '🔥' },
-    { maxChapter: 2000, title: 'Void Tribulation', icon: '☄️' },
-    { maxChapter: 9999, title: 'Heaven Trampling Sovereign', icon: '👑' }
+  // Canonical 4-Tier Cultivation Dao Progression (Pure English)
+  const DAO_STEPS = [
+    {
+      id: 'step-1',
+      title: '1st Step',
+      name: '1st Step: Mortal to Immortal',
+      subtitle: 'Spiritual Sea, Core & Life/Death Domains',
+      minChapter: 1,
+      maxChapter: 880,
+      realms: [
+        { name: 'Qi Condensation', startChapter: 1, endChapter: 50, desc: 'Entering Heng Yue Sect, absorbing spiritual qi with the Heaven Defying Bead.' },
+        { name: 'Foundation Establishment', startChapter: 51, endChapter: 143, desc: 'Breaking mortal limitations, forming the spiritual sea and foundation.' },
+        { name: 'Core Formation', startChapter: 144, endChapter: 223, desc: 'Forming the Dan core, cultivating the death essence in the Sea of Devils.' },
+        { name: 'Nascent Soul', startChapter: 224, endChapter: 324, desc: 'Birth of the Nascent Soul, slaughtering the sea of devils and comprehending mortality.' },
+        { name: 'Soul Formation', startChapter: 325, endChapter: 419, desc: 'Comprehending the Domain of Life and Death in the mortal country of Zhao.' },
+        { name: 'Soul Transformation', startChapter: 420, endChapter: 649, desc: 'Absorbing celestial spiritual energy in the Celestial Realm to temper the origin soul.' },
+        { name: 'Ascendant', startChapter: 650, endChapter: 800, desc: 'Domain crystallization into Dao intent, standing at the summit of Planet Suzaku.' },
+        { name: 'Half-Step Yin-Yang (Corporeal Boundary)', startChapter: 801, endChapter: 880, desc: 'Comprehending the illusion of cause and effect, life and death, touching the 2nd Step.' }
+      ]
+    },
+    {
+      id: 'step-2',
+      title: '2nd Step',
+      name: '2nd Step: Domain & Nirvana',
+      subtitle: 'Nirvana Comprehension & The 5 Heavenly Deva Blights',
+      minChapter: 881,
+      maxChapter: 1660,
+      realms: [
+        { name: 'Nirvana Scryer', startChapter: 881, endChapter: 1050, desc: 'Scrying into the realm of Nirvana, grasping the origin rules of heaven.' },
+        { name: 'Nirvana Cleanser', startChapter: 1051, endChapter: 1200, desc: 'Cleansing the origin soul, battling through the Cloud Sea Star System.' },
+        { name: 'Nirvana Shatterer', startChapter: 1201, endChapter: 1380, desc: 'Shattering Nirvana, fusing with the 8-Star Royal Ancient God body.' },
+        { name: '1st Deva Blight: Flesh & Blood', startChapter: 1381, endChapter: 1439, desc: 'Heavenly Tribulation: Physical vessel rots under heavenly condemnation.', isBlight: true },
+        { name: '2nd Deva Blight: Origin & Bones', startChapter: 1440, endChapter: 1499, desc: 'Heavenly Tribulation: Origin power deteriorates and spiritual energy revolts.', isBlight: true },
+        { name: '3rd Deva Blight: Origin Soul', startChapter: 1500, endChapter: 1569, desc: 'Heavenly Tribulation: The origin soul burns in spiritual tribulation fire.', isBlight: true },
+        { name: '4th Deva Blight: Dao Heart', startChapter: 1570, endChapter: 1629, desc: 'Heavenly Tribulation: Soul is plagued by inner demons and karmic illusions.', isBlight: true },
+        { name: '5th Deva Blight: Life Decline', startChapter: 1630, endChapter: 1660, desc: 'Supreme Blight: Lifespan drains into the void, transcending mortality to enter the 3rd Step.', isBlight: true }
+      ]
+    },
+    {
+      id: 'step-3',
+      title: '3rd Step',
+      name: '3rd Step: Void & Essences',
+      subtitle: 'Void Mastery, 9 Essences & Great Empyrean Trials',
+      minChapter: 1661,
+      maxChapter: 2060,
+      realms: [
+        { name: 'Nirvana Void', startChapter: 1661, endChapter: 1770, desc: 'Entering the Void Step, comprehending the fundamental Dao of heaven.' },
+        { name: 'Spirit Void', startChapter: 1771, endChapter: 1870, desc: 'Awakening 9-Star Ancient God royal line and mastering 7 Dao Essences.' },
+        { name: 'Arcane Void', startChapter: 1871, endChapter: 1950, desc: 'Conquering the God, Demon, and Devil paths, condensing 9 Origin Essences.' },
+        { name: 'Void Tribulant: Trials 1-3 (Earth & Heaven Calamity)', startChapter: 1951, endChapter: 1980, desc: 'Heaven Tribulation Trials: Shattering the early tribulations of the Heavenly Dao.', isTrial: true },
+        { name: 'Void Tribulant: Trials 4-6 (Great Empyrean Trial)', startChapter: 1981, endChapter: 2010, desc: 'Heaven Tribulation Trials: Competing with Great Empyreans, slaughtering divine wills.', isTrial: true },
+        { name: 'Void Tribulant: Trials 7-9 (Heavenly Dao Will Severing)', startChapter: 2011, endChapter: 2040, desc: 'Heaven Tribulation Trials: Severing the will of the Heavenly Dao and shattering destiny.', isTrial: true },
+        { name: 'Half-Step Heaven Trampling (Ascendant Empyrean)', startChapter: 2041, endChapter: 2060, desc: 'The summit of Immortal Gang, standing before the 9 Heaven Trampling Bridges.' }
+      ]
+    },
+    {
+      id: 'step-4',
+      title: 'Heaven Trampling',
+      name: '4th Step: Heaven Trampling',
+      subtitle: 'Sovereign Beyond Destiny (The 9 Heaven Trampling Bridges)',
+      minChapter: 2061,
+      maxChapter: 2088,
+      realms: [
+        { name: '1st - 3rd Heaven Trampling Bridge', startChapter: 2061, endChapter: 2070, desc: 'Breaking mortal and immortal laws, stepping onto the supreme cosmic void.', isBridge: true },
+        { name: '4th - 6th Heaven Trampling Bridge', startChapter: 2071, endChapter: 2080, desc: 'Severing karmic chains of reincarnation, time, and false illusions.', isBridge: true },
+        { name: '7th - 9th Heaven Trampling Bridge', startChapter: 2081, endChapter: 2087, desc: 'Transcending all creation, defying the heavens and ascending the 9th Bridge.', isBridge: true },
+        { name: 'Heaven Trampling Sovereign (True Dao Sovereign)', startChapter: 2088, endChapter: 9999, desc: 'Walking beyond the 9th bridge. "I am Wang Lin, Sovereign of Heaven Trampling!"', isSovereign: true }
+      ]
+    }
   ];
 
-  function getActiveTheme() {
-    try {
-      const raw = localStorage.getItem(STORAGE_KEY_SETTINGS);
-      return raw ? JSON.parse(raw).theme || 'slaughter' : 'slaughter';
-    } catch (_) {
-      return 'slaughter';
-    }
-  }
+  function getDaoProgression(chapter) {
+    const ch = Math.max(1, chapter || 1);
+    let activeStep = DAO_STEPS[0];
+    let activeRealm = activeStep.realms[0];
 
-  function getWalineUser() {
-    try {
-      const raw = localStorage.getItem('WALINE_USER');
-      return raw ? JSON.parse(raw) : null;
-    } catch (_) {
-      return null;
-    }
-  }
-
-  function getLastRead() {
-    try {
-      const raw = localStorage.getItem(STORAGE_KEY_LAST_READ);
-      return raw ? JSON.parse(raw) : null;
-    } catch (_) {
-      return null;
-    }
-  }
-
-  function getHighlights() {
-    try {
-      const raw = localStorage.getItem(STORAGE_KEY_HIGHLIGHTS);
-      return raw ? JSON.parse(raw) : {};
-    } catch (_) {
-      return {};
-    }
-  }
-
-  function saveHighlights(hl) {
-    try {
-      localStorage.setItem(STORAGE_KEY_HIGHLIGHTS, JSON.stringify(hl));
-      if (window.RenegadeHighlights && window.RenegadeHighlights.sync) {
-        window.RenegadeHighlights.sync(hl);
+    for (const step of DAO_STEPS) {
+      if (ch >= step.minChapter) {
+        activeStep = step;
+        for (const realm of step.realms) {
+          if (ch >= realm.startChapter) {
+            activeRealm = realm;
+          }
+        }
       }
-    } catch (e) {
-      console.error('Failed to save highlights:', e);
     }
+
+    const realmSpan = activeRealm.endChapter - activeRealm.startChapter + 1;
+    const progressInRealm = Math.min(100, Math.max(0, Math.round(((ch - activeRealm.startChapter) / realmSpan) * 100)));
+
+    return {
+      currentChapter: ch,
+      step: activeStep,
+      realm: activeRealm,
+      progressInRealm: progressInRealm
+    };
   }
 
-  function calculateRealm(lastChapter) {
-    const ch = lastChapter || 1;
-    for (const r of REALMS) {
-      if (ch <= r.maxChapter) return r;
-    }
-    return REALMS[REALMS.length - 1];
-  }
+  window.RenegadeDao = {
+    steps: DAO_STEPS,
+    getProgression: getDaoProgression
+  };
 
   // State
   let allHighlights = [];
@@ -104,6 +137,8 @@
     setupTabs();
     setupFilters();
     setupBackupTools();
+    setupAvatarUploader();
+    renderDaoRoadmap(lastRead ? lastRead.chapter : 1);
 
     // Load Highlights & Notes
     await loadHighlightsData(isPublicMode, publicUserParam);
@@ -127,7 +162,11 @@
     const authActionBtn = document.getElementById('btn-auth-action');
 
     const currentChapter = lastRead ? lastRead.chapter : 1;
-    const realm = calculateRealm(currentChapter);
+    const dao = getDaoProgression(currentChapter);
+
+    if (realmBadgeEl) {
+      realmBadgeEl.innerHTML = `<span style="opacity:0.85;">${dao.step.title}</span> · <strong>${dao.realm.name.split(' (')[0]}</strong>`;
+    }
 
     if (isPublicMode) {
       if (nameEl) nameEl.textContent = publicUsername;
@@ -136,30 +175,31 @@
         avatarEl.title = `Cultivator ${publicUsername}`;
       }
       if (statusEl) statusEl.textContent = 'Fellow Cultivator Public Profile';
-      if (realmBadgeEl) {
-        realmBadgeEl.innerHTML = `${realm.icon} ${realm.title}`;
-      }
       if (authActionBtn) authActionBtn.style.display = 'none';
       return;
     }
 
+    // Avatar resolution: custom uploaded avatar > Waline avatar > initial > default
+    const customAvatar = localStorage.getItem('renegade_user_avatar');
+    const avatarUrl = customAvatar || (user ? user.avatar : '');
+
+    if (avatarEl) {
+      if (avatarUrl) {
+        avatarEl.innerHTML = `<img src="${avatarUrl}" alt="Cultivator Avatar" style="width:100%;height:100%;border-radius:50%;object-fit:cover;">`;
+      } else if (user) {
+        const displayName = user.display_name || user.email || 'Cultivator';
+        avatarEl.textContent = displayName[0].toUpperCase();
+      } else {
+        avatarEl.textContent = '☯️';
+      }
+    }
+
     if (user && user.token) {
-      // Logged in user
       const displayName = user.display_name || user.email || 'Cultivator';
       if (nameEl) nameEl.textContent = displayName;
-      if (avatarEl) {
-        if (user.avatar) {
-          avatarEl.innerHTML = `<img src="${user.avatar}" alt="${displayName}" style="width:100%;height:100%;border-radius:50%;object-fit:cover;">`;
-        } else {
-          avatarEl.textContent = displayName[0].toUpperCase();
-        }
-      }
       if (statusEl) {
         const role = user.type === 'administrator' ? 'Grand Elder (Admin)' : 'Inner Disciple (Verified Reader)';
         statusEl.textContent = `${role} · ${user.email || ''}`;
-      }
-      if (realmBadgeEl) {
-        realmBadgeEl.innerHTML = `${realm.icon} ${realm.title}`;
       }
       if (authActionBtn) {
         authActionBtn.textContent = 'Sign Out';
@@ -172,13 +212,8 @@
         };
       }
     } else {
-      // Guest reader
       if (nameEl) nameEl.textContent = 'Wandering Cultivator (Guest)';
-      if (avatarEl) avatarEl.textContent = '☯️';
       if (statusEl) statusEl.textContent = 'Local Guest · Sign in with Waline to sync across devices & publish profile';
-      if (realmBadgeEl) {
-        realmBadgeEl.innerHTML = `${realm.icon} ${realm.title}`;
-      }
       if (authActionBtn) {
         authActionBtn.textContent = 'Sign In / Register';
         authActionBtn.onclick = (e) => {
@@ -187,6 +222,175 @@
         };
       }
     }
+  }
+
+  function setupAvatarUploader() {
+    const avatarWrap = document.getElementById('profile-avatar-wrap');
+    const avatarInput = document.getElementById('avatar-file-input');
+    if (!avatarWrap || !avatarInput) return;
+
+    avatarWrap.addEventListener('click', () => {
+      const choice = confirm('Cultivator Portrait: Click OK to upload an avatar image from your device, or Cancel to enter an image URL.');
+      if (choice) {
+        avatarInput.click();
+      } else {
+        const url = prompt('Enter image URL for your cultivator avatar:');
+        if (url && url.trim()) {
+          saveUserAvatar(url.trim());
+        }
+      }
+    });
+
+    avatarInput.addEventListener('change', (e) => {
+      const file = e.target.files?.[0];
+      if (!file) return;
+      if (file.size > 2 * 1024 * 1024) {
+        alert('Image size exceeds 2MB limit. Please choose a smaller portrait.');
+        return;
+      }
+      const reader = new FileReader();
+      reader.onload = (evt) => {
+        saveUserAvatar(evt.target.result);
+      };
+      reader.readAsDataURL(file);
+    });
+  }
+
+  function saveUserAvatar(avatarUrl) {
+    try {
+      localStorage.setItem('renegade_user_avatar', avatarUrl);
+      const walineUser = JSON.parse(localStorage.getItem('WALINE_USER') || '{}');
+      if (walineUser && typeof walineUser === 'object') {
+        walineUser.avatar = avatarUrl;
+        localStorage.setItem('WALINE_USER', JSON.stringify(walineUser));
+      }
+    } catch (_) {}
+
+    const avatarEl = document.getElementById('profile-avatar');
+    if (avatarEl) {
+      avatarEl.innerHTML = `<img src="${avatarUrl}" alt="Cultivator Avatar" style="width:100%;height:100%;border-radius:50%;object-fit:cover;">`;
+    }
+  }
+
+  function renderDaoRoadmap(currentChapter) {
+    const roadmapContainer = document.getElementById('dao-roadmap-container');
+    if (!roadmapContainer) return;
+
+    const dao = getDaoProgression(currentChapter);
+    const ch = dao.currentChapter;
+
+    let html = `
+      <div class="active-realm-hero-card">
+        <div class="active-realm-meta">
+          <span class="active-step-pill">${dao.step.name}</span>
+          <h2 class="active-realm-title">${dao.realm.name}</h2>
+          <p class="active-realm-desc">${dao.realm.desc}</p>
+        </div>
+        <div class="active-realm-progress-box">
+          <div class="active-progress-header">
+            <span>Realm Cultivation Progress</span>
+            <span class="active-progress-pct">${dao.progressInRealm}%</span>
+          </div>
+          <div class="realm-progress-bar-wrap">
+            <div class="realm-progress-fill" style="width: ${dao.progressInRealm}%;"></div>
+          </div>
+          <div class="active-progress-subtext">Chapter ${ch} Cultivated · Steadily advancing toward breakthrough</div>
+        </div>
+      </div>
+
+      <div class="dao-steps-ladder">
+    `;
+
+    DAO_STEPS.forEach((step) => {
+      const isStepPassed = ch > step.maxChapter;
+      const isStepActive = ch >= step.minChapter && ch <= step.maxChapter;
+
+      let statusBadge = '';
+      let statusClass = '';
+      if (isStepPassed) {
+        statusBadge = '<span>✅ Conquered</span>';
+        statusClass = 'step-conquered';
+      } else if (isStepActive) {
+        statusBadge = '<span class="status-pulse-badge">⚡ Cultivating</span>';
+        statusClass = 'step-active';
+      } else {
+        statusBadge = '<span>🔒 Locked</span>';
+        statusClass = 'step-locked';
+      }
+
+      html += `
+        <div class="dao-step-card ${statusClass}">
+          <div class="dao-step-header" onclick="this.parentElement.classList.toggle('expanded')">
+            <div class="dao-step-title-group">
+              <div class="dao-step-num">${step.title}</div>
+              <div class="dao-step-names">
+                <h3>${step.name}</h3>
+                <span class="dao-step-subtitle">${step.subtitle}</span>
+              </div>
+            </div>
+            <div class="dao-step-meta-right">
+              <div class="step-status-tag ${statusClass}">${statusBadge}</div>
+              <button class="step-toggle-btn" aria-label="Toggle Step Details">▼</button>
+            </div>
+          </div>
+
+          <div class="dao-subrealms-list">
+      `;
+
+      step.realms.forEach((realm) => {
+        const isRealmPassed = ch > realm.endChapter;
+        const isRealmActive = ch >= realm.startChapter && ch <= realm.endChapter;
+
+        let realmStatusIcon = '🔒';
+        let realmItemClass = 'realm-locked';
+        let specialBadge = '';
+
+        if (realm.isBlight) {
+          specialBadge = '<span class="realm-special-tag blight">💀 Deva Blight</span>';
+        } else if (realm.isTrial) {
+          specialBadge = '<span class="realm-special-tag trial">⚡ Void Trial</span>';
+        } else if (realm.isBridge) {
+          specialBadge = '<span class="realm-special-tag bridge">🌉 Heaven Bridge</span>';
+        } else if (realm.isSovereign) {
+          specialBadge = '<span class="realm-special-tag sovereign">👑 Sovereign</span>';
+        }
+
+        if (isRealmPassed) {
+          realmStatusIcon = '✓';
+          realmItemClass = 'realm-passed';
+        } else if (isRealmActive) {
+          realmStatusIcon = '⚡';
+          realmItemClass = 'realm-active';
+        }
+
+        html += `
+          <div class="dao-subrealm-item ${realmItemClass}">
+            <div class="subrealm-icon-wrap">${realmStatusIcon}</div>
+            <div class="subrealm-content">
+              <div class="subrealm-top-row">
+                <span class="subrealm-name">${realm.name}</span>
+                ${specialBadge}
+                ${isRealmActive ? `<span class="active-beacon-pill">Current Realm (${dao.progressInRealm}%)</span>` : ''}
+              </div>
+              <p class="subrealm-desc">${realm.desc}</p>
+              ${isRealmActive ? `
+                <div class="realm-mini-progress-bar">
+                  <div class="realm-mini-progress-fill" style="width: ${dao.progressInRealm}%;"></div>
+                </div>
+              ` : ''}
+            </div>
+          </div>
+        `;
+      });
+
+      html += `
+          </div>
+        </div>
+      `;
+    });
+
+    html += `</div>`;
+    roadmapContainer.innerHTML = html;
   }
 
   function toggleWalineLoginEmbed() {
@@ -296,15 +500,11 @@
     if (hlTabBadge) hlTabBadge.textContent = totalHighlights;
 
     const lastRead = getLastRead();
-    const ch = lastRead ? lastRead.chapter : 0;
+    const ch = lastRead ? lastRead.chapter : 1;
     const pct = Math.min(100, Math.round((ch / TOTAL_CHAPTERS) * 100));
     if (readProgressEl) readProgressEl.textContent = `${pct}%`;
 
-    // Realm progress panel
-    const realmFill = document.getElementById('realm-progress-fill');
-    const realmLabel = document.getElementById('realm-progress-label');
-    if (realmFill) realmFill.style.width = `${pct}%`;
-    if (realmLabel) realmLabel.textContent = `Chapter ${ch} of ${TOTAL_CHAPTERS} Cultivated (${pct}%)`;
+    renderDaoRoadmap(ch);
   }
 
   function populateChapterDropdown() {

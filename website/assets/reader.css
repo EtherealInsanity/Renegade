@@ -1343,3 +1343,14 @@ mark.renegade-highlight.active-pulse {
   margin-top: 4px;
 }
 
+/* User Avatar in Reader Header */
+.reader-header-avatar {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 1.5px solid var(--accent-color);
+  box-shadow: 0 0 8px var(--accent-glow, rgba(220, 38, 38, 0.4));
+  display: block;
+}
+

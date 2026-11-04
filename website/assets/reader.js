@@ -814,6 +814,22 @@
     window.addEventListener('scroll', updateProgress, { passive: true });
     updateProgress();
 
+    // Render user avatar in reader header if uploaded/logged in
+    try {
+      const customAvatar = localStorage.getItem('renegade_user_avatar');
+      let avatarUrl = customAvatar;
+      if (!avatarUrl) {
+        const walineUser = JSON.parse(localStorage.getItem('WALINE_USER') || '{}');
+        avatarUrl = walineUser.avatar;
+      }
+      if (avatarUrl) {
+        const profileBtn = document.getElementById('btn-cultivator-profile');
+        if (profileBtn) {
+          profileBtn.innerHTML = `<img class="reader-header-avatar" src="${avatarUrl}" alt="Cultivator Avatar">`;
+        }
+      }
+    } catch (_) {}
+
     // Drawer Selectors
     const settingsBtn = document.getElementById('btn-open-settings');
     const closeSettingsBtn = document.getElementById('btn-close-settings');

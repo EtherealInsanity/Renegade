@@ -170,3 +170,11 @@
   color: var(--accent-color, #ef4444);
   font-size: 0.85rem;
 }
+
+/* Explicitly hide the Waline reaction emoji bar */
+.wl-reaction,
+.wl-reaction-title,
+.wl-reaction-item,
+.wl-reaction-votes {
+  display: none !important;
+}

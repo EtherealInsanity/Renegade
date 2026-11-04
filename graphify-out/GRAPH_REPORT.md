@@ -1,17 +1,17 @@
 # Graph Report - Renegade Reader  (2026-11-05)
 
 ## Corpus Check
-- 16 files · ~10,278,457 words
+- 16 files · ~10,279,614 words
 - Verdict: corpus is large enough that graph structure adds value.
 - Unclassified: 9 file(s) not represented in the graph (top: .css 6, (none) 1, .epub 1)
 
 ## Summary
-- 147 nodes · 274 edges · 16 communities (12 shown, 4 thin omitted)
-- Extraction: 89% EXTRACTED · 11% INFERRED · 0% AMBIGUOUS · INFERRED: 29 edges (avg confidence: 0.85)
+- 145 nodes · 266 edges · 16 communities (12 shown, 4 thin omitted)
+- Extraction: 89% EXTRACTED · 11% INFERRED · 0% AMBIGUOUS · INFERRED: 30 edges (avg confidence: 0.85)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `f00e6324`
+- Built from commit: `c8c01bff`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -83,7 +83,7 @@ Nodes (10): C(), L(), b(), g(), h(), m(), o(), u() (+2 more)
 
 ### Community 8 - "account.js"
 Cohesion: 0.20
-Nodes (15): calculateRealm(), deleteHighlightItem(), escapeHtml(), getHighlights(), getLastRead(), loadHighlightsData(), persistHighlightChange(), populateChapterDropdown() (+7 more)
+Nodes (14): deleteHighlightItem(), escapeHtml(), getDaoProgression(), loadHighlightsData(), persistHighlightChange(), populateChapterDropdown(), renderDaoRoadmap(), renderHighlightsList() (+6 more)
 
 ### Community 10 - "applySelectionHighlight"
 Cohesion: 0.31
@@ -112,7 +112,7 @@ Nodes (3): focusActiveChapter(), loadChaptersIntoDrawer(), switchTab()
 _Questions this graph is uniquely positioned to answer:_
 
 - **Why does `L()` connect `L` to `anime.min.js`?**
-  _High betweenness centrality (0.018) - this node is a cross-community bridge._
+  _High betweenness centrality (0.019) - this node is a cross-community bridge._
 - **Are the 7 inferred relationships involving `r()` (e.g. with `P()` and `b()`) actually correct?**
   _`r()` has 7 INFERRED edges - model-reasoned connections that need verification._
 - **Why does `r()` connect `anime.min.js` to `L`?**
