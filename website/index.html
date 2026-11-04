@@ -8,18 +8,18 @@
   <meta name="description" content="Read Renegade Immortal (仙逆) by Er Gen online. Fast, clean, ad-free reader across all 13 canonical books and 2,088 chapters.">
   <meta property="og:title" content="Renegade Immortal (仙逆) - Complete Web Novel Reader">
   <meta property="og:description" content="Read all 2,088 chapters of Renegade Immortal (仙逆) online. Ad-free, 13 custom Xianxia themes, instant offline download.">
-  <meta property="og:image" content="assets/cover.jpg">
+  <meta property="og:image" content="/assets/cover.jpg">
   <meta property="og:type" content="website">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:image" content="assets/cover.jpg">
+  <meta name="twitter:image" content="/assets/cover.jpg">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="apple-mobile-web-app-title" content="Renegade">
-  <link rel="manifest" href="manifest.webmanifest">
-  <link rel="stylesheet" href="assets/themes.css">
-  <link rel="stylesheet" href="assets/landing.css">
-  <link rel="icon" type="image/png" href="assets/favicon.png">
-  <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+  <link rel="manifest" href="/manifest.webmanifest">
+  <link rel="stylesheet" href="/assets/themes.css">
+  <link rel="stylesheet" href="/assets/landing.css">
+  <link rel="icon" type="image/png" href="/assets/favicon.png">
+  <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
 </head>
 <body>
 
@@ -38,8 +38,8 @@
       <div class="hero-cover-tilt-wrap" id="hero-cover-wrap">
         <div class="hero-cover-sheen" id="hero-cover-sheen"></div>
         <picture>
-          <source srcset="assets/cover.webp" type="image/webp">
-          <img src="assets/cover.jpg" alt="Renegade Immortal (仙逆) Novel Cover Art" width="340" height="452" class="hero-cover-img" loading="eager">
+          <source srcset="/assets/cover.webp" type="image/webp">
+          <img src="/assets/cover.jpg" alt="Renegade Immortal (仙逆) Novel Cover Art" width="340" height="452" class="hero-cover-img" loading="eager">
         </picture>
       </div>
     </div>
@@ -54,19 +54,19 @@
 
       <!-- Action Buttons: Read & Download (with automatic Resume for returning readers) -->
       <div class="hero-cta-buttons">
-        <a id="btn-hero-primary" href="read/ch_1.html" class="btn-primary">
+        <a id="btn-hero-primary" href="/read/ch_1" class="btn-primary">
           <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"/></svg>
           <span id="hero-primary-text">Read</span>
         </a>
-        <a href="chapters.html" class="btn-secondary">
+        <a href="/chapters" class="btn-secondary">
           <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
           Chapters
         </a>
-        <a href="account" class="btn-secondary">
+        <a href="/account" class="btn-secondary">
           <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
           Profile
         </a>
-        <a href="download.html" class="btn-secondary">
+        <a href="/download" class="btn-secondary">
           <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" x2="12" y1="15" y2="3"/></svg>
           Download
         </a>
@@ -103,8 +103,8 @@
     <p>Ad-free, zero trackers, 100% static client-side architecture. Optimized for desktop & mobile.</p>
   </footer>
 
-  <script src="assets/anime.min.js"></script>
-  <script src="assets/waline-config.js"></script>
+  <script src="/assets/anime.min.js"></script>
+  <script src="/assets/waline-config.js"></script>
   <script>
     // Restore last read chapter button
     try {
@@ -113,7 +113,7 @@
         const primaryBtn = document.getElementById('btn-hero-primary');
         const primaryTxt = document.getElementById('hero-primary-text');
         if (primaryBtn && primaryTxt) {
-          primaryBtn.href = 'read/ch_' + lastRead.chapter + '.html';
+          primaryBtn.href = '/read/ch_' + lastRead.chapter;
           primaryTxt.textContent = 'Resume Ch. ' + lastRead.chapter;
         }
       }
@@ -217,7 +217,7 @@
     // Register PWA Service Worker & Install Handler
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
-        navigator.serviceWorker.register('./sw.js').catch(err => console.debug('SW reg failed', err));
+        navigator.serviceWorker.register('/sw.js').catch(err => console.debug('SW reg failed', err));
       });
     }
 

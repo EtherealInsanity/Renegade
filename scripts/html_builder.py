@@ -100,7 +100,7 @@ def main():
             prev_disabled = "disabled"
         else:
             prev_num = chapters[idx - 1]["chapter"]
-            prev_href = f"ch_{prev_num}.html"
+            prev_href = f"/read/ch_{prev_num}"
             prev_label = f"Ch. {prev_num}"
             prev_disabled = ""
 
@@ -110,7 +110,7 @@ def main():
             next_disabled = "disabled"
         else:
             next_num = chapters[idx + 1]["chapter"]
-            next_href = f"ch_{next_num}.html"
+            next_href = f"/read/ch_{next_num}"
             next_label = f"Ch. {next_num}"
             next_disabled = ""
 

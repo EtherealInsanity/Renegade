@@ -3,36 +3,36 @@
    Precaches core app shell and dynamically caches read chapters for offline use
    ========================================================================== */
 
-const CACHE_NAME = 'renegade-reader-v16';
+const CACHE_NAME = 'renegade-reader-v18';
 
 // Base core assets to precache for offline shell
 const PRECACHE_ASSETS = [
-  './',
-  './index.html',
-  './download',
-  './download.html',
-  './chapters',
-  './chapters.html',
-  './account',
-  './account.html',
-  './manifest.webmanifest',
-  './assets/themes.css',
-  './assets/landing.css',
-  './assets/reader.css',
-  './assets/reader.js',
-  './assets/anime.min.js',
-  './assets/waline.css',
-  './assets/waline-config.js',
-  './assets/account.css',
-  './assets/account.js',
-  './assets/giscus.css',
-  './assets/giscus-config.js',
-  './assets/cover.webp',
-  './assets/cover.jpg',
-  './assets/icon-192.png',
-  './assets/icon-512.png',
-  './assets/apple-touch-icon.png',
-  './assets/favicon.png'
+  '/',
+  '/index.html',
+  '/download',
+  '/download.html',
+  '/chapters',
+  '/chapters.html',
+  '/account',
+  '/account.html',
+  '/manifest.webmanifest',
+  '/assets/themes.css',
+  '/assets/landing.css',
+  '/assets/reader.css',
+  '/assets/reader.js',
+  '/assets/anime.min.js',
+  '/assets/waline.css',
+  '/assets/waline-config.js',
+  '/assets/account.css',
+  '/assets/account.js',
+  '/assets/giscus.css',
+  '/assets/giscus-config.js',
+  '/assets/cover.webp',
+  '/assets/cover.jpg',
+  '/assets/icon-192.png',
+  '/assets/icon-512.png',
+  '/assets/apple-touch-icon.png',
+  '/assets/favicon.png'
 ];
 
 // Offline HTML fallback when a page hasn't been cached yet
@@ -42,8 +42,8 @@ const OFFLINE_PAGE_HTML = `<!DOCTYPE html>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Offline - Renegade Reader</title>
-  <link rel="stylesheet" href="./assets/themes.css">
-  <link rel="stylesheet" href="./assets/landing.css">
+  <link rel="stylesheet" href="/assets/themes.css">
+  <link rel="stylesheet" href="/assets/landing.css">
   <style>
     .offline-box {
       max-width: 600px;
@@ -63,7 +63,7 @@ const OFFLINE_PAGE_HTML = `<!DOCTYPE html>
     <p style="color: var(--text-muted); line-height: 1.6; margin-bottom: 24px;">
       You are currently offline. You can still read any chapters you previously opened, or access the offline EPUB library.
     </p>
-    <a href="./" class="btn-primary" style="text-decoration:none;">Return to Library</a>
+    <a href="/" class="btn-primary" style="text-decoration:none;">Return to Library</a>
   </div>
 </body>
 </html>`;
@@ -114,13 +114,14 @@ self.addEventListener('fetch', event => {
         }
         return networkResponse;
       }).catch(async () => {
-        const cached = await caches.match(request);
+        let cached = await caches.match(request);
         if (cached) return cached;
-        const altPath = url.pathname.endsWith('.html')
-          ? url.pathname.replace(/\.html$/, '')
-          : `${url.pathname}.html`;
-        const altCached = await caches.match(altPath);
-        if (altCached) return altCached;
+        const cleanPath = url.pathname.replace(/\/$/, '') || '/';
+        cached = await caches.match(cleanPath) || await caches.match(`${cleanPath}/`);
+        if (cached) return cached;
+        const htmlPath = `${cleanPath}.html`;
+        cached = await caches.match(htmlPath);
+        if (cached) return cached;
 
         return new Response(OFFLINE_PAGE_HTML, {
           headers: { 'Content-Type': 'text/html; charset=utf-8' }

@@ -71,7 +71,7 @@ def main():
                 display_title = f"Ch. {ch_num} – {title_text}"
 
             ch_items_html.append(
-                f'<a href="read/ch_{ch_num}.html" class="chapter-item-link" data-title="{title_text.lower()}">'
+                f'<a href="/read/ch_{ch_num}" class="chapter-item-link" data-title="{title_text.lower()}">'
                 f'{display_title}</a>'
             )
 
@@ -108,18 +108,18 @@ def main():
   <meta name="description" content="Read Renegade Immortal (仙逆) by Er Gen online. Fast, clean, ad-free reader across all 13 canonical books and 2,088 chapters.">
   <meta property="og:title" content="Renegade Immortal (仙逆) - Complete Web Novel Reader">
   <meta property="og:description" content="Read all 2,088 chapters of Renegade Immortal (仙逆) online. Ad-free, 13 custom Xianxia themes, instant offline download.">
-  <meta property="og:image" content="assets/cover.jpg">
+  <meta property="og:image" content="/assets/cover.jpg">
   <meta property="og:type" content="website">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:image" content="assets/cover.jpg">
+  <meta name="twitter:image" content="/assets/cover.jpg">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="apple-mobile-web-app-title" content="Renegade">
-  <link rel="manifest" href="manifest.webmanifest">
-  <link rel="stylesheet" href="assets/themes.css">
-  <link rel="stylesheet" href="assets/landing.css">
-  <link rel="icon" type="image/png" href="assets/favicon.png">
-  <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+  <link rel="manifest" href="/manifest.webmanifest">
+  <link rel="stylesheet" href="/assets/themes.css">
+  <link rel="stylesheet" href="/assets/landing.css">
+  <link rel="icon" type="image/png" href="/assets/favicon.png">
+  <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
 </head>
 <body>
 
@@ -138,8 +138,8 @@ def main():
       <div class="hero-cover-tilt-wrap" id="hero-cover-wrap">
         <div class="hero-cover-sheen" id="hero-cover-sheen"></div>
         <picture>
-          <source srcset="assets/cover.webp" type="image/webp">
-          <img src="assets/cover.jpg" alt="Renegade Immortal (仙逆) Novel Cover Art" width="340" height="452" class="hero-cover-img" loading="eager">
+          <source srcset="/assets/cover.webp" type="image/webp">
+          <img src="/assets/cover.jpg" alt="Renegade Immortal (仙逆) Novel Cover Art" width="340" height="452" class="hero-cover-img" loading="eager">
         </picture>
       </div>
     </div>
@@ -154,19 +154,19 @@ def main():
 
       <!-- Action Buttons: Read & Download (with automatic Resume for returning readers) -->
       <div class="hero-cta-buttons">
-        <a id="btn-hero-primary" href="read/ch_1.html" class="btn-primary">
+        <a id="btn-hero-primary" href="/read/ch_1.html" class="btn-primary">
           <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"/></svg>
           <span id="hero-primary-text">Read</span>
         </a>
-        <a href="chapters.html" class="btn-secondary">
+        <a href="/chapters" class="btn-secondary">
           <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
           Chapters
         </a>
-        <a href="account" class="btn-secondary">
+        <a href="/account" class="btn-secondary">
           <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
           Profile
         </a>
-        <a href="download.html" class="btn-secondary">
+        <a href="/download" class="btn-secondary">
           <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" x2="12" y1="15" y2="3"/></svg>
           Download
         </a>
@@ -203,8 +203,8 @@ def main():
     <p>Ad-free, zero trackers, 100% static client-side architecture. Optimized for desktop & mobile.</p>
   </footer>
 
-  <script src="assets/anime.min.js"></script>
-  <script src="assets/waline-config.js"></script>
+  <script src="/assets/anime.min.js"></script>
+  <script src="/assets/waline-config.js"></script>
   <script>
     // Restore last read chapter button
     try {{
@@ -213,7 +213,7 @@ def main():
         const primaryBtn = document.getElementById('btn-hero-primary');
         const primaryTxt = document.getElementById('hero-primary-text');
         if (primaryBtn && primaryTxt) {{
-          primaryBtn.href = 'read/ch_' + lastRead.chapter + '.html';
+          primaryBtn.href = '/read/ch_' + lastRead.chapter;
           primaryTxt.textContent = 'Resume Ch. ' + lastRead.chapter;
         }}
       }}
@@ -317,7 +317,7 @@ def main():
     // Register PWA Service Worker & Install Handler
     if ('serviceWorker' in navigator) {{
       window.addEventListener('load', () => {{
-        navigator.serviceWorker.register('./sw.js').catch(err => console.debug('SW reg failed', err));
+        navigator.serviceWorker.register('/sw.js').catch(err => console.debug('SW reg failed', err));
       }});
     }}
 
@@ -384,10 +384,10 @@ def main():
   <!-- Navigation -->
   <header class="landing-nav">
     <div class="nav-links">
-      <a href="./" class="nav-link">Home</a>
-      <a href="read/ch_1.html" class="nav-link">Read</a>
-      <a href="download.html" class="nav-link">EPUB</a>
-      <a href="account" class="nav-link">Profile</a>
+      <a href="/" class="nav-link">Home</a>
+      <a href="/read/ch_1" class="nav-link">Read</a>
+      <a href="/download" class="nav-link">EPUB</a>
+      <a href="/account" class="nav-link">Profile</a>
       <button id="theme-quick-toggle" class="nav-link" style="background: none; border: 1px solid var(--border-color); padding: 6px 12px; border-radius: var(--border-radius); cursor: pointer;" aria-label="Toggle Theme">
         ⚔️ Theme
       </button>
@@ -443,7 +443,7 @@ def main():
   <!-- Footer -->
   <footer class="landing-footer">
     <p>Renegade Reader · Unofficial fan reader platform for <em>Renegade Immortal (仙逆)</em> by Er Gen.</p>
-    <p><a href="./">← Back to Novel Overview</a> · <a href="download.html">Download Full EPUB</a></p>
+    <p><a href="/">← Back to Novel Overview</a> · <a href="/download">Download Full EPUB</a></p>
   </footer>
 
   <script src="assets/anime.min.js"></script>
@@ -516,7 +516,7 @@ def main():
         const link = document.getElementById('resume-chapter-link');
         const titleSpan = document.getElementById('resume-chapter-title');
         if (banner && link && titleSpan) {{
-          link.href = 'read/ch_' + lastRead.chapter + '.html';
+          link.href = '/read/ch_' + lastRead.chapter;
           titleSpan.textContent = 'Chapter ' + lastRead.chapter + (lastRead.title ? ' – ' + lastRead.title : '');
           banner.style.display = 'flex';
         }}
@@ -604,7 +604,7 @@ def main():
     // Register PWA Service Worker
     if ('serviceWorker' in navigator) {{
       window.addEventListener('load', () => {{
-        navigator.serviceWorker.register('./sw.js').catch(err => console.debug('SW reg failed', err));
+        navigator.serviceWorker.register('/sw.js').catch(err => console.debug('SW reg failed', err));
       }});
     }}
   </script>
@@ -613,20 +613,8 @@ def main():
 """
 
     os.makedirs("website/chapters", exist_ok=True)
-    chapters_subfolder_html = chapters_html
-    chapters_subfolder_html = chapters_subfolder_html.replace('content="assets/', 'content="../assets/')
-    chapters_subfolder_html = chapters_subfolder_html.replace('href="assets/', 'href="../assets/')
-    chapters_subfolder_html = chapters_subfolder_html.replace('src="assets/', 'src="../assets/')
-    chapters_subfolder_html = chapters_subfolder_html.replace('href="manifest.webmanifest"', 'href="../manifest.webmanifest"')
-    chapters_subfolder_html = chapters_subfolder_html.replace('href="./"', 'href="../"')
-    chapters_subfolder_html = chapters_subfolder_html.replace('href="read/', 'href="../read/')
-    chapters_subfolder_html = chapters_subfolder_html.replace('href="download.html"', 'href="../download.html"')
-    chapters_subfolder_html = chapters_subfolder_html.replace('href="account"', 'href="../account"')
-    chapters_subfolder_html = chapters_subfolder_html.replace("link.href = 'read/ch_'", "link.href = '../read/ch_'")
-    chapters_subfolder_html = chapters_subfolder_html.replace("navigator.serviceWorker.register('./sw.js')", "navigator.serviceWorker.register('../sw.js')")
-
     with open("website/chapters/index.html", "w", encoding="utf-8") as f:
-        f.write(chapters_subfolder_html)
+        f.write(chapters_html)
     print("Generated website/chapters/index.html (Clean route /chapters)")
 
     with open("website/chapters.html", "w", encoding="utf-8") as f:
@@ -638,14 +626,8 @@ def main():
         os.makedirs("website/account", exist_ok=True)
         with open("website/account.html", "r", encoding="utf-8") as f:
             account_src_html = f.read()
-        account_sub_html = account_src_html
-        account_sub_html = account_sub_html.replace('href="assets/', 'href="../assets/')
-        account_sub_html = account_sub_html.replace('src="assets/', 'src="../assets/')
-        account_sub_html = account_sub_html.replace('href="manifest.webmanifest"', 'href="../manifest.webmanifest"')
-        account_sub_html = account_sub_html.replace('href="./"', 'href="../"')
-        account_sub_html = account_sub_html.replace('href="read/', 'href="../read/')
         with open("website/account/index.html", "w", encoding="utf-8") as f:
-            f.write(account_sub_html)
+            f.write(account_src_html)
         print("Generated website/account/index.html (Clean route /account)")
 
     # Remove website/read/index.html if it exists to avoid phantom redirect
@@ -669,17 +651,17 @@ def main():
   <meta name="description" content="Download the complete 2,088-chapter Renegade Immortal EPUB for offline reading on any e-reader or mobile device.">
   <meta property="og:title" content="Download Renegade Immortal (仙逆) EPUB">
   <meta property="og:description" content="Offline full 2,088-chapter EPUB with clean formatting and metadata.">
-  <meta property="og:image" content="assets/cover.jpg">
+  <meta property="og:image" content="/assets/cover.jpg">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:image" content="assets/cover.jpg">
+  <meta name="twitter:image" content="/assets/cover.jpg">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="apple-mobile-web-app-title" content="Renegade">
-  <link rel="manifest" href="manifest.webmanifest">
-  <link rel="stylesheet" href="assets/themes.css">
-  <link rel="stylesheet" href="assets/landing.css">
-  <link rel="icon" type="image/png" href="assets/favicon.png">
-  <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+  <link rel="manifest" href="/manifest.webmanifest">
+  <link rel="stylesheet" href="/assets/themes.css">
+  <link rel="stylesheet" href="/assets/landing.css">
+  <link rel="icon" type="image/png" href="/assets/favicon.png">
+  <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
   <style>
     .download-container {{
       max-width: 800px;
@@ -767,23 +749,23 @@ def main():
 <body>
   <header class="landing-nav">
     <div class="nav-links">
-      <a href="./" class="nav-link">Home</a>
-      <a href="read/ch_1.html" class="nav-link">Read Online</a>
-      <a href="chapters.html" class="nav-link">Chapters</a>
-      <a href="account" class="nav-link">Profile</a>
+      <a href="/" class="nav-link">Home</a>
+      <a href="/read/ch_1" class="nav-link">Read Online</a>
+      <a href="/chapters" class="nav-link">Chapters</a>
+      <a href="/account" class="nav-link">Profile</a>
     </div>
   </header>
 
   <main class="download-container">
     <div class="download-card">
       <picture>
-        <source srcset="assets/cover.webp" type="image/webp">
-        <img src="assets/cover.jpg" alt="Renegade Immortal Cover" class="download-cover">
+        <source srcset="/assets/cover.webp" type="image/webp">
+        <img src="/assets/cover.jpg" alt="Renegade Immortal Cover" class="download-cover">
       </picture>
       <h1 style="margin: 0 0 8px 0; font-size: clamp(1.6rem, 4vw, 2rem);">Renegade Immortal (仙逆)</h1>
       <p style="color: var(--text-muted); margin-bottom: 24px;">Complete 2,088 Chapters · Full 13 Canonical Books · Offline EPUB</p>
 
-      <a href="download/Renegade_Immortal.epub" class="btn-primary" style="font-size: 1.05rem; padding: 14px 28px; display: inline-flex; align-items: center; gap: 10px; width: auto;" download>
+      <a href="/download/Renegade_Immortal.epub" class="btn-primary" style="font-size: 1.05rem; padding: 14px 28px; display: inline-flex; align-items: center; gap: 10px; width: auto;" download>
         <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" x2="12" y1="15" y2="3"/></svg>
         Download Full EPUB ({file_size_mb})
       </a>
@@ -841,7 +823,7 @@ def main():
     <p>Renegade Reader · Unofficial fan reader platform for <em>Renegade Immortal (仙逆)</em> by Er Gen.</p>
   </footer>
 
-  <script src="assets/anime.min.js"></script>
+  <script src="/assets/anime.min.js"></script>
   <script>
     try {{
       const saved = JSON.parse(localStorage.getItem('renegade_reader_settings'));
@@ -879,6 +861,13 @@ def main():
       btn.addEventListener('pointerup', reset);
       btn.addEventListener('pointerleave', reset);
     }});
+
+    // Register PWA Service Worker
+    if ('serviceWorker' in navigator) {{
+      window.addEventListener('load', () => {{
+        navigator.serviceWorker.register('/sw.js').catch(err => console.debug('SW reg failed', err));
+      }});
+    }}
   </script>
 </body>
 </html>
@@ -887,6 +876,23 @@ def main():
     with open("website/download.html", "w", encoding="utf-8") as f:
         f.write(download_html)
     print("Generated website/download.html")
+
+    # Generate clean route website/download/index.html
+    os.makedirs("website/download", exist_ok=True)
+    with open("website/download/index.html", "w", encoding="utf-8") as f:
+        f.write(download_html)
+    print("Generated website/download/index.html (Clean route /download)")
+
+    # Cloudflare Pages _redirects file for legacy .html paths
+    redirects_content = """# Cloudflare Pages 301 Redirects for Clean URLs
+/index.html       /            301
+/chapters.html    /chapters    301
+/download.html    /download    301
+/account.html     /account     301
+"""
+    with open("website/_redirects", "w", encoding="utf-8") as f:
+        f.write(redirects_content)
+    print("Generated website/_redirects (Cloudflare Pages Clean URL redirects)")
 
 if __name__ == "__main__":
     main()

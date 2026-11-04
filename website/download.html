@@ -8,17 +8,17 @@
   <meta name="description" content="Download the complete 2,088-chapter Renegade Immortal EPUB for offline reading on any e-reader or mobile device.">
   <meta property="og:title" content="Download Renegade Immortal (仙逆) EPUB">
   <meta property="og:description" content="Offline full 2,088-chapter EPUB with clean formatting and metadata.">
-  <meta property="og:image" content="assets/cover.jpg">
+  <meta property="og:image" content="/assets/cover.jpg">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:image" content="assets/cover.jpg">
+  <meta name="twitter:image" content="/assets/cover.jpg">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="apple-mobile-web-app-title" content="Renegade">
-  <link rel="manifest" href="manifest.webmanifest">
-  <link rel="stylesheet" href="assets/themes.css">
-  <link rel="stylesheet" href="assets/landing.css">
-  <link rel="icon" type="image/png" href="assets/favicon.png">
-  <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+  <link rel="manifest" href="/manifest.webmanifest">
+  <link rel="stylesheet" href="/assets/themes.css">
+  <link rel="stylesheet" href="/assets/landing.css">
+  <link rel="icon" type="image/png" href="/assets/favicon.png">
+  <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
   <style>
     .download-container {
       max-width: 800px;
@@ -106,23 +106,23 @@
 <body>
   <header class="landing-nav">
     <div class="nav-links">
-      <a href="./" class="nav-link">Home</a>
-      <a href="read/ch_1.html" class="nav-link">Read Online</a>
-      <a href="chapters.html" class="nav-link">Chapters</a>
-      <a href="account" class="nav-link">Profile</a>
+      <a href="/" class="nav-link">Home</a>
+      <a href="/read/ch_1" class="nav-link">Read Online</a>
+      <a href="/chapters" class="nav-link">Chapters</a>
+      <a href="/account" class="nav-link">Profile</a>
     </div>
   </header>
 
   <main class="download-container">
     <div class="download-card">
       <picture>
-        <source srcset="assets/cover.webp" type="image/webp">
-        <img src="assets/cover.jpg" alt="Renegade Immortal Cover" class="download-cover">
+        <source srcset="/assets/cover.webp" type="image/webp">
+        <img src="/assets/cover.jpg" alt="Renegade Immortal Cover" class="download-cover">
       </picture>
       <h1 style="margin: 0 0 8px 0; font-size: clamp(1.6rem, 4vw, 2rem);">Renegade Immortal (仙逆)</h1>
       <p style="color: var(--text-muted); margin-bottom: 24px;">Complete 2,088 Chapters · Full 13 Canonical Books · Offline EPUB</p>
 
-      <a href="download/Renegade_Immortal.epub" class="btn-primary" style="font-size: 1.05rem; padding: 14px 28px; display: inline-flex; align-items: center; gap: 10px; width: auto;" download>
+      <a href="/download/Renegade_Immortal.epub" class="btn-primary" style="font-size: 1.05rem; padding: 14px 28px; display: inline-flex; align-items: center; gap: 10px; width: auto;" download>
         <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" x2="12" y1="15" y2="3"/></svg>
         Download Full EPUB (9.1 MB)
       </a>
@@ -180,7 +180,7 @@
     <p>Renegade Reader · Unofficial fan reader platform for <em>Renegade Immortal (仙逆)</em> by Er Gen.</p>
   </footer>
 
-  <script src="assets/anime.min.js"></script>
+  <script src="/assets/anime.min.js"></script>
   <script>
     try {
       const saved = JSON.parse(localStorage.getItem('renegade_reader_settings'));
@@ -218,6 +218,13 @@
       btn.addEventListener('pointerup', reset);
       btn.addEventListener('pointerleave', reset);
     });
+
+    // Register PWA Service Worker
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/sw.js').catch(err => console.debug('SW reg failed', err));
+      });
+    }
   </script>
 </body>
 </html>

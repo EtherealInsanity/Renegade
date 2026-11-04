@@ -958,7 +958,7 @@
               displayTitle = 'Ch. ' + ch.chapter + ' – ' + displayTitle;
             }
 
-            chListHtml += `<a href="ch_${ch.chapter}.html" class="drawer-ch-item${activeClass}"${activeAttr} data-num="${ch.chapter}" data-title="${ch.title.toLowerCase()}"><span class="drawer-ch-title">${displayTitle}</span><span class="drawer-ch-num">#${ch.chapter}</span></a>`;
+            chListHtml += `<a href="/read/ch_${ch.chapter}" class="drawer-ch-item${activeClass}"${activeAttr} data-num="${ch.chapter}" data-title="${ch.title.toLowerCase()}"><span class="drawer-ch-title">${displayTitle}</span><span class="drawer-ch-num">#${ch.chapter}</span></a>`;
           });
 
           const activeVolClass = isCurrentBook ? ' active' : '';

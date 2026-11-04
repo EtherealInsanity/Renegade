@@ -150,7 +150,7 @@
     // Update Resume button in nav
     const resumeBtn = document.getElementById('account-resume-btn');
     if (resumeBtn && lastRead && lastRead.chapter) {
-      resumeBtn.href = `${basePrefix}read/ch_${lastRead.chapter}.html`;
+      resumeBtn.href = `/read/ch_${lastRead.chapter}.html`;
       resumeBtn.innerHTML = `<span>Resume Ch. ${lastRead.chapter}</span>`;
     }
   });
@@ -452,7 +452,7 @@
       });
 
       if (window.loadWaline) {
-        window.loadWaline(container.querySelector('#waline-account-thread'), '/account.html');
+        window.loadWaline(container.querySelector('#waline-account-thread'), '/account');
       }
     }
   }
@@ -614,7 +614,7 @@
           <p class="empty-state-desc">
             ${allHighlights.length === 0 ? 'While reading any chapter, select text to illuminate passages with cultivation colors and record your insight notes!' : 'No highlights match your current search or color filters.'}
           </p>
-          ${allHighlights.length === 0 ? `<a href="${basePrefix}read/ch_1.html" class="btn-waline-auth" style="margin-top:8px;">Begin Reading Chapter 1</a>` : ''}
+          ${allHighlights.length === 0 ? `<a href="/read/ch_1" class="btn-waline-auth" style="margin-top:8px;">Begin Reading Chapter 1</a>` : ''}
         </div>
       `;
       return;
@@ -635,7 +635,7 @@
       };
       const colorLabel = colorNameMap[hl.color] || 'Highlight';
 
-      const jumpHref = hl.isChapterSummary ? `${basePrefix}read/ch_${hl.chapter}.html#chapter-notes` : `${basePrefix}read/ch_${hl.chapter}.html#${hl.id}`;
+      const jumpHref = hl.isChapterSummary ? `/read/ch_${hl.chapter}#chapter-notes` : `/read/ch_${hl.chapter}#${hl.id}`;
 
       card.innerHTML = `
         <div class="highlight-card-header">
@@ -779,7 +779,7 @@
             <p class="empty-state-desc">
               ${targetUser ? `No recorded discussions under nickname "${targetUser}".` : 'Sign in to see your chapter comments and join fellow cultivators in chapter discussions!'}
             </p>
-            <a href="${basePrefix}read/ch_1.html#comments-section" class="btn-waline-auth" style="margin-top:8px;">Explore Chapter Discussions</a>
+            <a href="/read/ch_1#comments-section" class="btn-waline-auth" style="margin-top:8px;">Explore Chapter Discussions</a>
           </div>
         `;
         return;
@@ -790,7 +790,7 @@
         const card = document.createElement('div');
         card.className = 'comment-card';
         const dateStr = c.time ? new Date(c.time).toLocaleDateString() : '';
-        const chapterPath = c.url || '/read/ch_1.html';
+        const chapterPath = c.url || '/read/ch_1';
         const chapterMatch = chapterPath.match(/ch_(\d+)/);
         const chapterLabel = chapterMatch ? `Chapter ${chapterMatch[1]}` : 'General Discussion';
 

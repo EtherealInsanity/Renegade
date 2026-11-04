@@ -1,0 +1,5 @@
+# Cloudflare Pages 301 Redirects for Clean URLs
+/index.html       /            301
+/chapters.html    /chapters    301
+/download.html    /download    301
+/account.html     /account     301
