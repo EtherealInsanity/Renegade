@@ -293,43 +293,22 @@
     }, { passive: true });
   }
 
-  // Immersive Auto-Hide on scroll & tap
-  function initImmersiveReading() {
-    const header = document.getElementById('reader-header');
-    let lastScrollY = window.scrollY;
-    let ticking = false;
+  // Floating Back to Top button
+  function initBackToTop() {
+    const btn = document.getElementById('btn-back-to-top');
+    if (!btn) return;
 
     window.addEventListener('scroll', () => {
-      if (!ticking) {
-        window.requestAnimationFrame(() => {
-          const currentScrollY = window.scrollY;
-          const delta = currentScrollY - lastScrollY;
-
-          // Hide when scrolling in either direction away from top (non-persistent)
-          if (currentScrollY > 60) {
-            if (Math.abs(delta) > 5) {
-              if (header) header.classList.add('immersive-hidden');
-            }
-          } else {
-            // Only show at the very top of the chapter
-            if (header) header.classList.remove('immersive-hidden');
-          }
-
-          lastScrollY = currentScrollY;
-          ticking = false;
-        });
-        ticking = true;
+      if (window.scrollY > 400) {
+        btn.classList.add('visible');
+      } else {
+        btn.classList.remove('visible');
       }
     }, { passive: true });
 
-    // Center screen tap toggles header
-    const readerContent = document.getElementById('reader-content');
-    if (readerContent) {
-      readerContent.addEventListener('click', e => {
-        if (e.target.closest('a, button, input, textarea, select, .cultivator-notes-section, .cultivator-comments-section, .giscus-thread-container')) return;
-        if (header) header.classList.toggle('immersive-hidden');
-      });
-    }
+    btn.addEventListener('click', () => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
   }
 
   document.addEventListener('DOMContentLoaded', () => {
@@ -677,7 +656,7 @@
 
     initKeyboardNav();
     initTouchNavigation();
-    initImmersiveReading();
+    initBackToTop();
     initComments();
 
     // Anime.js entrance animation for header
@@ -685,14 +664,13 @@
       anime({
         targets: '.reader-header',
         opacity: [0, 1],
-        translateY: [-16, 0],
         duration: 500,
         easing: 'easeOutQuad'
       });
     }
 
     // Button micro-interactions with Anime.js
-    document.querySelectorAll('.icon-btn').forEach(btn => {
+    document.querySelectorAll('.icon-btn, .chapter-end-btn, .floating-back-to-top').forEach(btn => {
       btn.addEventListener('pointerdown', () => {
         if (window.anime) {
           anime({ targets: btn, scale: 0.94, duration: 80, easing: 'easeOutQuad' });

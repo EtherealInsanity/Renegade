@@ -38,28 +38,17 @@ body {
   will-change: width;
 }
 
-/* Sticky Header - Seamless ORV Frosted Glass */
+/* Document Header - Clean Non-Sticky Flow */
 .reader-header {
-  position: sticky;
-  top: 0;
-  left: 0;
+  position: relative;
   width: 100%;
-  background: var(--nav-bg);
-  backdrop-filter: blur(18px);
-  -webkit-backdrop-filter: blur(18px);
+  background: transparent;
   border-bottom: none;
-  z-index: 900;
+  z-index: 10;
   display: flex;
   align-items: center;
   justify-content: flex-end;
-  padding: 10px 20px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
-  transition: transform 0.28s cubic-bezier(0.16, 1, 0.3, 1), background var(--transition);
-}
-
-.reader-header.immersive-hidden {
-  transform: translateY(-100%);
-  pointer-events: none;
+  padding: 16px 24px;
 }
 
 .reader-header .header-left,
@@ -296,6 +285,48 @@ body {
   height: 1px;
   background: radial-gradient(circle, var(--accent-color) 0%, transparent 80%);
   margin: 32px 0;
+}
+
+/* End-of-Chapter Navigation (ORV Borderless Pill Links) */
+.chapter-end-nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  margin: 40px 0 24px 0;
+}
+
+.chapter-end-btn {
+  background: var(--bg-secondary);
+  color: var(--text-color);
+  text-decoration: none;
+  border: none;
+  border-radius: 26px;
+  padding: 12px 22px;
+  font-weight: 600;
+  font-size: 0.95rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 46px;
+  box-shadow: var(--shadow-sm);
+  transition: all var(--transition);
+  touch-action: manipulation;
+}
+
+.chapter-end-btn:hover,
+.chapter-end-btn:active {
+  background: var(--bg-tertiary);
+  color: var(--accent-color);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+.chapter-end-btn.disabled {
+  opacity: 0.3;
+  pointer-events: none;
+  cursor: default;
 }
 
 
@@ -862,13 +893,69 @@ select.font-select:focus {
   transform: translate(-50%, -50%) scale(1);
 }
 
+/* Floating Back to Top Button */
+.floating-back-to-top {
+  position: fixed;
+  bottom: 28px;
+  right: 24px;
+  z-index: 850;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: none;
+  background: var(--card-bg);
+  color: var(--text-color);
+  box-shadow: var(--shadow-md);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(14px);
+  transition: opacity 0.25s ease, transform 0.25s ease, background var(--transition), color var(--transition);
+  touch-action: manipulation;
+}
+
+.floating-back-to-top.visible {
+  opacity: 0.92;
+  pointer-events: auto;
+  transform: translateY(0);
+}
+
+.floating-back-to-top:hover,
+.floating-back-to-top:active {
+  opacity: 1;
+  background: var(--bg-tertiary);
+  color: var(--accent-color);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-lg);
+}
+
 /* ==========================================================================
    Mobile Responsive Rules (< 768px and < 640px)
    ========================================================================== */
 
 @media (max-width: 640px) {
   .reader-header {
-    padding: 8px 12px;
+    padding: 12px 16px;
+  }
+
+  .chapter-end-nav {
+    gap: 12px;
+  }
+
+  .chapter-end-btn {
+    flex: 1;
+    padding: 12px 14px;
+    font-size: 0.9rem;
+  }
+
+  .floating-back-to-top {
+    bottom: 20px;
+    right: 18px;
+    width: 40px;
+    height: 40px;
   }
 
   .reader-header .header-right {
