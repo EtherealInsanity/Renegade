@@ -1,0 +1,172 @@
+/*!
+ * Renegade Reader - Xianxia Cultivation Theme for Waline Comments
+ * Automatically maps to the active Daoist palette across all 13 themes
+ */
+
+:root {
+  --waline-font-size: 15px;
+  --waline-theme-color: var(--accent-color, #ef4444);
+  --waline-active-color: var(--accent-hover, #dc2626);
+  --waline-color: var(--text-color, #e2e8f0);
+  --waline-bg-color: var(--card-bg, #141620);
+  --waline-bg-color-light: var(--bg-secondary, #13151c);
+  --waline-bg-color-hover: var(--bg-tertiary, #1b1e28);
+  --waline-border-color: var(--border-color, rgba(255, 255, 255, 0.08));
+  --waline-disable-bg-color: var(--bg-secondary, #13151c);
+  --waline-disable-color: var(--text-dim, #64748b);
+  --waline-code-bg-color: var(--code-bg, #07080b);
+  --waline-bq-color: var(--accent-color, #ef4444);
+  --waline-badge-color: var(--accent-color, #ef4444);
+  --waline-info-bg-color: var(--bg-secondary, #13151c);
+  --waline-info-color: var(--text-muted, #94a3b8);
+  --waline-avatar-radius: 50%;
+  --waline-border: 1px solid var(--waline-border-color);
+  --waline-box-shadow: none;
+}
+
+/* Waline Widget Base Tweaks */
+[data-waline] {
+  font-family: inherit;
+  color: var(--waline-color);
+}
+
+.waline-thread-container {
+  min-height: 180px;
+  width: 100%;
+  margin-top: 1rem;
+}
+
+/* Panel & Inputs */
+.wl-panel {
+  background: var(--waline-bg-color) !important;
+  border: 1px solid var(--waline-border-color) !important;
+  border-radius: 10px !important;
+  box-shadow: var(--shadow-sm, 0 4px 16px rgba(0, 0, 0, 0.2)) !important;
+}
+
+.wl-header {
+  border-bottom: 1px solid var(--waline-border-color) !important;
+}
+
+.wl-header label {
+  color: var(--text-muted) !important;
+}
+
+.wl-input,
+.wl-header input {
+  background: transparent !important;
+  color: var(--text-color) !important;
+  border: none !important;
+}
+
+.wl-input::placeholder,
+.wl-header input::placeholder {
+  color: var(--text-dim) !important;
+}
+
+.wl-editor {
+  background: transparent !important;
+  color: var(--text-color) !important;
+  font-size: 15px !important;
+}
+
+.wl-editor::placeholder {
+  color: var(--text-dim) !important;
+}
+
+/* Buttons */
+.wl-btn {
+  border-radius: 8px !important;
+  font-weight: 500 !important;
+  transition: all 0.2s ease !important;
+}
+
+.wl-btn.primary {
+  background: var(--waline-theme-color) !important;
+  border-color: var(--waline-theme-color) !important;
+  color: #ffffff !important;
+}
+
+.wl-btn.primary:hover {
+  background: var(--waline-active-color) !important;
+  border-color: var(--waline-active-color) !important;
+  transform: translateY(-1px);
+}
+
+/* Cards & Thread replies */
+.wl-card-item {
+  border-bottom: 1px solid var(--waline-border-color) !important;
+  padding: 1rem 0 !important;
+}
+
+.wl-card .wl-nick {
+  color: var(--text-color) !important;
+  font-weight: 600 !important;
+}
+
+.wl-card .wl-time {
+  color: var(--text-dim) !important;
+}
+
+.wl-reply {
+  color: var(--waline-theme-color) !important;
+}
+
+/* Loading skeleton */
+.waline-skeleton {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2.5rem 1rem;
+  gap: 0.75rem;
+  color: var(--text-dim);
+  font-size: 0.9rem;
+}
+
+.waline-spinner {
+  width: 24px;
+  height: 24px;
+  border: 2.5px solid var(--border-color);
+  border-top-color: var(--accent-color);
+  border-radius: 50%;
+  animation: waline-spin 0.8s linear infinite;
+}
+
+@keyframes waline-spin {
+  to { transform: rotate(360deg); }
+}
+
+/* Configuration Notice Card (shown when serverURL is empty) */
+.waline-notice-card {
+  background: var(--card-bg, #141620);
+  border: 1px dashed var(--accent-color, #ef4444);
+  border-radius: 12px;
+  padding: 1.75rem 1.5rem;
+  text-align: center;
+  color: var(--text-color, #e2e8f0);
+  margin: 1rem 0;
+  box-shadow: var(--shadow-sm);
+}
+
+.waline-notice-card h4 {
+  margin: 0.5rem 0 0.5rem;
+  font-size: 1.15rem;
+  color: var(--accent-color, #ef4444);
+}
+
+.waline-notice-card p {
+  margin: 0.25rem 0 0.75rem;
+  font-size: 0.95rem;
+  color: var(--text-muted, #94a3b8);
+  line-height: 1.6;
+}
+
+.waline-notice-card code {
+  background: var(--code-bg, #07080b);
+  border: 1px solid var(--border-color, rgba(255, 255, 255, 0.1));
+  padding: 0.2rem 0.5rem;
+  border-radius: 4px;
+  color: var(--accent-color, #ef4444);
+  font-size: 0.85rem;
+}

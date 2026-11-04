@@ -26,7 +26,19 @@ CANONICAL_BOOKS = [
 ]
 
 MISSING_TITLES = {
+    66: "Chapter 66 – Forced Relocation",
+    67: "Chapter 67 – Leaving Heng Yue Sect",
+    68: "Chapter 68 – Dealing With Trouble",
+    69: "Chapter 69 – Puppet Technique",
+    109: "Chapter 109 – Killing a Pseudo Core Formation",
+    111: "Chapter 111 – Sorting Loot",
+    112: "Chapter 112 – Two Months (1)",
+    113: "Chapter 113 – Two Months (2)",
+    114: "Chapter 114 – Waiting for Wang Lin",
+    115: "Chapter 115 – Do You Dare to Fight With Me?",
+    116: "Chapter 116 – Incomplete Soul Flag",
     359: "Chapter 359 – War Chariot's Wrath",
+    537: "Chapter 537 – Lifting the Tribe",
     538: "Chapter 538 – You Are Not Qualified!",
     939: "Chapter 939 – Ji Xiantian",
     1056: "Chapter 1056 – Prelude to Tuo Sen's Chaos",
@@ -133,7 +145,11 @@ def main():
             # Skip if paragraph is identical duplicate of the chapter title
             norm_p = re.sub(r"\s+", " ", p_clean).lower()
             norm_t = re.sub(r"\s+", " ", title).lower()
-            if norm_p == norm_t or norm_p == f"chapter {ch_num}":
+            if (
+                norm_p == norm_t
+                or norm_p == f"chapter {ch_num}"
+                or (ch_num in MISSING_TITLES and "untitled" in norm_p)
+            ):
                 continue
             p_clean = clean_text(p_clean)
             clean_paragraphs.append(p_clean)

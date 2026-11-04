@@ -144,16 +144,18 @@
     }
   }
 
-  // Chapter Discussions (Giscus Comments with Lazy Load)
-  function initGiscusComments() {
-    const threadContainer = document.getElementById('giscus-thread-container');
+  // Chapter Discussions (Waline Comments with Lazy Load)
+  function initComments() {
+    const threadContainer = document.getElementById('waline-thread-container') || document.getElementById('waline') || document.getElementById('giscus-thread-container');
     if (!threadContainer) return;
 
-    const term = threadContainer.getAttribute('data-term') || document.title;
+    const path = threadContainer.getAttribute('data-path') || threadContainer.getAttribute('data-term') || window.location.pathname;
 
-    function triggerGiscus() {
-      if (window.loadGiscus) {
-        window.loadGiscus(threadContainer, term);
+    function triggerComments() {
+      if (window.loadWaline) {
+        window.loadWaline(threadContainer, path);
+      } else if (window.loadGiscus) {
+        window.loadGiscus(threadContainer, path);
       }
     }
 
@@ -165,7 +167,7 @@
         if (target) {
           e.preventDefault();
           target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-          triggerGiscus();
+          triggerComments();
         }
       });
     });
@@ -175,13 +177,13 @@
         entries.forEach(entry => {
           if (entry.isIntersecting) {
             obs.disconnect();
-            triggerGiscus();
+            triggerComments();
           }
         });
       }, { rootMargin: '300px 0px' });
       observer.observe(threadContainer);
     } else {
-      triggerGiscus();
+      triggerComments();
     }
   }
 
@@ -673,7 +675,7 @@
     initKeyboardNav();
     initTouchNavigation();
     initImmersiveReading();
-    initGiscusComments();
+    initComments();
 
     // Anime.js entrance animation for header
     if (window.anime && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {

@@ -78,11 +78,11 @@
           </h3>
           <span class="landing-assembly-sub">Share your thoughts, reviews, and discuss the novel with fellow readers.</span>
         </div>
-        <span class="brand-badge">GitHub Discussion</span>
+        <span class="brand-badge">Waline Community</span>
       </div>
-      <div id="landing-giscus-container" class="giscus-thread-container" data-term="Renegade Immortal - Novel Reviews & Community Ratings">
-        <div class="giscus-skeleton">
-          <div class="giscus-spinner"></div>
+      <div id="landing-waline-container" class="waline-thread-container" data-path="/">
+        <div class="waline-skeleton">
+          <div class="waline-spinner"></div>
           <span>Loading discussion...</span>
         </div>
       </div>
@@ -96,7 +96,7 @@
   </footer>
 
   <script src="assets/anime.min.js"></script>
-  <script src="assets/giscus-config.js"></script>
+  <script src="assets/waline-config.js"></script>
   <script>
     // Restore last read chapter button
     try {
@@ -196,11 +196,13 @@
       btn.addEventListener('pointerleave', resetBtn);
     });
 
-    // Load Giscus for Reviews Section
-    if (window.loadGiscus) {
-      const gContainer = document.getElementById('landing-giscus-container');
-      if (gContainer) {
-        window.loadGiscus(gContainer, 'Renegade Immortal - Novel Reviews & Community Ratings');
+    // Load Waline for Reviews Section
+    const wContainer = document.getElementById('landing-waline-container') || document.getElementById('landing-giscus-container');
+    if (wContainer) {
+      if (window.loadWaline) {
+        window.loadWaline(wContainer, '/');
+      } else if (window.loadGiscus) {
+        window.loadGiscus(wContainer, '/');
       }
     }
 
