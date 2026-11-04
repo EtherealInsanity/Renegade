@@ -6,7 +6,7 @@ window.WALINE_CONFIG = {
   pageview: true,
   commentSorting: 'latest',
   locale: {
-    placeholder: 'Leave a Daoist remark... (Guest commenting supported! No account needed)',
+    placeholder: 'Write a comment...',
   }
 };
 
@@ -44,9 +44,9 @@ window.loadWaline = async function(container, customPath) {
     const notice = document.createElement('div');
     notice.className = 'waline-notice-card';
     notice.innerHTML = `
-      <div style="font-size: 2rem; margin-bottom: 0.5rem;">📜</div>
-      <h4>Waline Comments Integrated</h4>
-      <p>Guest commenting & threaded replies are ready! To connect your database, deploy your Waline backend and paste your <code>serverURL</code> into <code>website/assets/waline-config.js</code>.</p>
+      <div style="font-size: 2rem; margin-bottom: 0.5rem;">💬</div>
+      <h4>Comments</h4>
+      <p>Please configure your <code>serverURL</code> in <code>website/assets/waline-config.js</code> to view comments.</p>
     `;
     container.appendChild(notice);
     return;
@@ -68,8 +68,7 @@ window.loadWaline = async function(container, customPath) {
       commentSorting: window.WALINE_CONFIG.commentSorting || 'latest',
       dark: 'html:not([data-theme="bamboo"]):not([data-theme="medicine-pavilion"])',
       emoji: [
-        'https://unpkg.com/@waline/emojis@1.2.0/weibo',
-        'https://unpkg.com/@waline/emojis@1.2.0/bilibili',
+        'https://unpkg.com/@waline/emojis@1.2.0/tw-emoji',
       ],
       locale: window.WALINE_CONFIG.locale || {}
     });
