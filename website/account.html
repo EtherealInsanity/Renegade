@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="slaughter">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="theme-color" content="#0c0d12">
+  <title>Cultivator Profile & Highlights - Renegade Immortal</title>
+  <meta name="description" content="View your reading progress, Waline comment count, and manage your color-coded highlights and cultivation notes for Renegade Immortal.">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="stylesheet" href="assets/themes.css">
+  <link rel="stylesheet" href="assets/reader.css">
+  <link rel="stylesheet" href="assets/waline.css">
+  <link rel="stylesheet" href="assets/account.css">
+  <link rel="icon" type="image/png" href="assets/favicon.png">
+  <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+</head>
+<body class="account-page-body">
+
+  <!-- Top Navigation -->
+  <header class="account-nav">
+    <div class="account-nav-left">
+      <a href="./" class="account-brand-link">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+        <span>Renegade Immortal</span>
+        <span class="chinese">仙逆</span>
+      </a>
+    </div>
+    <div class="account-nav-right">
+      <a href="chapters.html" class="icon-btn" style="text-decoration:none; display:inline-flex; align-items:center; gap:6px; font-size:0.88rem; padding:6px 12px; width:auto; border-radius:18px;">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
+        <span>Chapters</span>
+      </a>
+      <a id="account-resume-btn" href="read/ch_1.html" class="icon-btn" style="text-decoration:none; display:inline-flex; align-items:center; gap:6px; font-size:0.88rem; padding:6px 12px; width:auto; border-radius:18px; border-color:var(--accent-color); color:var(--accent-color);">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+        <span>Read Chapter 1</span>
+      </a>
+    </div>
+  </header>
+
+  <!-- Main Content Container -->
+  <main class="account-container">
+
+    <!-- Cultivator Profile Header Card -->
+    <section class="profile-card">
+      <div class="profile-card-top">
+        <div class="profile-identity">
+          <div class="profile-avatar-wrap">
+            <div id="profile-avatar" class="profile-avatar">☯️</div>
+          </div>
+          <div class="profile-info">
+            <div class="profile-name-row">
+              <h1 id="profile-name" class="profile-name">Loading Cultivator...</h1>
+              <span id="profile-realm-badge" class="profile-realm-badge">🌱 Qi Condensation</span>
+            </div>
+            <p id="profile-status" class="profile-status">Checking Waline spiritual connection...</p>
+          </div>
+        </div>
+        <div class="profile-actions">
+          <button id="btn-auth-action" class="btn-waline-auth">Sign In / Register</button>
+        </div>
+      </div>
+
+      <!-- Stat Counters Grid -->
+      <div class="stat-grid">
+        <div class="stat-pill">
+          <span id="stat-comments-count" class="stat-num">0</span>
+          <span class="stat-label">💬 Total Comments</span>
+        </div>
+        <div class="stat-pill">
+          <span id="stat-highlights-count" class="stat-num">0</span>
+          <span class="stat-label">🖋️ Highlights</span>
+        </div>
+        <div class="stat-pill">
+          <span id="stat-notes-count" class="stat-num">0</span>
+          <span class="stat-label">📝 Notes</span>
+        </div>
+        <div class="stat-pill">
+          <span id="stat-read-progress" class="stat-num">0%</span>
+          <span class="stat-label">📖 Cultivated</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Embedded Waline Auth Box (collapsible) -->
+    <div id="waline-login-container"></div>
+
+    <!-- Navigation Tabs -->
+    <nav class="account-tabs" role="tablist">
+      <button class="tab-btn active" data-tab="tab-highlights" role="tab" aria-selected="true">
+        <span>🖋️ Highlights & Notes</span>
+        <span id="badge-highlights-count" class="tab-badge">0</span>
+      </button>
+      <button class="tab-btn" data-tab="tab-comments" role="tab" aria-selected="false">
+        <span>💬 Comment History</span>
+        <span id="badge-comments-count" class="tab-badge">0</span>
+      </button>
+      <button class="tab-btn" data-tab="tab-stats" role="tab" aria-selected="false">
+        <span>📜 Cultivator Realm & Data</span>
+      </button>
+    </nav>
+
+    <!-- Tab 1: Highlights & Notes -->
+    <section id="tab-highlights" class="tab-panel active" role="tabpanel">
+      <!-- Filter Bar -->
+      <div class="filter-bar">
+        <div class="filter-search-wrap">
+          <svg class="filter-search-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+          <input type="text" id="filter-search-input" class="filter-search-input" placeholder="Search saved quotes or notes...">
+        </div>
+
+        <div class="color-filter-chips">
+          <button class="color-filter-chip active" data-color="all">All</button>
+          <button class="color-filter-chip" data-color="gold">
+            <span class="color-chip-dot" style="background:#f59e0b;"></span>
+            <span>Gold</span>
+          </button>
+          <button class="color-filter-chip" data-color="jade">
+            <span class="color-chip-dot" style="background:#10b981;"></span>
+            <span>Jade</span>
+          </button>
+          <button class="color-filter-chip" data-color="crimson">
+            <span class="color-chip-dot" style="background:#ef4444;"></span>
+            <span>Red</span>
+          </button>
+          <button class="color-filter-chip" data-color="spirit">
+            <span class="color-chip-dot" style="background:#06b6d4;"></span>
+            <span>Blue</span>
+          </button>
+          <button class="color-filter-chip" data-color="purple">
+            <span class="color-chip-dot" style="background:#a855f7;"></span>
+            <span>Purple</span>
+          </button>
+        </div>
+
+        <select id="filter-chapter-select" class="filter-search-input" style="width: auto; padding-left: 12px; cursor: pointer;">
+          <option value="all">All Chapters</option>
+        </select>
+      </div>
+
+      <!-- Highlights Cards Container -->
+      <div id="highlights-list-container" class="highlights-list">
+        <div class="empty-state-card">
+          <div class="empty-state-icon">🖋️</div>
+          <h4 class="empty-state-title">Loading highlights...</h4>
+        </div>
+      </div>
+    </section>
+
+    <!-- Tab 2: Comments History -->
+    <section id="tab-comments" class="tab-panel" role="tabpanel">
+      <div id="comments-list-container" class="comments-list">
+        <div class="empty-state-card">
+          <div class="empty-state-icon">💬</div>
+          <h4 class="empty-state-title">Fetching discussions from Waline...</h4>
+        </div>
+      </div>
+    </section>
+
+    <!-- Tab 3: Cultivator Realm & Data Backup -->
+    <section id="tab-stats" class="tab-panel" role="tabpanel">
+      <!-- Realm Progression Card -->
+      <div class="realm-progress-card">
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+          <h3 style="margin: 0;">Cultivation Dao Progression</h3>
+          <span id="realm-progress-label" style="font-size: 0.88rem; color: var(--accent-color); font-weight: 600;">Chapter 1 of 2088</span>
+        </div>
+        <div class="realm-progress-bar-wrap">
+          <div id="realm-progress-fill" class="realm-progress-fill" style="width: 0%;"></div>
+        </div>
+        <div class="realm-stages-timeline">
+          <span>Qi Condensation</span>
+          <span>Core Formation</span>
+          <span>Soul Formation</span>
+          <span>Ascendant</span>
+          <span>Heaven Trampling</span>
+        </div>
+      </div>
+
+      <!-- Data Backup & Cloud Card -->
+      <div class="backup-card">
+        <h3 style="margin: 0;">Data Backup & Cloud Synchronization</h3>
+        <p style="font-size: 0.9rem; color: var(--text-muted); margin: 0;">
+          Your enlightenment highlights and notes are stored locally in your browser spiritual sea. You can export a JSON backup file anytime or import notes onto a new device.
+        </p>
+        <div class="backup-actions">
+          <button id="btn-export-data" class="btn-waline-auth">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            <span>Export Backup (JSON)</span>
+          </button>
+          <button id="btn-import-data" class="icon-btn" style="width: auto; padding: 8px 16px; border-radius: 20px;">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+            <span>Import Backup</span>
+          </button>
+          <input type="file" id="import-file-input" accept=".json" style="display: none;">
+          <button id="btn-clear-all-data" class="action-btn-mini danger" style="padding: 8px 12px;">
+            Erase Local Highlights
+          </button>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <script src="assets/waline-config.js"></script>
+  <script src="assets/account.js"></script>
+</body>
+</html>

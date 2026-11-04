@@ -144,6 +144,487 @@
     }
   }
 
+  // ==========================================================================
+  // Cultivator In-Reader Highlights & Notes Engine (5 Colors & Cloud Sync)
+  // ==========================================================================
+  const STORAGE_KEY_HIGHLIGHTS = 'renegade_highlights';
+  let floatingToolbar = null;
+  let activeSelectionRange = null;
+  let noteModalOverlay = null;
+
+  function getStoredHighlights() {
+    try {
+      const raw = localStorage.getItem(STORAGE_KEY_HIGHLIGHTS);
+      return raw ? JSON.parse(raw) : {};
+    } catch (e) {
+      console.error('Failed to parse highlights:', e);
+      return {};
+    }
+  }
+
+  function saveStoredHighlights(highlights) {
+    try {
+      localStorage.setItem(STORAGE_KEY_HIGHLIGHTS, JSON.stringify(highlights));
+      syncHighlightsToCloud(highlights);
+    } catch (e) {
+      console.error('Failed to save highlights:', e);
+    }
+  }
+
+  async function syncHighlightsToCloud(highlights) {
+    try {
+      const walineUserRaw = localStorage.getItem('WALINE_USER');
+      let token = '';
+      if (walineUserRaw) {
+        try {
+          const u = JSON.parse(walineUserRaw);
+          token = u.token || '';
+        } catch (_) {}
+      }
+      if (!token) return; // Guest mode - local only until authenticated
+
+      await fetch('/api/highlights', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify({ highlights })
+      });
+    } catch (_) {
+      // Offline or function not bound - local storage remains source of truth
+    }
+  }
+
+  // Expose global helper for account page & extensions
+  window.RenegadeHighlights = {
+    getAll: getStoredHighlights,
+    saveAll: saveStoredHighlights,
+    sync: syncHighlightsToCloud
+  };
+
+  function createFloatingToolbar() {
+    if (floatingToolbar) return floatingToolbar;
+    const bar = document.createElement('div');
+    bar.id = 'highlight-floating-toolbar';
+    bar.className = 'highlight-floating-toolbar';
+    bar.innerHTML = `
+      <div class="highlight-color-picker">
+        <button class="hl-color-dot" data-color="gold" title="Golden Core (Gold)" aria-label="Golden Core"></button>
+        <button class="hl-color-dot" data-color="jade" title="Jade Wood (Green)" aria-label="Jade Wood"></button>
+        <button class="hl-color-dot" data-color="crimson" title="Slaughter Red (Crimson)" aria-label="Slaughter Red"></button>
+        <button class="hl-color-dot" data-color="spirit" title="Spirit Blue (Cyan)" aria-label="Spirit Blue"></button>
+        <button class="hl-color-dot" data-color="purple" title="Purple Mist (Violet)" aria-label="Purple Mist"></button>
+      </div>
+      <button class="hl-btn" id="hl-btn-add-note" title="Add Note">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+        <span>Note</span>
+      </button>
+      <button class="hl-btn" id="hl-btn-copy" title="Copy Text">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>
+        <span>Copy</span>
+      </button>
+      <button class="hl-btn" id="hl-btn-dismiss" title="Dismiss" style="padding: 4px 6px;">✕</button>
+    `;
+    document.body.appendChild(bar);
+    floatingToolbar = bar;
+
+    bar.querySelectorAll('.hl-color-dot').forEach(dot => {
+      dot.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const color = dot.getAttribute('data-color') || 'gold';
+        applySelectionHighlight(color);
+      });
+    });
+
+    const noteBtn = bar.querySelector('#hl-btn-add-note');
+    if (noteBtn) {
+      noteBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const hl = applySelectionHighlight('gold');
+        if (hl) {
+          openNoteModal(hl);
+        }
+      });
+    }
+
+    const copyBtn = bar.querySelector('#hl-btn-copy');
+    if (copyBtn) {
+      copyBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        if (activeSelectionRange) {
+          const text = activeSelectionRange.toString();
+          navigator.clipboard.writeText(text).then(() => {
+            hideFloatingToolbar();
+          }).catch(() => {});
+        }
+      });
+    }
+
+    const dismissBtn = bar.querySelector('#hl-btn-dismiss');
+    if (dismissBtn) {
+      dismissBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        hideFloatingToolbar();
+        window.getSelection()?.removeAllRanges();
+      });
+    }
+
+    return bar;
+  }
+
+  function showFloatingToolbar(range) {
+    if (!range) return;
+    const bar = createFloatingToolbar();
+    activeSelectionRange = range.cloneRange();
+    const rect = range.getBoundingClientRect();
+    if (!rect || (rect.width === 0 && rect.height === 0)) return;
+
+    bar.style.display = 'flex';
+    const top = rect.top + window.scrollY - 10;
+    const left = rect.left + window.scrollX + (rect.width / 2);
+
+    const barWidth = 280;
+    const minLeft = (barWidth / 2) + 12;
+    const maxLeft = window.innerWidth - (barWidth / 2) - 12;
+    const clampedLeft = Math.max(minLeft, Math.min(maxLeft, left));
+
+    bar.style.top = `${top}px`;
+    bar.style.left = `${clampedLeft}px`;
+  }
+
+  function hideFloatingToolbar() {
+    if (floatingToolbar) {
+      floatingToolbar.style.display = 'none';
+    }
+    activeSelectionRange = null;
+  }
+
+  function applySelectionHighlight(color) {
+    if (!activeSelectionRange) return null;
+    const text = activeSelectionRange.toString().trim();
+    if (!text) return null;
+
+    const chapterMeta = document.querySelector('meta[name="chapter-number"]');
+    const chapterNum = chapterMeta ? parseInt(chapterMeta.getAttribute('content'), 10) : 1;
+    const hlId = `hl_${Date.now()}_${Math.random().toString(36).substring(2, 7)}`;
+
+    let paragraphIndex = -1;
+    let node = activeSelectionRange.startContainer;
+    while (node && node !== document.body) {
+      if (node.nodeName === 'P' && node.parentElement?.classList.contains('chapter-body')) {
+        const paragraphs = Array.from(document.querySelectorAll('.chapter-body p'));
+        paragraphIndex = paragraphs.indexOf(node);
+        break;
+      }
+      node = node.parentNode;
+    }
+
+    const hlObj = {
+      id: hlId,
+      chapter: chapterNum,
+      text: text,
+      color: color || 'gold',
+      note: '',
+      isPublic: true,
+      timestamp: Date.now(),
+      paragraphIndex: paragraphIndex
+    };
+
+    try {
+      const mark = document.createElement('mark');
+      mark.className = `renegade-highlight color-${hlObj.color}`;
+      mark.setAttribute('data-hl-id', hlId);
+      mark.setAttribute('data-color', hlObj.color);
+      mark.setAttribute('tabindex', '0');
+      mark.setAttribute('title', 'Click to view enlightenment note');
+
+      activeSelectionRange.surroundContents(mark);
+      attachHighlightClick(mark, hlObj);
+    } catch (e) {
+      wrapRangeCrossNode(activeSelectionRange, hlObj);
+    }
+
+    const all = getStoredHighlights();
+    all[hlId] = hlObj;
+    saveStoredHighlights(all);
+
+    hideFloatingToolbar();
+    window.getSelection()?.removeAllRanges();
+    return hlObj;
+  }
+
+  function wrapRangeCrossNode(range, hlObj) {
+    try {
+      const fragment = range.extractContents();
+      const mark = document.createElement('mark');
+      mark.className = `renegade-highlight color-${hlObj.color}`;
+      mark.setAttribute('data-hl-id', hlObj.id);
+      mark.setAttribute('data-color', hlObj.color);
+      mark.setAttribute('tabindex', '0');
+      mark.setAttribute('title', 'Click to view enlightenment note');
+      mark.appendChild(fragment);
+      range.insertNode(mark);
+      attachHighlightClick(mark, hlObj);
+    } catch (err) {
+      console.warn('Cross-node highlight fallback failed:', err);
+    }
+  }
+
+  function openNoteModal(hlObj) {
+    if (!hlObj) return;
+    if (!noteModalOverlay) {
+      const overlay = document.createElement('div');
+      overlay.id = 'hl-note-modal-overlay';
+      overlay.className = 'hl-modal-overlay';
+      overlay.style.display = 'none';
+      overlay.innerHTML = `
+        <div class="hl-modal-card" role="dialog" aria-modal="true">
+          <div class="hl-modal-header">
+            <h4>
+              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+              Enlightenment Insight Note
+            </h4>
+            <button class="icon-btn" id="hl-modal-close" aria-label="Close Note Modal">✕</button>
+          </div>
+          <blockquote class="hl-modal-quote" id="hl-modal-quote"></blockquote>
+          <textarea class="hl-modal-textarea" id="hl-modal-textarea" placeholder="Record your cultivation insights, realizations, or daoist thoughts on this passage..."></textarea>
+          <div class="hl-modal-options">
+            <div class="highlight-color-picker" id="hl-modal-colors">
+              <button class="hl-color-dot" data-color="gold" title="Golden Core"></button>
+              <button class="hl-color-dot" data-color="jade" title="Jade Wood"></button>
+              <button class="hl-color-dot" data-color="crimson" title="Slaughter Red"></button>
+              <button class="hl-color-dot" data-color="spirit" title="Spirit Blue"></button>
+              <button class="hl-color-dot" data-color="purple" title="Purple Mist"></button>
+            </div>
+            <label class="hl-public-toggle">
+              <input type="checkbox" id="hl-modal-public" checked>
+              <span>Public on Cultivator Profile</span>
+            </label>
+          </div>
+          <div class="hl-modal-actions">
+            <button class="icon-btn" id="hl-modal-delete" style="color: var(--accent-color); border-color: rgba(239, 68, 68, 0.4);">Delete Highlight</button>
+            <button class="icon-btn" id="hl-modal-save" style="border-color: var(--accent-color); color: var(--accent-color); font-weight: 600;">Save Note</button>
+          </div>
+        </div>
+      `;
+      document.body.appendChild(overlay);
+      noteModalOverlay = overlay;
+
+      overlay.querySelector('#hl-modal-close')?.addEventListener('click', closeNoteModal);
+      overlay.addEventListener('click', (e) => {
+        if (e.target === overlay) closeNoteModal();
+      });
+    }
+
+    const overlay = noteModalOverlay;
+    const quoteEl = overlay.querySelector('#hl-modal-quote');
+    const textarea = overlay.querySelector('#hl-modal-textarea');
+    const publicCheckbox = overlay.querySelector('#hl-modal-public');
+    const colorPicker = overlay.querySelector('#hl-modal-colors');
+    const saveBtn = overlay.querySelector('#hl-modal-save');
+    const deleteBtn = overlay.querySelector('#hl-modal-delete');
+
+    if (quoteEl) quoteEl.textContent = `“${hlObj.text}”`;
+    if (textarea) {
+      textarea.value = hlObj.note || '';
+      setTimeout(() => textarea.focus(), 50);
+    }
+    if (publicCheckbox) publicCheckbox.checked = hlObj.isPublic !== false;
+
+    let selectedColor = hlObj.color || 'gold';
+    function updateActiveDot() {
+      colorPicker?.querySelectorAll('.hl-color-dot').forEach(dot => {
+        if (dot.getAttribute('data-color') === selectedColor) {
+          dot.classList.add('active');
+        } else {
+          dot.classList.remove('active');
+        }
+      });
+    }
+    updateActiveDot();
+
+    colorPicker?.querySelectorAll('.hl-color-dot').forEach(dot => {
+      dot.onclick = () => {
+        selectedColor = dot.getAttribute('data-color') || 'gold';
+        updateActiveDot();
+      };
+    });
+
+    if (saveBtn) {
+      saveBtn.onclick = () => {
+        hlObj.note = textarea ? textarea.value.trim() : '';
+        hlObj.color = selectedColor;
+        hlObj.isPublic = publicCheckbox ? publicCheckbox.checked : true;
+        hlObj.timestamp = Date.now();
+
+        document.querySelectorAll(`mark[data-hl-id="${hlObj.id}"]`).forEach(m => {
+          m.className = `renegade-highlight color-${hlObj.color} ${hlObj.note ? 'has-note' : ''}`;
+          m.setAttribute('data-color', hlObj.color);
+          m.setAttribute('title', hlObj.note ? `Note: ${hlObj.note}` : 'Click to view enlightenment note');
+        });
+
+        const all = getStoredHighlights();
+        all[hlObj.id] = hlObj;
+        saveStoredHighlights(all);
+        closeNoteModal();
+      };
+    }
+
+    if (deleteBtn) {
+      deleteBtn.onclick = () => {
+        document.querySelectorAll(`mark[data-hl-id="${hlObj.id}"]`).forEach(m => {
+          const parent = m.parentNode;
+          while (m.firstChild) {
+            parent.insertBefore(m.firstChild, m);
+          }
+          parent.removeChild(m);
+        });
+
+        const all = getStoredHighlights();
+        delete all[hlObj.id];
+        saveStoredHighlights(all);
+        closeNoteModal();
+      };
+    }
+
+    overlay.style.display = 'flex';
+  }
+
+  function closeNoteModal() {
+    if (noteModalOverlay) {
+      noteModalOverlay.style.display = 'none';
+    }
+  }
+
+  function attachHighlightClick(mark, hlObj) {
+    mark.addEventListener('click', (e) => {
+      e.stopPropagation();
+      openNoteModal(hlObj);
+    });
+    mark.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        openNoteModal(hlObj);
+      }
+    });
+  }
+
+  function restoreHighlightsForChapter(chapterNum) {
+    if (!chapterNum) return;
+    const chapterBody = document.querySelector('.chapter-body');
+    if (!chapterBody) return;
+
+    const all = getStoredHighlights();
+    const chapterHighlights = Object.values(all).filter(h => h.chapter === chapterNum);
+    if (!chapterHighlights.length) return;
+
+    const paragraphs = Array.from(chapterBody.querySelectorAll('p'));
+
+    chapterHighlights.forEach(hl => {
+      if (!hl.text) return;
+      let targetP = (hl.paragraphIndex >= 0 && hl.paragraphIndex < paragraphs.length) ? paragraphs[hl.paragraphIndex] : null;
+
+      if (!targetP || !targetP.textContent.includes(hl.text)) {
+        targetP = paragraphs.find(p => p.textContent.includes(hl.text));
+      }
+
+      if (targetP) {
+        if (targetP.querySelector(`mark[data-hl-id="${hl.id}"]`)) return;
+
+        const walker = document.createTreeWalker(targetP, NodeFilter.SHOW_TEXT, null);
+        let textNode;
+        while ((textNode = walker.nextNode())) {
+          const idx = textNode.textContent.indexOf(hl.text);
+          if (idx !== -1) {
+            try {
+              const range = document.createRange();
+              range.setStart(textNode, idx);
+              range.setEnd(textNode, idx + hl.text.length);
+
+              const mark = document.createElement('mark');
+              mark.className = `renegade-highlight color-${hl.color || 'gold'} ${hl.note ? 'has-note' : ''}`;
+              mark.setAttribute('data-hl-id', hl.id);
+              mark.setAttribute('data-color', hl.color || 'gold');
+              mark.setAttribute('tabindex', '0');
+              mark.setAttribute('title', hl.note ? `Note: ${hl.note}` : 'Click to view enlightenment note');
+
+              range.surroundContents(mark);
+              attachHighlightClick(mark, hl);
+              break;
+            } catch (_) {}
+          }
+        }
+      }
+    });
+
+    handleDeepLinkAnchor();
+  }
+
+  function handleDeepLinkAnchor() {
+    const hash = window.location.hash;
+    if (hash && hash.startsWith('#hl-')) {
+      const hlId = hash.substring(1);
+      setTimeout(() => {
+        const mark = document.querySelector(`mark[data-hl-id="${hlId}"]`);
+        if (mark) {
+          mark.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          mark.classList.add('active-pulse');
+          setTimeout(() => mark.classList.remove('active-pulse'), 5500);
+        }
+      }, 350);
+    }
+  }
+
+  function initHighlights(chapterNum) {
+    restoreHighlightsForChapter(chapterNum);
+
+    const chapterBody = document.querySelector('.chapter-body');
+    if (!chapterBody) return;
+
+    let selectionTimer = null;
+    function handleSelectionCheck() {
+      clearTimeout(selectionTimer);
+      selectionTimer = setTimeout(() => {
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed || !sel.rangeCount) {
+          hideFloatingToolbar();
+          return;
+        }
+
+        const range = sel.getRangeAt(0);
+        const text = sel.toString().trim();
+        if (text.length < 2) {
+          hideFloatingToolbar();
+          return;
+        }
+
+        const common = range.commonAncestorContainer;
+        const isInsideBody = chapterBody.contains(common.nodeType === 3 ? common.parentNode : common);
+        if (!isInsideBody) {
+          hideFloatingToolbar();
+          return;
+        }
+
+        showFloatingToolbar(range);
+      }, 120);
+    }
+
+    document.addEventListener('selectionchange', handleSelectionCheck);
+    chapterBody.addEventListener('mouseup', handleSelectionCheck);
+    chapterBody.addEventListener('touchend', handleSelectionCheck);
+
+    document.addEventListener('pointerdown', (e) => {
+      if (floatingToolbar && !floatingToolbar.contains(e.target)) {
+        if (!window.getSelection()?.toString().trim()) {
+          hideFloatingToolbar();
+        }
+      }
+    });
+
+    window.addEventListener('hashchange', handleDeepLinkAnchor);
+  }
+
   // Chapter Discussions (Waline Comments with Lazy Load)
   function initComments() {
     const threadContainer = document.getElementById('waline-thread-container') || document.getElementById('waline') || document.getElementById('giscus-thread-container');
@@ -325,6 +806,9 @@
         timestamp: Date.now()
       }));
       initNotes(currentChapter);
+      initHighlights(currentChapter);
+    } else {
+      initHighlights(1);
     }
 
     window.addEventListener('scroll', updateProgress, { passive: true });

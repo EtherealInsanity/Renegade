@@ -7,7 +7,12 @@
   "5": "Renegade Reader (仙逆)",
   "6": "L",
   "7": "sw.js",
-  "8": "k",
+  "8": "account.js",
   "9": "waline-config.js",
-  "11": "Ponytail, lazy senior dev mode"
+  "10": "applySelectionHighlight",
+  "11": "Ponytail, lazy senior dev mode",
+  "12": "createFloatingToolbar",
+  "13": "initTouchNavigation",
+  "14": "highlights.js",
+  "15": "loadChaptersIntoDrawer"
 }

@@ -1057,3 +1057,289 @@ select.font-select:focus {
     height: 17px;
   }
 }
+
+/* ==========================================================================
+   Cultivator In-Reader Highlights & Notes System
+   ========================================================================== */
+
+:root {
+  --hl-gold-bg: rgba(245, 158, 11, 0.28);
+  --hl-gold-border: #f59e0b;
+  --hl-jade-bg: rgba(16, 185, 129, 0.28);
+  --hl-jade-border: #10b981;
+  --hl-crimson-bg: rgba(239, 68, 68, 0.28);
+  --hl-crimson-border: #ef4444;
+  --hl-spirit-bg: rgba(6, 182, 212, 0.28);
+  --hl-spirit-border: #06b6d4;
+  --hl-purple-bg: rgba(168, 85, 247, 0.28);
+  --hl-purple-border: #a855f7;
+}
+
+/* Highlighting in body */
+mark.renegade-highlight {
+  background-color: var(--hl-gold-bg);
+  border-bottom: 2px solid var(--hl-gold-border);
+  color: inherit;
+  padding: 1px 3px;
+  border-radius: 3px;
+  cursor: pointer;
+  position: relative;
+  transition: background-color 0.2s, filter 0.2s;
+  text-decoration: none;
+}
+
+mark.renegade-highlight:hover {
+  filter: brightness(1.18);
+}
+
+mark.renegade-highlight.color-gold {
+  background-color: var(--hl-gold-bg);
+  border-bottom-color: var(--hl-gold-border);
+}
+
+mark.renegade-highlight.color-jade {
+  background-color: var(--hl-jade-bg);
+  border-bottom-color: var(--hl-jade-border);
+}
+
+mark.renegade-highlight.color-crimson {
+  background-color: var(--hl-crimson-bg);
+  border-bottom-color: var(--hl-crimson-border);
+}
+
+mark.renegade-highlight.color-spirit {
+  background-color: var(--hl-spirit-bg);
+  border-bottom-color: var(--hl-spirit-border);
+}
+
+mark.renegade-highlight.color-purple {
+  background-color: var(--hl-purple-bg);
+  border-bottom-color: var(--hl-purple-border);
+}
+
+/* Note badge on highlight */
+mark.renegade-highlight.has-note::after {
+  content: '📝';
+  display: inline-block;
+  font-size: 0.68em;
+  margin-left: 3px;
+  vertical-align: super;
+  pointer-events: none;
+  opacity: 0.85;
+}
+
+/* Deep link flash pulse */
+@keyframes highlight-pulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(245, 158, 11, 0.8);
+    filter: brightness(1.5);
+  }
+  50% {
+    box-shadow: 0 0 0 8px rgba(245, 158, 11, 0);
+    filter: brightness(1.7);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(245, 158, 11, 0);
+    filter: brightness(1);
+  }
+}
+
+mark.renegade-highlight.active-pulse {
+  animation: highlight-pulse 1.8s ease-out 3;
+}
+
+/* Floating Action Toolbar */
+.highlight-floating-toolbar {
+  position: absolute;
+  z-index: 1000;
+  display: none;
+  align-items: center;
+  gap: 6px;
+  background: var(--nav-bg);
+  border: 1px solid var(--border-color);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  padding: 6px 10px;
+  border-radius: 28px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.45), 0 0 0 1px rgba(255, 255, 255, 0.05);
+  transform: translate(-50%, -100%);
+  margin-top: -10px;
+  user-select: none;
+  white-space: nowrap;
+  animation: hlFadeIn 0.18s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes hlFadeIn {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -90%) scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, -100%) scale(1);
+  }
+}
+
+.highlight-color-picker {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding-right: 6px;
+  border-right: 1px solid var(--border-color);
+}
+
+.hl-color-dot {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  border: 2px solid transparent;
+  cursor: pointer;
+  transition: transform 0.15s, border-color 0.15s;
+  padding: 0;
+}
+
+.hl-color-dot:hover {
+  transform: scale(1.22);
+}
+
+.hl-color-dot.active {
+  border-color: #fff;
+  transform: scale(1.15);
+}
+
+.hl-color-dot[data-color="gold"] { background-color: var(--hl-gold-border); }
+.hl-color-dot[data-color="jade"] { background-color: var(--hl-jade-border); }
+.hl-color-dot[data-color="crimson"] { background-color: var(--hl-crimson-border); }
+.hl-color-dot[data-color="spirit"] { background-color: var(--hl-spirit-border); }
+.hl-color-dot[data-color="purple"] { background-color: var(--hl-purple-border); }
+
+.hl-btn {
+  background: transparent;
+  border: none;
+  color: var(--text-color);
+  font-size: 0.82rem;
+  font-weight: 500;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 5px 8px;
+  border-radius: 14px;
+  cursor: pointer;
+  transition: background-color 0.15s, color 0.15s;
+}
+
+.hl-btn:hover {
+  background: rgba(255, 255, 255, 0.08);
+  color: var(--accent-color);
+}
+
+.hl-btn svg {
+  width: 14px;
+  height: 14px;
+}
+
+/* Highlight Note Modal / Popover */
+.hl-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.65);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  z-index: 1100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+}
+
+.hl-modal-card {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius);
+  width: 100%;
+  max-width: 480px;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.6);
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  animation: hlFadeIn 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.hl-modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.hl-modal-header h4 {
+  margin: 0;
+  font-size: 1.05rem;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--text-color);
+}
+
+.hl-modal-quote {
+  font-size: 0.92rem;
+  font-style: italic;
+  color: var(--text-muted);
+  border-left: 3px solid var(--accent-color);
+  padding: 6px 12px;
+  margin: 0;
+  background: rgba(255, 255, 255, 0.02);
+  border-radius: 0 6px 6px 0;
+  max-height: 80px;
+  overflow-y: auto;
+}
+
+.hl-modal-textarea {
+  width: 100%;
+  min-height: 90px;
+  background: var(--bg-color);
+  border: 1px solid var(--border-color);
+  color: var(--text-color);
+  border-radius: 6px;
+  padding: 10px;
+  font-family: inherit;
+  font-size: 0.95rem;
+  resize: vertical;
+}
+
+.hl-modal-textarea:focus {
+  outline: none;
+  border-color: var(--accent-color);
+}
+
+.hl-modal-options {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.hl-public-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.84rem;
+  color: var(--text-muted);
+  cursor: pointer;
+  user-select: none;
+}
+
+.hl-public-toggle input[type="checkbox"] {
+  accent-color: var(--accent-color);
+  cursor: pointer;
+}
+
+.hl-modal-actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 8px;
+  margin-top: 4px;
+}
+
