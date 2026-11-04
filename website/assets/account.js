@@ -155,6 +155,32 @@
     }
   });
 
+  function resolveCultivatorRole(item) {
+    if (window.getCultivatorRole) return window.getCultivatorRole(item);
+    const userId = item?.user_id ?? item?.id;
+    const name = (item?.nick || item?.display_name || item?.author || '').trim();
+    const email = (item?.mail || item?.email || '').toLowerCase();
+    const type = (item?.type || '').toLowerCase();
+    const label = (item?.label || '').toLowerCase();
+
+    if (userId === 1 || name.toLowerCase() === 'etherealinsanity' || email.includes('anc1ent.0')) {
+      return { title: 'Heavenly Dao (Owner)', type: 'owner', color: '#f59e0b' };
+    }
+    if (type === 'administrator') {
+      return { title: 'Guardian', type: 'guardian', color: '#a855f7' };
+    }
+    if (type === 'moderator' || label.includes('elder') || label.includes('mod')) {
+      return { title: 'Elder', type: 'elder', color: '#10b981' };
+    }
+    if (type && type !== 'guest') {
+      return { title: 'Daoist', type: 'daoist', color: '#38bdf8' };
+    }
+    if (name && name.toLowerCase() !== 'anonymous') {
+      return { title: 'Daoist', type: 'daoist', color: '#38bdf8' };
+    }
+    return { title: 'Wandering Cultivator', type: 'guest', color: '#94a3b8' };
+  }
+
   function renderProfileHeader(user, lastRead, isPublicMode, publicUsername) {
     const avatarEl = document.getElementById('profile-avatar');
     const nameEl = document.getElementById('profile-name');
@@ -171,11 +197,14 @@
 
     if (isPublicMode) {
       if (nameEl) nameEl.textContent = publicUsername;
+      const initialRole = resolveCultivatorRole({ nick: publicUsername });
       if (avatarEl) {
         avatarEl.textContent = (publicUsername[0] || 'C').toUpperCase();
         avatarEl.title = `Cultivator ${publicUsername}`;
       }
-      if (statusEl) statusEl.textContent = 'Fellow Cultivator Public Profile';
+      if (statusEl) {
+        statusEl.innerHTML = `<span style="color:${initialRole.color}; font-size:0.75rem;">●</span> ${initialRole.title} · Fellow Cultivator`;
+      }
       if (authActionBtn) authActionBtn.style.display = 'none';
       return;
     }
@@ -199,8 +228,8 @@
       const displayName = user.display_name || user.email || 'Cultivator';
       if (nameEl) nameEl.textContent = displayName;
       if (statusEl) {
-        const role = user.type === 'administrator' ? 'Grand Elder (Admin)' : 'Inner Disciple (Verified Reader)';
-        statusEl.textContent = `${role} · ${user.email || ''}`;
+        const role = resolveCultivatorRole(user);
+        statusEl.innerHTML = `<span style="color:${role.color}; font-size:0.75rem;">●</span> ${role.title} · ${user.email || ''}`;
       }
       if (authActionBtn) {
         authActionBtn.textContent = 'Sign Out';
@@ -214,7 +243,9 @@
       }
     } else {
       if (nameEl) nameEl.textContent = 'Wandering Cultivator (Guest)';
-      if (statusEl) statusEl.textContent = 'Local Guest · Sign in with Waline to sync across devices & publish profile';
+      if (statusEl) {
+        statusEl.innerHTML = `<span style="color:#94a3b8; font-size:0.75rem;">●</span> Wandering Cultivator · Local Guest`;
+      }
       if (authActionBtn) {
         authActionBtn.textContent = 'Sign In / Register';
         authActionBtn.onclick = (e) => {
@@ -721,6 +752,19 @@
 
       userComments = matched;
       const count = matched.length;
+
+      if (isPublicMode && matched.length > 0) {
+        const first = matched[0];
+        const realRole = resolveCultivatorRole(first);
+        const statusEl = document.getElementById('profile-status');
+        const avatarEl = document.getElementById('profile-avatar');
+        if (statusEl) {
+          statusEl.innerHTML = `<span style="color:${realRole.color}; font-size:0.75rem;">●</span> ${realRole.title} · Fellow Cultivator`;
+        }
+        if (avatarEl && first.avatar) {
+          avatarEl.innerHTML = `<img src="${first.avatar}" alt="${publicUsername}" style="width:100%;height:100%;border-radius:50%;object-fit:cover;">`;
+        }
+      }
 
       if (commentCountEl) commentCountEl.textContent = count;
       if (commentBadgeEl) commentBadgeEl.textContent = count;

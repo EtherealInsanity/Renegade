@@ -25164,9 +25164,9 @@
     "semantic_hash": ""
   },
   "website/sw.js": {
-    "mtime": 1793823785.446083,
-    "seen": 1793823963.0354948,
-    "ast_hash": "6cc06e05c05d8a2a76537dd043091112",
+    "mtime": 1793824121.0368752,
+    "seen": 1793824147.3578753,
+    "ast_hash": "203331df6b95989ae2d1fbad45da1ec3",
     "semantic_hash": ""
   },
   "website/assets/apple-touch-icon.png": {
@@ -25212,9 +25212,9 @@
     "semantic_hash": ""
   },
   "website/assets/waline-config.js": {
-    "mtime": 1793823766.5220315,
-    "seen": 1793823963.0354729,
-    "ast_hash": "9e713945e862eefe9a13098efc5e5d28",
+    "mtime": 1793824027.9666753,
+    "seen": 1793824147.3578544,
+    "ast_hash": "0bbb7c4275c61d5369ff2c33216f1408",
     "semantic_hash": ""
   },
   "functions/api/highlights.js": {
@@ -25224,9 +25224,9 @@
     "semantic_hash": ""
   },
   "website/assets/account.js": {
-    "mtime": 1793823931.252453,
-    "seen": 1793823963.035452,
-    "ast_hash": "9ae6f845b6be87d3533a05204a9ec9e4",
+    "mtime": 1793824116.7118661,
+    "seen": 1793824147.3578317,
+    "ast_hash": "d7553f62dc2f6ab37f135cb52d7d5fc5",
     "semantic_hash": ""
   },
   "website/account.html": {

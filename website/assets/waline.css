@@ -211,3 +211,246 @@
     transform: translateY(0);
   }
 }
+
+/* ==========================================================================
+   Cultivator Status Subtitle (shown below commenter name)
+   ========================================================================== */
+.wl-card-item .wl-head {
+  display: flex !important;
+  flex-wrap: wrap !important;
+  align-items: baseline !important;
+  gap: 0 8px !important;
+}
+
+.wl-card-item .wl-nick {
+  font-size: 0.95rem !important;
+  font-weight: 600 !important;
+  margin-right: 4px !important;
+}
+
+.wl-card-item .wl-time {
+  font-size: 0.78rem !important;
+  color: var(--text-dim, #64748b) !important;
+}
+
+.wl-card-item .wl-comment-actions {
+  margin-left: auto !important;
+}
+
+/* Status subtitle breaks onto its own line under nickname */
+.wl-cultivator-status {
+  width: 100% !important;
+  order: 3 !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 5px !important;
+  font-size: 0.78rem !important;
+  font-weight: 500 !important;
+  margin-top: 2px !important;
+  margin-bottom: 4px !important;
+  letter-spacing: 0.25px !important;
+  opacity: 0.95;
+}
+
+.wl-status-dot {
+  font-size: 0.65rem !important;
+  line-height: 1 !important;
+  display: inline-block !important;
+}
+
+/* Hide default redundant icons that clutter the username line */
+.wl-user .administrator-icon {
+  display: none !important;
+}
+
+/* Interactive Avatar Styling */
+.wl-user {
+  cursor: pointer !important;
+  position: relative !important;
+  transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+
+.wl-user:hover {
+  transform: scale(1.08) !important;
+}
+
+.wl-user .wl-user-avatar {
+  border-radius: 50% !important;
+  border: 1.5px solid var(--border-color, rgba(255, 255, 255, 0.15)) !important;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease !important;
+}
+
+.wl-user:hover .wl-user-avatar {
+  border-color: var(--accent-color, #ef4444) !important;
+  box-shadow: 0 0 10px var(--accent-glow, rgba(239, 68, 68, 0.35)) !important;
+}
+
+/* ==========================================================================
+   Cultivator Profile Quick-Preview Modal
+   ========================================================================== */
+.cultivator-preview-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 10000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s ease;
+}
+
+.cultivator-preview-overlay.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.cultivator-preview-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.65);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+}
+
+.cultivator-preview-card {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 360px;
+  background: var(--card-bg, #141620);
+  border: 1px solid var(--border-color, rgba(255, 255, 255, 0.12));
+  border-radius: 16px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(255, 255, 255, 0.05);
+  padding: 1.5rem;
+  color: var(--text-color, #e2e8f0);
+  transform: scale(0.92) translateY(10px);
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.cultivator-preview-overlay.active .cultivator-preview-card {
+  transform: scale(1) translateY(0);
+}
+
+.cultivator-preview-close {
+  position: absolute;
+  top: 12px;
+  right: 14px;
+  background: transparent;
+  border: none;
+  color: var(--text-dim, #94a3b8);
+  font-size: 1.5rem;
+  line-height: 1;
+  cursor: pointer;
+  padding: 4px;
+  border-radius: 6px;
+  transition: color 0.15s ease, background 0.15s ease;
+}
+
+.cultivator-preview-close:hover {
+  color: var(--text-color, #ffffff);
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.cultivator-preview-header {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 1rem;
+}
+
+.cultivator-preview-avatar-box {
+  position: relative;
+  width: 58px;
+  height: 58px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  box-shadow: 0 0 14px var(--role-glow-color, rgba(239, 68, 68, 0.4));
+  border: 2px solid var(--role-glow-color, var(--accent-color, #ef4444));
+  padding: 2px;
+  background: var(--bg-secondary, #13151c);
+}
+
+.cultivator-preview-avatar {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background: var(--bg-tertiary, #1b1e28);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: var(--text-color, #ffffff);
+  overflow: hidden;
+}
+
+.cultivator-preview-meta {
+  flex: 1;
+  min-width: 0;
+}
+
+.cultivator-preview-name {
+  font-size: 1.15rem;
+  font-weight: 700;
+  margin: 0 0 3px 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  color: var(--text-color, #ffffff);
+}
+
+.cultivator-preview-status-line {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 0.82rem;
+  font-weight: 500;
+  color: var(--text-muted, #cbd5e1);
+}
+
+.cultivator-preview-dot {
+  font-size: 0.65rem;
+  line-height: 1;
+}
+
+.cultivator-preview-body {
+  border-top: 1px solid var(--border-color, rgba(255, 255, 255, 0.08));
+  padding-top: 0.85rem;
+  margin-bottom: 1.25rem;
+}
+
+.cultivator-preview-desc {
+  font-size: 0.86rem;
+  color: var(--text-dim, #94a3b8);
+  line-height: 1.5;
+  margin: 0;
+}
+
+.cultivator-preview-footer {
+  display: flex;
+}
+
+.btn-cultivator-view-profile {
+  width: 100%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 10px 16px;
+  background: var(--accent-color, #ef4444);
+  color: #ffffff !important;
+  font-size: 0.88rem;
+  font-weight: 600;
+  text-decoration: none;
+  border-radius: 10px;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 12px var(--accent-glow, rgba(239, 68, 68, 0.3));
+}
+
+.btn-cultivator-view-profile:hover {
+  background: var(--accent-hover, #dc2626);
+  transform: translateY(-1px);
+  box-shadow: 0 6px 16px var(--accent-glow, rgba(239, 68, 68, 0.45));
+}
