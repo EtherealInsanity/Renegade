@@ -6,9 +6,9 @@
     "semantic_hash": "f83b5e41230ecb5e9cc4c30fe327677e"
   },
   "scripts/build_chapters.py": {
-    "mtime": 1793525877.6045084,
-    "seen": 1793526017.5291984,
-    "ast_hash": "accfe66a32da18c9399bc452a98d9a22",
+    "mtime": 1793810074.7259245,
+    "seen": 1793810168.6018772,
+    "ast_hash": "1c511944e5671488b0b9486906c5d894",
     "semantic_hash": ""
   },
   "scripts/build_landing.py": {
@@ -30,17 +30,16 @@
     "semantic_hash": ""
   },
   "website/meta/books.json": {
-    "mtime": 1793525983.0102022,
-    "seen": 1793526017.529232,
-    "ast_hash": "3028e21c64d6220dc2637bc490fb6af1",
+    "mtime": 1793810053.6992302,
+    "seen": 1793810168.6019087,
+    "ast_hash": "522e8b08d187634176929bbf63ad4710",
     "semantic_hash": ""
   },
   "website/meta/chapters.json": {
-    "mtime": 1793525982.9692013,
-    "seen": 1793526017.5292373,
-    "ast_hash": "464d410e32faa420abb86f033bc13270",
-    "semantic_hash": "464d410e32faa420abb86f033bc13270",
-    "ast_empty": true
+    "mtime": 1793810053.7082303,
+    "seen": 1793810168.6019137,
+    "ast_hash": "bb34e59f47049b8e2ec318bd8ca88fcd",
+    "semantic_hash": ""
   },
   "website/meta/stats.json": {
     "mtime": 1793525983.0150719,
@@ -6193,9 +6192,9 @@
     "semantic_hash": ""
   },
   "chapters/192.txt": {
-    "mtime": 1793525964.8635046,
-    "seen": 1793526017.5342195,
-    "ast_hash": "cef3fe90276844ff97b9603d01004965",
+    "mtime": 1793810053.688266,
+    "seen": 1793810168.6065972,
+    "ast_hash": "0218a26f1361dcac9fca86e0866bd3ed",
     "semantic_hash": ""
   },
   "chapters/1920.txt": {
@@ -6259,9 +6258,9 @@
     "semantic_hash": ""
   },
   "chapters/193.txt": {
-    "mtime": 1793525964.875954,
-    "seen": 1793526017.5342655,
-    "ast_hash": "ff7cd4d72880efacc3458a51f000ca09",
+    "mtime": 1793810053.689086,
+    "seen": 1793810168.6066482,
+    "ast_hash": "ce174b49fe368d16c68ef3c396f60a3e",
     "semantic_hash": ""
   },
   "chapters/1930.txt": {
@@ -6391,9 +6390,9 @@
     "semantic_hash": ""
   },
   "chapters/195.txt": {
-    "mtime": 1793525964.8957305,
-    "seen": 1793526017.5343573,
-    "ast_hash": "8f23965209b0c99be94bb4b3a1574a9d",
+    "mtime": 1793810053.690047,
+    "seen": 1793810168.6067657,
+    "ast_hash": "5e45e208261e836925be97786be3022f",
     "semantic_hash": ""
   },
   "chapters/1950.txt": {
@@ -6457,9 +6456,9 @@
     "semantic_hash": ""
   },
   "chapters/196.txt": {
-    "mtime": 1793525964.905,
-    "seen": 1793526017.534415,
-    "ast_hash": "081d4dba09e825a4d100f71a1f38ce84",
+    "mtime": 1793810053.6907117,
+    "seen": 1793810168.606856,
+    "ast_hash": "a9faa45126c9e285b96d0700f932c810",
     "semantic_hash": ""
   },
   "chapters/1960.txt": {
@@ -6523,9 +6522,9 @@
     "semantic_hash": ""
   },
   "chapters/197.txt": {
-    "mtime": 1793525964.917361,
-    "seen": 1793526017.5344622,
-    "ast_hash": "51c65a76dd0f413dba714407e1884fc9",
+    "mtime": 1793810053.6913717,
+    "seen": 1793810168.6069393,
+    "ast_hash": "596473b0d808f404597d68e5b717b661",
     "semantic_hash": ""
   },
   "chapters/1970.txt": {
@@ -7741,9 +7740,9 @@
     "semantic_hash": ""
   },
   "chapters/271.txt": {
-    "mtime": 1793525965.81654,
-    "seen": 1793526017.535307,
-    "ast_hash": "e262466f32c9d7bf3971a694c35b0b7d",
+    "mtime": 1793810053.6920226,
+    "seen": 1793810168.6088169,
+    "ast_hash": "3be52ed57dc73dfe71f36f6508ec474f",
     "semantic_hash": ""
   },
   "chapters/272.txt": {
@@ -7855,9 +7854,9 @@
     "semantic_hash": ""
   },
   "chapters/289.txt": {
-    "mtime": 1793525965.9870765,
-    "seen": 1793526017.5354025,
-    "ast_hash": "43a4b2b045608ec4d1d159c1afd96755",
+    "mtime": 1793810053.6926053,
+    "seen": 1793810168.6089702,
+    "ast_hash": "b6151a4bfd1447a48a107f8fabe498a3",
     "semantic_hash": ""
   },
   "chapters/29.txt": {
@@ -8113,9 +8112,9 @@
     "semantic_hash": ""
   },
   "chapters/327.txt": {
-    "mtime": 1793525966.3719068,
-    "seen": 1793526017.5355847,
-    "ast_hash": "3da0df1d46964d2b03df61f4c9b4b6e2",
+    "mtime": 1793810053.693191,
+    "seen": 1793810168.609322,
+    "ast_hash": "27e501b78961cb4dce0253fbe54b30a7",
     "semantic_hash": ""
   },
   "chapters/328.txt": {
@@ -8227,9 +8226,9 @@
     "semantic_hash": ""
   },
   "chapters/344.txt": {
-    "mtime": 1793525966.5419192,
-    "seen": 1793526017.535665,
-    "ast_hash": "43fadd899f92a05f328fa2f93a6c92af",
+    "mtime": 1793810053.6936529,
+    "seen": 1793810168.6094995,
+    "ast_hash": "130e13bec3375ff4841d5cfc3a5b4c44",
     "semantic_hash": ""
   },
   "chapters/345.txt": {
@@ -10651,9 +10650,9 @@
     "semantic_hash": ""
   },
   "chapters/708.txt": {
-    "mtime": 1793525970.1547372,
-    "seen": 1793526017.5376139,
-    "ast_hash": "f75080702aa3aa18866c285cd96767de",
+    "mtime": 1793810053.6942353,
+    "seen": 1793810168.6121547,
+    "ast_hash": "5cdd3fdcf54e2aaea0111b2e26804abd",
     "semantic_hash": ""
   },
   "chapters/709.txt": {
@@ -11029,9 +11028,9 @@
     "semantic_hash": ""
   },
   "chapters/765.txt": {
-    "mtime": 1793525970.6888337,
-    "seen": 1793526017.5378828,
-    "ast_hash": "84585b99ec8449c89eefe4a24f79ff52",
+    "mtime": 1793810053.6949112,
+    "seen": 1793810168.6124873,
+    "ast_hash": "39d8c200ee03c122950fd35406ee32c6",
     "semantic_hash": ""
   },
   "chapters/766.txt": {
@@ -18739,9 +18738,9 @@
     "semantic_hash": ""
   },
   "website/read/ch_192.html": {
-    "mtime": 1793526521.5449326,
-    "seen": 1793526562.1760333,
-    "ast_hash": "6f21167c1eed5b3b77ffb636b7ff4500",
+    "mtime": 1793810053.7128155,
+    "seen": 1793810168.6198514,
+    "ast_hash": "75ac3ada2b8ce7a7439981e781e9d578",
     "semantic_hash": ""
   },
   "website/read/ch_1920.html": {
@@ -18805,9 +18804,9 @@
     "semantic_hash": ""
   },
   "website/read/ch_193.html": {
-    "mtime": 1793526521.5464933,
-    "seen": 1793526562.176081,
-    "ast_hash": "44be9c6c8d53aef0efc150c21691301e",
+    "mtime": 1793810053.7141411,
+    "seen": 1793810168.6199071,
+    "ast_hash": "120d36c3034e8d7fc1b48ed63491b102",
     "semantic_hash": ""
   },
   "website/read/ch_1930.html": {
@@ -18937,9 +18936,9 @@
     "semantic_hash": ""
   },
   "website/read/ch_195.html": {
-    "mtime": 1793526521.549853,
-    "seen": 1793526562.1761754,
-    "ast_hash": "99acf50abd9488d53cd4c6c11b11ecb9",
+    "mtime": 1793810053.7158434,
+    "seen": 1793810168.6200159,
+    "ast_hash": "4096ada143ee4b3a8948d45aa557dbdb",
     "semantic_hash": ""
   },
   "website/read/ch_1950.html": {
@@ -19003,9 +19002,9 @@
     "semantic_hash": ""
   },
   "website/read/ch_196.html": {
-    "mtime": 1793526521.5518503,
-    "seen": 1793526562.1762223,
-    "ast_hash": "cb7ea036aef36a321eea047d3169e115",
+    "mtime": 1793810053.7177486,
+    "seen": 1793810168.62007,
+    "ast_hash": "582ccc0cd022e15b87b69b1359cb6192",
     "semantic_hash": ""
   },
   "website/read/ch_1960.html": {
@@ -19069,9 +19068,9 @@
     "semantic_hash": ""
   },
   "website/read/ch_197.html": {
-    "mtime": 1793526521.553189,
-    "seen": 1793526562.176271,
-    "ast_hash": "86fcbc32001192c4b16f34816afe19dd",
+    "mtime": 1793810053.7190564,
+    "seen": 1793810168.6201253,
+    "ast_hash": "992f1cef458d216993267409dd8b479e",
     "semantic_hash": ""
   },
   "website/read/ch_1970.html": {
@@ -20287,9 +20286,9 @@
     "semantic_hash": ""
   },
   "website/read/ch_271.html": {
-    "mtime": 1793526521.6817372,
-    "seen": 1793526562.1792827,
-    "ast_hash": "4498bd50e2f7aa764b1d24e9b885071f",
+    "mtime": 1793810053.7209172,
+    "seen": 1793810168.6211026,
+    "ast_hash": "db00335fc28d736767de81ad56e35430",
     "semantic_hash": ""
   },
   "website/read/ch_272.html": {
@@ -20401,9 +20400,9 @@
     "semantic_hash": ""
   },
   "website/read/ch_289.html": {
-    "mtime": 1793526521.706702,
-    "seen": 1793526562.1794996,
-    "ast_hash": "d359077f7da1a7d84bdc8a42552353d1",
+    "mtime": 1793810053.723068,
+    "seen": 1793810168.621195,
+    "ast_hash": "ff032f900cfcd47a8275fe6ab51e6751",
     "semantic_hash": ""
   },
   "website/read/ch_29.html": {
@@ -20659,9 +20658,9 @@
     "semantic_hash": ""
   },
   "website/read/ch_327.html": {
-    "mtime": 1793526521.7543213,
-    "seen": 1793526562.1799512,
-    "ast_hash": "96a38bef2e5d570c01efb2d3257a701d",
+    "mtime": 1793810053.7249165,
+    "seen": 1793810168.6214092,
+    "ast_hash": "4f1c14197a4a76d07a60fea82353fc2a",
     "semantic_hash": ""
   },
   "website/read/ch_328.html": {
@@ -20773,9 +20772,9 @@
     "semantic_hash": ""
   },
   "website/read/ch_344.html": {
-    "mtime": 1793526521.7796974,
-    "seen": 1793526562.1801522,
-    "ast_hash": "8551ec12d7f01bc29814a60d6d31b7b3",
+    "mtime": 1793810053.7265544,
+    "seen": 1793810168.6215045,
+    "ast_hash": "218e205bfd2e87ec01c536d0fec37c69",
     "semantic_hash": ""
   },
   "website/read/ch_345.html": {
@@ -23197,9 +23196,9 @@
     "semantic_hash": ""
   },
   "website/read/ch_708.html": {
-    "mtime": 1793526522.3151255,
-    "seen": 1793526562.1844091,
-    "ast_hash": "9808542cf5ebd2bb3df73335aa86a574",
+    "mtime": 1793810053.7276404,
+    "seen": 1793810168.6234791,
+    "ast_hash": "2c0de4b31a65c3c72e33746570fb33c5",
     "semantic_hash": ""
   },
   "website/read/ch_709.html": {
@@ -23575,9 +23574,9 @@
     "semantic_hash": ""
   },
   "website/read/ch_765.html": {
-    "mtime": 1793526522.400699,
-    "seen": 1793526562.1850073,
-    "ast_hash": "0d3f0cceebd1aeb92573298ccf6f0791",
+    "mtime": 1793810053.728795,
+    "seen": 1793810168.6239517,
+    "ast_hash": "c1e6cd4d371a93250c83ee3596bfbf90",
     "semantic_hash": ""
   },
   "website/read/ch_766.html": {
@@ -25189,15 +25188,21 @@
     "semantic_hash": ""
   },
   "website/chapters.html": {
-    "mtime": 1793526521.1936324,
-    "seen": 1793526562.1716354,
-    "ast_hash": "e97b6d08d896fefc2f9d2e1e4c07925c",
+    "mtime": 1793810053.73623,
+    "seen": 1793810168.6148238,
+    "ast_hash": "8a7b8adf2e79d6c7fee4ae07e80a3c45",
     "semantic_hash": ""
   },
   "website/chapters/index.html": {
-    "mtime": 1793526521.190632,
-    "seen": 1793526562.1716423,
-    "ast_hash": "95d78172bc23a0fe9e4cea654d298332",
+    "mtime": 1793810053.7452297,
+    "seen": 1793810168.6148303,
+    "ast_hash": "56cb1f038964b46e1412c9fd8392ef2c",
+    "semantic_hash": ""
+  },
+  ".agents/rules/ponytail.md": {
+    "mtime": 1793526671.3135366,
+    "seen": 1793810168.601932,
+    "ast_hash": "a7bdf895265a52f294512e548d70a80c",
     "semantic_hash": ""
   }
 }

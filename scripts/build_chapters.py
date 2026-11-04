@@ -56,6 +56,7 @@ TYPO_REPLACEMENTS = [
     (r"\bTeng Hua Yuan\b", "Teng Huayuan"),
     (r"\bLi Mu Wan\b", "Li Muwan"),
     (r"\bQing shui\b", "Qing Shui"),
+    (r"\bTa Sen\b", "Tuo Sen"),
     (r"([A-Za-z]+)[’']S\b", r"\1's"),  # Fix uppercase possessive 'S typos (e.g. Lin’S -> Lin's)
 ]
 

@@ -1,17 +1,17 @@
-# Graph Report - Renegade Reader  (2026-11-01)
+# Graph Report - Renegade Reader  (2026-11-04)
 
 ## Corpus Check
-- 11 files · ~11,304,761 words
+- 12 files · ~11,305,222 words
 - Verdict: corpus is large enough that graph structure adds value.
 - Unclassified: 7 file(s) not represented in the graph (top: .css 4, (none) 1, .epub 1)
 
 ## Summary
-- 58 nodes · 76 edges · 11 communities (5 shown, 6 thin omitted)
+- 62 nodes · 79 edges · 12 communities (6 shown, 6 thin omitted)
 - Extraction: 92% EXTRACTED · 8% INFERRED · 0% AMBIGUOUS · INFERRED: 6 edges (avg confidence: 0.85)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `58d28a69`
+- Built from commit: `ee318cb9`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -25,6 +25,7 @@
 - initGiscusComments
 - initKeyboardNav
 - loadChaptersIntoDrawer
+- Ponytail, lazy senior dev mode
 
 ## God Nodes (most connected - your core abstractions)
 1. `scripts` - 7 edges
@@ -49,7 +50,7 @@
 ## Import Cycles
 - None detected.
 
-## Communities (11 total, 6 thin omitted)
+## Communities (12 total, 6 thin omitted)
 
 ### Community 2 - "build_chapters.py"
 Cohesion: 0.52
@@ -71,6 +72,10 @@ Nodes (4): closeChaptersDrawer(), initTouchNavigation(), openChaptersDrawer(), t
 Cohesion: 1.00
 Nodes (3): focusActiveChapter(), loadChaptersIntoDrawer(), switchTab()
 
+### Community 11 - "Ponytail, lazy senior dev mode"
+Cohesion: 0.50
+Nodes (3): Before you write, Ponytail, lazy senior dev mode, The smallest complete change
+
 ## Knowledge Gaps
 - **6 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
@@ -78,6 +83,6 @@ Nodes (3): focusActiveChapter(), loadChaptersIntoDrawer(), switchTab()
 _Questions this graph is uniquely positioned to answer:_
 
 - **Why does `initTouchNavigation()` connect `initTouchNavigation` to `reader.js`?**
-  _High betweenness centrality (0.012) - this node is a cross-community bridge._
+  _High betweenness centrality (0.011) - this node is a cross-community bridge._
 - **Why does `initGiscusComments()` connect `initGiscusComments` to `reader.js`?**
-  _High betweenness centrality (0.012) - this node is a cross-community bridge._
+  _High betweenness centrality (0.010) - this node is a cross-community bridge._
