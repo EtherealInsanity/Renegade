@@ -691,6 +691,9 @@
       } else if (e.key === 'c' || e.key === 'C' || e.key === 't' || e.key === 'T') {
         e.preventDefault();
         toggleChaptersDrawer();
+      } else if (e.key === 'f' || e.key === 'F') {
+        e.preventDefault();
+        if (window.toggleFullscreen) window.toggleFullscreen();
       } else if (e.key === 'Escape') {
         closeAllDrawers();
       }
@@ -790,6 +793,85 @@
     btn.addEventListener('click', () => {
       window.scrollTo({ top: 0, behavior: 'smooth' });
     });
+  }
+
+  // Fullscreen Reading Mode
+  function initFullscreen() {
+    function isFs() {
+      return !!(document.fullscreenElement || document.webkitFullscreenElement || document.body.classList.contains('fullscreen-active'));
+    }
+
+    function updateFsUI(active) {
+      document.body.classList.toggle('fullscreen-active', active);
+      const btns = [document.getElementById('btn-toggle-fullscreen'), document.getElementById('btn-drawer-fullscreen')];
+      btns.forEach(btn => {
+        if (!btn) return;
+        const enterIcon = btn.querySelector('.icon-fs-enter');
+        const exitIcon = btn.querySelector('.icon-fs-exit');
+        if (enterIcon) enterIcon.style.display = active ? 'none' : '';
+        if (exitIcon) exitIcon.style.display = active ? '' : 'none';
+        const label = btn.querySelector('.drawer-fs-label');
+        if (label) label.textContent = active ? 'Exit Fullscreen' : 'Fullscreen';
+        btn.setAttribute('title', active ? 'Exit Fullscreen (Press F or Esc)' : 'Fullscreen (Press F)');
+        btn.setAttribute('aria-label', active ? 'Exit Fullscreen' : 'Fullscreen');
+      });
+    }
+
+    function toggleFs() {
+      const doc = document.documentElement;
+      if (!isFs()) {
+        if (doc.requestFullscreen) {
+          doc.requestFullscreen().catch(() => updateFsUI(true));
+        } else if (doc.webkitRequestFullscreen) {
+          doc.webkitRequestFullscreen();
+        } else {
+          updateFsUI(true);
+        }
+      } else {
+        if (document.exitFullscreen) {
+          document.exitFullscreen().catch(() => updateFsUI(false));
+        } else if (document.webkitExitFullscreen) {
+          document.webkitExitFullscreen();
+        } else {
+          updateFsUI(false);
+        }
+      }
+    }
+
+    let headerFsBtn = document.getElementById('btn-toggle-fullscreen');
+    const headerRight = document.querySelector('.reader-header .header-right');
+    const settingsBtn = document.getElementById('btn-open-settings');
+    if (!headerFsBtn && headerRight && settingsBtn) {
+      headerFsBtn = document.createElement('button');
+      headerFsBtn.id = 'btn-toggle-fullscreen';
+      headerFsBtn.className = 'icon-btn';
+      headerFsBtn.setAttribute('aria-label', 'Fullscreen');
+      headerFsBtn.setAttribute('title', 'Fullscreen (Press F)');
+      headerFsBtn.innerHTML = `
+        <svg class="icon-fs-enter" xmlns="http://www.w3.org/2000/svg" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"/></svg>
+        <svg class="icon-fs-exit" xmlns="http://www.w3.org/2000/svg" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:none;"><path d="M8 3v3a2 2 0 0 1-2 2H3m18 0h-3a2 2 0 0 1-2-2V3m0 18v-3a2 2 0 0 1 2-2h3M3 16h3a2 2 0 0 1 2 2v3"/></svg>
+      `;
+      headerRight.insertBefore(headerFsBtn, settingsBtn);
+    }
+
+    if (headerFsBtn) headerFsBtn.addEventListener('click', toggleFs);
+
+    const drawerFsBtn = document.getElementById('btn-drawer-fullscreen');
+    if (drawerFsBtn) {
+      drawerFsBtn.addEventListener('click', () => {
+        toggleFs();
+        if (typeof closeSettingsDrawer === 'function') closeSettingsDrawer();
+      });
+    }
+
+    ['fullscreenchange', 'webkitfullscreenchange'].forEach(evt => {
+      document.addEventListener(evt, () => {
+        const active = !!(document.fullscreenElement || document.webkitFullscreenElement);
+        updateFsUI(active);
+      });
+    });
+
+    window.toggleFullscreen = toggleFs;
   }
 
   document.addEventListener('DOMContentLoaded', () => {
@@ -1157,6 +1239,7 @@
     initKeyboardNav();
     initTouchNavigation();
     initBackToTop();
+    initFullscreen();
     initComments();
 
     // Anime.js entrance animation for header
