@@ -123,23 +123,70 @@ def main():
 </head>
 <body>
 
-  <!-- Landing Nav -->
+  <!-- Full-Screen Landscape Atmospheric Background (LOTM-Reader Inspired) -->
+  <div class="landing-bg-container" id="landing-bg" aria-hidden="true">
+    <picture class="landing-bg-img active" id="bg-img-1">
+      <source srcset="/assets/bg-desktop.webp" type="image/webp">
+      <img src="/assets/bg-desktop.jpg" alt="" class="bg-img" loading="eager">
+    </picture>
+    <picture class="landing-bg-img" id="bg-img-2">
+      <source srcset="/assets/bg-waner.webp" type="image/webp">
+      <img src="/assets/bg-waner.jpg" alt="" class="bg-img" loading="lazy">
+    </picture>
+    <div class="landing-bg-overlay"></div>
+  </div>
+
+  <!-- Landing Top Nav (PWA Install Bar when prompted) -->
   <header class="landing-nav" id="landing-nav" style="display: none;">
     <div class="nav-links">
       <button id="btn-pwa-install" class="nav-link" style="display: none; background: none; border: 1px solid var(--accent-color); color: var(--accent-color); padding: 6px 12px; border-radius: var(--border-radius); cursor: pointer;" aria-label="Install App">
-        📥 Install
+        📥 Install App
       </button>
     </div>
   </header>
 
-  <!-- Focused Hero Section: Cover, Name, Volumes, and Read/Download buttons -->
+  <!-- Floating Quick-Action Side Dock (LOTM-Reader Inspired) -->
+  <aside class="floating-side-dock" id="floating-side-dock" aria-label="Quick Actions">
+    <div class="dock-item" data-tip="Switch Background">
+      <button id="btn-toggle-bg" class="dock-btn" aria-label="Switch Background Wallpaper">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+      </button>
+    </div>
+    <div class="dock-item" data-tip="Cycle Dao Theme">
+      <button id="btn-toggle-theme" class="dock-btn" aria-label="Cycle Dao Theme">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
+      </button>
+    </div>
+    <div class="dock-item" data-tip="Community Discussion">
+      <a href="#reviews" class="dock-btn" aria-label="Community Discussion">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+      </a>
+    </div>
+    <div class="dock-item" data-tip="Table of Contents">
+      <a href="/chapters" class="dock-btn" aria-label="Table of Contents">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
+      </a>
+    </div>
+    <div class="dock-item" data-tip="Download EPUB">
+      <a href="/download" class="dock-btn" aria-label="Download Offline EPUB">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" x2="12" y1="15" y2="3"/></svg>
+      </a>
+    </div>
+    <div class="dock-item" data-tip="Install App" id="dock-install-item" style="display: none;">
+      <button id="btn-dock-install" class="dock-btn" aria-label="Install App">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2"/><polyline points="7 11 12 16 17 11"/><line x1="12" y1="4" x2="12" y2="16"/></svg>
+      </button>
+    </div>
+  </aside>
+
+  <!-- Focused Hero Section (LOTM-Reader 2-Column Desktop, Stacked Mobile) -->
   <main class="hero-section">
     <div class="hero-cover">
       <div class="hero-cover-tilt-wrap" id="hero-cover-wrap">
         <div class="hero-cover-sheen" id="hero-cover-sheen"></div>
         <picture>
           <source srcset="/assets/cover.webp" type="image/webp">
-          <img src="/assets/cover.jpg" alt="Renegade Immortal (仙逆) Novel Cover Art" width="340" height="485" class="hero-cover-img" loading="eager">
+          <img src="/assets/cover.jpg" alt="Renegade Immortal (仙逆) Novel Cover Art" width="350" height="500" class="hero-cover-img" loading="eager">
         </picture>
       </div>
     </div>
@@ -148,7 +195,13 @@ def main():
       <h1 class="novel-title">Renegade Immortal<span class="novel-chinese-title">仙逆</span></h1>
       <div class="novel-author">By <strong>Er Gen (耳根)</strong> · Official Translation</div>
 
-      <div class="novel-meta-text" style="color: var(--text-muted); font-size: 1.05rem; margin-top: 14px; margin-bottom: 26px;">
+      <blockquote class="novel-quote">
+        “If the heavens wish to crush me, I shall shatter the heavens.<br>
+        If the earth wishes to bury me, I shall pierce the earth.<br>
+        My life is mine to command, not the heavens!”
+      </blockquote>
+
+      <div class="novel-meta-text">
         13 Canonical Volumes · {stats["total_chapters"]:,} Chapters · {stats["total_words"]:,} Words · Complete
       </div>
 
@@ -156,7 +209,7 @@ def main():
       <div class="hero-cta-buttons">
         <a id="btn-hero-primary" href="/read/ch_1" class="btn-primary">
           <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"/></svg>
-          <span id="hero-primary-text">Read</span>
+          <span id="hero-primary-text">Read Now</span>
         </a>
         <a href="/chapters" class="btn-secondary">
           <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
@@ -176,7 +229,7 @@ def main():
 
   <!-- Reviews & Community Discussions Section -->
   <section class="reviews-section" id="reviews">
-    <!-- Live Community Reviews & Discussions (Giscus) -->
+    <!-- Live Community Reviews & Discussions (Waline) -->
     <div class="landing-assembly-container">
       <div class="landing-assembly-header">
         <div>
@@ -206,6 +259,53 @@ def main():
   <script src="/assets/anime.min.js"></script>
   <script src="/assets/waline-config.js"></script>
   <script>
+    // Wallpaper switcher (landscape wallpapers from extra assets)
+    const bg1 = document.getElementById('bg-img-1');
+    const bg2 = document.getElementById('bg-img-2');
+    const btnToggleBg = document.getElementById('btn-toggle-bg');
+    let currentBg = localStorage.getItem('renegade_bg_preference') || '1';
+
+    function setBg(choice) {{
+      if (choice === '2') {{
+        bg1 && bg1.classList.remove('active');
+        bg2 && bg2.classList.add('active');
+        currentBg = '2';
+      }} else {{
+        bg2 && bg2.classList.remove('active');
+        bg1 && bg1.classList.add('active');
+        currentBg = '1';
+      }}
+      try {{ localStorage.setItem('renegade_bg_preference', currentBg); }} catch(e) {{}}
+    }}
+    setBg(currentBg);
+
+    if (btnToggleBg) {{
+      btnToggleBg.addEventListener('click', () => {{
+        setBg(currentBg === '1' ? '2' : '1');
+      }});
+    }}
+
+    // Dao Theme cycler
+    const btnToggleTheme = document.getElementById('btn-toggle-theme');
+    if (btnToggleTheme) {{
+      const themes = [
+        'slaughter', 'bead', 'ancient-god', 'life-death', 'karma',
+        'true-false', 'thunder', 'underworld', 'all-seer',
+        'dao-ancient', 'seven-colored', 'heaven-trampling', 'ink-scholar'
+      ];
+      btnToggleTheme.addEventListener('click', () => {{
+        const cur = document.documentElement.getAttribute('data-theme') || 'slaughter';
+        const idx = themes.indexOf(cur);
+        const next = themes[(idx + 1) % themes.length];
+        document.documentElement.setAttribute('data-theme', next);
+        try {{
+          const saved = JSON.parse(localStorage.getItem('renegade_reader_settings') || '{{}}');
+          saved.theme = next;
+          localStorage.setItem('renegade_reader_settings', JSON.stringify(saved));
+        }} catch(e) {{}}
+      }});
+    }}
+
     // Restore last read chapter button
     try {{
       const lastRead = JSON.parse(localStorage.getItem('renegade_last_read'));
@@ -279,9 +379,11 @@ def main():
           '.hero-cover',
           '.novel-title',
           '.novel-author',
+          '.novel-quote',
           '.novel-meta-text',
           '.hero-cta-buttons .btn-primary',
           '.hero-cta-buttons .btn-secondary',
+          '.floating-side-dock',
           '.landing-assembly-container'
         ],
         opacity: [0, 1],
@@ -323,26 +425,32 @@ def main():
 
     let deferredPrompt;
     const installBtn = document.getElementById('btn-pwa-install');
+    const dockInstallItem = document.getElementById('dock-install-item');
+    const btnDockInstall = document.getElementById('btn-dock-install');
     const landingNav = document.getElementById('landing-nav');
+
     window.addEventListener('beforeinstallprompt', (e) => {{
       e.preventDefault();
       deferredPrompt = e;
       if (installBtn) installBtn.style.display = 'inline-flex';
+      if (dockInstallItem) dockInstallItem.style.display = 'flex';
       if (landingNav) landingNav.style.display = 'flex';
     }});
 
-    if (installBtn) {{
-      installBtn.addEventListener('click', async () => {{
-        if (!deferredPrompt) return;
-        deferredPrompt.prompt();
-        const choice = await deferredPrompt.userChoice;
-        if (choice && choice.outcome === 'accepted') {{
-          installBtn.style.display = 'none';
-          if (landingNav) landingNav.style.display = 'none';
-        }}
-        deferredPrompt = null;
-      }});
-    }}
+    const triggerInstall = async () => {{
+      if (!deferredPrompt) return;
+      deferredPrompt.prompt();
+      const choice = await deferredPrompt.userChoice;
+      if (choice && choice.outcome === 'accepted') {{
+        if (installBtn) installBtn.style.display = 'none';
+        if (dockInstallItem) dockInstallItem.style.display = 'none';
+        if (landingNav) landingNav.style.display = 'none';
+      }}
+      deferredPrompt = null;
+    }};
+
+    if (installBtn) installBtn.addEventListener('click', triggerInstall);
+    if (btnDockInstall) btnDockInstall.addEventListener('click', triggerInstall);
   </script>
 </body>
 </html>
