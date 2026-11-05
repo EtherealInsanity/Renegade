@@ -117,7 +117,7 @@ body {
   width: 100%;
   max-width: 340px;
   height: auto;
-  aspect-ratio: 600 / 798;
+  aspect-ratio: 718 / 1024;
   object-fit: cover;
   border-radius: var(--border-radius);
   box-shadow: 0 18px 48px rgba(0, 0, 0, 0.55), 0 0 28px var(--accent-glow);

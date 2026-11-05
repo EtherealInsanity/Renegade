@@ -139,7 +139,7 @@ def main():
         <div class="hero-cover-sheen" id="hero-cover-sheen"></div>
         <picture>
           <source srcset="/assets/cover.webp" type="image/webp">
-          <img src="/assets/cover.jpg" alt="Renegade Immortal (仙逆) Novel Cover Art" width="340" height="452" class="hero-cover-img" loading="eager">
+          <img src="/assets/cover.jpg" alt="Renegade Immortal (仙逆) Novel Cover Art" width="340" height="485" class="hero-cover-img" loading="eager">
         </picture>
       </div>
     </div>
@@ -679,7 +679,7 @@ def main():
     .download-cover {{
       width: 180px;
       height: auto;
-      aspect-ratio: 600 / 798;
+      aspect-ratio: 718 / 1024;
       object-fit: cover;
       border-radius: var(--border-radius);
       margin-bottom: 24px;
