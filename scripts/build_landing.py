@@ -176,7 +176,7 @@ def main():
         <div class="hero-cover-sheen" id="hero-cover-sheen"></div>
         <picture>
           <source srcset="/assets/cover.webp" type="image/webp">
-          <img src="/assets/cover.jpg" alt="Renegade Immortal (仙逆) Novel Cover Art" width="180" height="257" class="hero-cover-img" loading="eager">
+          <img src="/assets/cover.jpg" alt="Renegade Immortal (仙逆) Novel Cover Art" width="200" height="285" class="hero-cover-img" loading="eager">
         </picture>
       </div>
     </div>
@@ -312,7 +312,7 @@ def main():
         const y = (e.clientY - bounds.top) / bounds.height - 0.5;
         const rotX = -y * 18;
         const rotY = x * 18;
-        coverWrap.style.transform = `perspective(1000px) rotateX(${{rotX.toFixed(2)}}deg) rotateY(${{rotY.toFixed(2)}}deg) scale3d(1.10, 1.10, 1.10)`;
+        coverWrap.style.transform = `perspective(1000px) rotateX(${{rotX.toFixed(2)}}deg) rotateY(${{rotY.toFixed(2)}}deg) scale(1.10)`;
         if (coverSheen) {{
           const px = ((x + 0.5) * 100).toFixed(1);
           const py = ((y + 0.5) * 100).toFixed(1);
@@ -322,22 +322,29 @@ def main():
       coverWrap.addEventListener('pointerleave', () => {{
         bounds = null;
         if (window.anime) {{
+          anime.remove(coverWrap);
+          if (coverSheen) anime.remove(coverSheen);
           anime({{
             targets: coverWrap,
             rotateX: 0,
             rotateY: 0,
             scale: 1,
             duration: 600,
-            easing: 'easeOutElastic(1, .6)'
+            easing: 'easeOutElastic(1, .6)',
+            complete: () => {{
+              coverWrap.style.transform = '';
+            }}
           }});
-          anime({{
-            targets: coverSheen,
-            opacity: 0,
-            duration: 350,
-            easing: 'easeOutQuad'
-          }});
+          if (coverSheen) {{
+            anime({{
+              targets: coverSheen,
+              opacity: 0,
+              duration: 350,
+              easing: 'easeOutQuad'
+            }});
+          }}
         }} else {{
-          coverWrap.style.transform = 'none';
+          coverWrap.style.transform = '';
           if (coverSheen) coverSheen.style.opacity = '0';
         }}
       }});

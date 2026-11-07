@@ -148,7 +148,7 @@ body {
 .hero-cover {
   flex: 0 0 auto;
   width: 100%;
-  max-width: 190px;
+  max-width: 210px;
   perspective: 1000px;
   display: flex;
   justify-content: center;
@@ -157,37 +157,33 @@ body {
 .hero-cover-tilt-wrap {
   position: relative;
   width: 100%;
-  max-width: 180px;
+  max-width: 200px;
   border-radius: 14px;
   transform-style: preserve-3d;
   will-change: transform;
   display: block;
   cursor: pointer;
   transform: scale(1);
-  transition: transform 0.35s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.35s ease;
+  transition: box-shadow 0.35s ease;
 }
 
 .hero-cover img,
 .hero-cover-img {
   width: 100%;
-  max-width: 180px;
+  max-width: 200px;
   height: auto;
   aspect-ratio: 718 / 1024;
   object-fit: cover;
   border-radius: 14px;
-  box-shadow: 0 14px 32px -8px rgba(0, 0, 0, 0.75), 0 0 18px var(--accent-glow);
+  box-shadow: 0 16px 36px -8px rgba(0, 0, 0, 0.75), 0 0 20px var(--accent-glow);
   border: 1px solid rgba(255, 255, 255, 0.12);
   display: block;
   transform: translateZ(0);
   transition: box-shadow 0.35s ease, border-color 0.35s ease;
 }
 
-.hero-cover-tilt-wrap:hover {
-  transform: scale(1.10);
-}
-
 .hero-cover-tilt-wrap:hover .hero-cover-img {
-  box-shadow: 0 26px 54px -10px rgba(0, 0, 0, 0.88), 0 0 34px var(--accent-glow);
+  box-shadow: 0 28px 60px -10px rgba(0, 0, 0, 0.88), 0 0 36px var(--accent-glow);
   border-color: rgba(255, 255, 255, 0.24);
 }
 
@@ -419,16 +415,16 @@ body {
   }
 
   .hero-cover {
-    max-width: 160px;
+    max-width: 170px;
   }
 
   .hero-cover-tilt-wrap {
-    max-width: 150px;
+    max-width: 160px;
   }
 
   .hero-cover img,
   .hero-cover-img {
-    max-width: 150px;
+    max-width: 160px;
   }
 
   .hero-content {
