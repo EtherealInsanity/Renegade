@@ -18,9 +18,9 @@
     "semantic_hash": ""
   },
   "scripts/build_landing.py": {
-    "mtime": 1794091514.8358939,
-    "seen": 1794091546.893342,
-    "ast_hash": "3c8a40bbbe65fc0664c94453f17f8676",
+    "mtime": 1794092003.006315,
+    "seen": 1794092040.2370853,
+    "ast_hash": "7271946676a2f6ccd4efddc25d14a495",
     "semantic_hash": ""
   },
   "scripts/html_builder.py": {
@@ -78,9 +78,9 @@
     "semantic_hash": ""
   },
   "website/sw.js": {
-    "mtime": 1794091490.4251425,
-    "seen": 1794091546.8933947,
-    "ast_hash": "257e331c05c3d9b0332a8151b6a28472",
+    "mtime": 1794091727.258925,
+    "seen": 1794091761.0701516,
+    "ast_hash": "b78849c3686cf4e99bcf0673e6efaec2",
     "semantic_hash": ""
   },
   "README.md": {
@@ -12630,39 +12630,39 @@
     "semantic_hash": ""
   },
   "website/account/index.html": {
-    "mtime": 1794091518.3506238,
-    "seen": 1794091546.9051976,
+    "mtime": 1794092006.3541086,
+    "seen": 1794092040.2480485,
     "ast_hash": "bff3456f4c75e1907cb8c81b42c7d6ee",
     "semantic_hash": ""
   },
   "website/chapters.html": {
-    "mtime": 1794091518.345865,
-    "seen": 1794091546.905203,
+    "mtime": 1794092006.3494275,
+    "seen": 1794092040.2480645,
     "ast_hash": "6d11e11a8fab202c761a252cf2a39428",
     "semantic_hash": ""
   },
   "website/chapters/index.html": {
-    "mtime": 1794091518.342865,
-    "seen": 1794091546.9052079,
+    "mtime": 1794092006.3454273,
+    "seen": 1794092040.2480745,
     "ast_hash": "6d11e11a8fab202c761a252cf2a39428",
     "semantic_hash": ""
   },
   "website/download.html": {
-    "mtime": 1794091518.3516548,
-    "seen": 1794091546.9052122,
+    "mtime": 1794092006.354718,
+    "seen": 1794092040.2480834,
     "ast_hash": "0c89d9f5d7b71a9a77d8bbde643194ca",
     "semantic_hash": ""
   },
   "website/download/index.html": {
-    "mtime": 1794091518.3523066,
-    "seen": 1794091546.9052167,
+    "mtime": 1794092006.3552146,
+    "seen": 1794092040.248092,
     "ast_hash": "0c89d9f5d7b71a9a77d8bbde643194ca",
     "semantic_hash": ""
   },
   "website/index.html": {
-    "mtime": 1794091518.3405411,
-    "seen": 1794091546.9052212,
-    "ast_hash": "722a72768384580fa122ba3febe63dfb",
+    "mtime": 1794092006.3434255,
+    "seen": 1794092040.2481008,
+    "ast_hash": "2f5ff73f315c43f879cf2ab865168778",
     "semantic_hash": ""
   },
   "website/read/ch_1.html": {
@@ -25206,9 +25206,9 @@
     "semantic_hash": ""
   },
   "website/assets/apple-touch-icon.png": {
-    "mtime": 1793517997.599392,
-    "seen": 1793885584.6257026,
-    "ast_hash": "9f9540e9a801d51965e8a83c2f17353e",
+    "mtime": 1794091713.3238556,
+    "seen": 1794091761.0900588,
+    "ast_hash": "48f925962922a6905dfd08586721fcc2",
     "semantic_hash": ""
   },
   "website/assets/bg-desktop.jpg": {
@@ -25248,21 +25248,21 @@
     "semantic_hash": ""
   },
   "website/assets/favicon.png": {
-    "mtime": 1793517997.605392,
-    "seen": 1793885584.6257415,
-    "ast_hash": "1126b42e35f1be51d081e4230e51df0c",
+    "mtime": 1794091713.3318558,
+    "seen": 1794091761.0900953,
+    "ast_hash": "a984dee264c75bf083e895a1fade7de6",
     "semantic_hash": ""
   },
   "website/assets/icon-192.png": {
-    "mtime": 1793517997.589392,
-    "seen": 1793885584.6257458,
-    "ast_hash": "2044685731e4620769dd4c46cd2868bf",
+    "mtime": 1794091713.3018556,
+    "seen": 1794091761.0901003,
+    "ast_hash": "37df0f79a8de73f99d46c076a086fb82",
     "semantic_hash": ""
   },
   "website/assets/icon-512.png": {
-    "mtime": 1793517997.5773919,
-    "seen": 1793885584.6257496,
-    "ast_hash": "4a4e1c51a67d1f2b39d13741c07a7f08",
+    "mtime": 1794091713.2808554,
+    "seen": 1794091761.0901046,
+    "ast_hash": "6b281414a56dc739422f34e97faca210",
     "semantic_hash": ""
   },
   "website/assets/renegade-immortal-desktop-wallpaper.png": {

@@ -53,16 +53,6 @@
         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
       </a>
     </div>
-    <div class="dock-item" data-tip="Table of Contents">
-      <a href="/chapters" class="dock-btn" aria-label="Table of Contents">
-        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
-      </a>
-    </div>
-    <div class="dock-item" data-tip="Download EPUB">
-      <a href="/download" class="dock-btn" aria-label="Download Offline EPUB">
-        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" x2="12" y1="15" y2="3"/></svg>
-      </a>
-    </div>
     <div class="dock-item" data-tip="Install App" id="dock-install-item" style="display: none;">
       <button id="btn-dock-install" class="dock-btn" aria-label="Install App">
         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2"/><polyline points="7 11 12 16 17 11"/><line x1="12" y1="4" x2="12" y2="16"/></svg>
@@ -86,29 +76,11 @@
       <h1 class="novel-title">Renegade Immortal<span class="novel-chinese-title">仙逆</span></h1>
       <div class="novel-author">By <strong>Er Gen (耳根)</strong> · Official Translation</div>
 
-      <blockquote class="novel-quote">
-        “If the heavens wish to crush me, I shall shatter the heavens.<br>
-        If the earth wishes to bury me, I shall pierce the earth.<br>
-        My life is mine to command, not the heavens!”
-      </blockquote>
-
-      <div class="novel-meta-text">
-        13 Canonical Volumes · 2,093 Chapters · 3,960,189 Words · Complete
-      </div>
-
       <!-- Action Buttons: Read & Download (with automatic Resume for returning readers) -->
       <div class="hero-cta-buttons">
         <a id="btn-hero-primary" href="/read/ch_1" class="btn-primary">
           <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"/></svg>
           <span id="hero-primary-text">Read Now</span>
-        </a>
-        <a href="/chapters" class="btn-secondary">
-          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
-          Chapters
-        </a>
-        <a href="/account" class="btn-secondary">
-          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-          Profile
         </a>
         <a href="/download" class="btn-secondary">
           <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" x2="12" y1="15" y2="3"/></svg>
@@ -244,8 +216,6 @@
           '.hero-cover',
           '.novel-title',
           '.novel-author',
-          '.novel-quote',
-          '.novel-meta-text',
           '.hero-cta-buttons .btn-primary',
           '.hero-cta-buttons .btn-secondary',
           '.floating-side-dock',
