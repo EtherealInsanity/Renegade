@@ -30,6 +30,7 @@ const PRECACHE_ASSETS = [
   '/assets/cover.webp',
   '/assets/cover.jpg',
   '/assets/bg-desktop.webp',
+  '/assets/bg-waner.webp',
   '/assets/icon-192.png',
   '/assets/icon-512.png',
   '/assets/apple-touch-icon.png',

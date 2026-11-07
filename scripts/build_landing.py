@@ -123,11 +123,15 @@ def main():
 </head>
 <body>
 
-  <!-- Full-Screen Landscape Atmospheric Background (First landscape image) -->
+  <!-- Full-Screen Landscape Atmospheric Background (Dual Wallpaper with Switcher) -->
   <div class="landing-bg-container" id="landing-bg" aria-hidden="true">
-    <picture class="landing-bg-img">
+    <picture class="landing-bg-img active" id="bg-img-1">
       <source srcset="/assets/bg-desktop.webp" type="image/webp">
-      <img src="/assets/bg-desktop.jpg" alt="" class="bg-img" loading="eager" fetchpriority="high">
+      <img src="/assets/bg-desktop.jpg" alt="Renegade Immortal Landscape Wallpaper 1" class="bg-img" loading="eager" fetchpriority="high">
+    </picture>
+    <picture class="landing-bg-img" id="bg-img-2">
+      <source srcset="/assets/bg-waner.webp" type="image/webp">
+      <img src="/assets/bg-waner.jpg" alt="Renegade Immortal Landscape Wallpaper 2" class="bg-img" loading="lazy">
     </picture>
     <div class="landing-bg-overlay"></div>
   </div>
@@ -143,6 +147,11 @@ def main():
 
   <!-- Floating Quick-Action Side Dock (LOTM-Reader Inspired) -->
   <aside class="floating-side-dock" id="floating-side-dock" aria-label="Quick Actions">
+    <div class="dock-item" data-tip="Switch Background">
+      <button id="btn-toggle-bg" class="dock-btn" aria-label="Switch Background Wallpaper">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+      </button>
+    </div>
     <div class="dock-item" data-tip="Cycle Dao Theme">
       <button id="btn-toggle-theme" class="dock-btn" aria-label="Cycle Dao Theme">
         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
@@ -167,7 +176,7 @@ def main():
         <div class="hero-cover-sheen" id="hero-cover-sheen"></div>
         <picture>
           <source srcset="/assets/cover.webp" type="image/webp">
-          <img src="/assets/cover.jpg" alt="Renegade Immortal (仙逆) Novel Cover Art" width="240" height="342" class="hero-cover-img" loading="eager">
+          <img src="/assets/cover.jpg" alt="Renegade Immortal (仙逆) Novel Cover Art" width="180" height="257" class="hero-cover-img" loading="eager">
         </picture>
       </div>
     </div>
@@ -222,6 +231,32 @@ def main():
   <script src="/assets/anime.min.js"></script>
   <script src="/assets/waline-config.js"></script>
   <script>
+    // Wallpaper switcher (landscape wallpapers from extra assets)
+    const bg1 = document.getElementById('bg-img-1');
+    const bg2 = document.getElementById('bg-img-2');
+    const btnToggleBg = document.getElementById('btn-toggle-bg');
+    let currentBg = localStorage.getItem('renegade_bg_preference') || '1';
+
+    function setBg(choice) {{
+      if (choice === '2') {{
+        bg1 && bg1.classList.remove('active');
+        bg2 && bg2.classList.add('active');
+        currentBg = '2';
+      }} else {{
+        bg2 && bg2.classList.remove('active');
+        bg1 && bg1.classList.add('active');
+        currentBg = '1';
+      }}
+      try {{ localStorage.setItem('renegade_bg_preference', currentBg); }} catch(e) {{}}
+    }}
+    setBg(currentBg);
+
+    if (btnToggleBg) {{
+      btnToggleBg.addEventListener('click', () => {{
+        setBg(currentBg === '1' ? '2' : '1');
+      }});
+    }}
+
     // Dao Theme cycler
     const btnToggleTheme = document.getElementById('btn-toggle-theme');
     if (btnToggleTheme) {{
@@ -277,7 +312,7 @@ def main():
         const y = (e.clientY - bounds.top) / bounds.height - 0.5;
         const rotX = -y * 18;
         const rotY = x * 18;
-        coverWrap.style.transform = `perspective(1000px) rotateX(${{rotX.toFixed(2)}}deg) rotateY(${{rotY.toFixed(2)}}deg) scale3d(1.12, 1.12, 1.12)`;
+        coverWrap.style.transform = `perspective(1000px) rotateX(${{rotX.toFixed(2)}}deg) rotateY(${{rotY.toFixed(2)}}deg) scale3d(1.10, 1.10, 1.10)`;
         if (coverSheen) {{
           const px = ((x + 0.5) * 100).toFixed(1);
           const py = ((y + 0.5) * 100).toFixed(1);
