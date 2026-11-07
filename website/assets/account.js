@@ -115,6 +115,53 @@
     getProgression: getDaoProgression
   };
 
+  function getActiveTheme() {
+    try {
+      const raw = localStorage.getItem(STORAGE_KEY_SETTINGS);
+      return raw ? JSON.parse(raw).theme || 'slaughter' : 'slaughter';
+    } catch (_) {
+      return 'slaughter';
+    }
+  }
+
+  function getWalineUser() {
+    try {
+      const raw = localStorage.getItem('WALINE_USER');
+      return raw ? JSON.parse(raw) : null;
+    } catch (_) {
+      return null;
+    }
+  }
+
+  function getLastRead() {
+    try {
+      const raw = localStorage.getItem(STORAGE_KEY_LAST_READ);
+      return raw ? JSON.parse(raw) : null;
+    } catch (_) {
+      return null;
+    }
+  }
+
+  function getHighlights() {
+    try {
+      const raw = localStorage.getItem(STORAGE_KEY_HIGHLIGHTS);
+      return raw ? JSON.parse(raw) : {};
+    } catch (_) {
+      return {};
+    }
+  }
+
+  function saveHighlights(hl) {
+    try {
+      localStorage.setItem(STORAGE_KEY_HIGHLIGHTS, JSON.stringify(hl));
+      if (window.RenegadeHighlights && window.RenegadeHighlights.sync) {
+        window.RenegadeHighlights.sync(hl);
+      }
+    } catch (e) {
+      console.error('Failed to save highlights:', e);
+    }
+  }
+
   // State
   let allHighlights = [];
   let userComments = [];
@@ -150,8 +197,13 @@
     // Update Resume button in nav
     const resumeBtn = document.getElementById('account-resume-btn');
     if (resumeBtn && lastRead && lastRead.chapter) {
-      resumeBtn.href = `/read/ch_${lastRead.chapter}.html`;
-      resumeBtn.innerHTML = `<span>Resume Ch. ${lastRead.chapter}</span>`;
+      resumeBtn.href = `/read/ch_${lastRead.chapter}`;
+      const resumeSpan = resumeBtn.querySelector('span');
+      if (resumeSpan) {
+        resumeSpan.textContent = `Resume Ch. ${lastRead.chapter}`;
+      } else {
+        resumeBtn.innerHTML = `<span>Resume Ch. ${lastRead.chapter}</span>`;
+      }
     }
   });
 
@@ -464,14 +516,25 @@
     tabButtons.forEach(btn => {
       btn.addEventListener('click', () => {
         const targetId = btn.getAttribute('data-tab');
-        tabButtons.forEach(b => b.classList.remove('active'));
+        tabButtons.forEach(b => {
+          b.classList.remove('active');
+          b.setAttribute('aria-selected', 'false');
+        });
         tabPanels.forEach(p => p.classList.remove('active'));
 
         btn.classList.add('active');
+        btn.setAttribute('aria-selected', 'true');
         const activePanel = document.getElementById(targetId);
         if (activePanel) activePanel.classList.add('active');
       });
     });
+
+    const hash = window.location.hash.replace('#', '');
+    if (hash) {
+      const targetBtn = document.querySelector(`.tab-btn[data-tab="${hash}"]`) ||
+                        document.querySelector(`.tab-btn[data-tab="tab-${hash}"]`);
+      if (targetBtn) targetBtn.click();
+    }
   }
 
   async function loadHighlightsData(isPublicMode, publicUsername) {
