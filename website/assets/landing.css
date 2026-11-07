@@ -83,12 +83,12 @@ body {
 }
 
 /* ==========================================================================
-   Full-Bleed Landscape Background (LOTM-Reader Inspired)
+   Full-Bleed Landscape Background (Renegade Immortal Landscape Art)
    ========================================================================== */
 .landing-bg-container {
   position: fixed;
   inset: 0;
-  z-index: -10;
+  z-index: 0;
   overflow: hidden;
   pointer-events: none;
 }
@@ -98,13 +98,7 @@ body {
   inset: 0;
   width: 100%;
   height: 100%;
-  opacity: 0;
-  transition: opacity 1s cubic-bezier(0.4, 0, 0.2, 1);
-  will-change: opacity;
-}
-
-.landing-bg-img.active {
-  opacity: 1;
+  display: block;
 }
 
 .landing-bg-img img,
@@ -113,21 +107,15 @@ body {
   height: 100%;
   object-fit: cover;
   object-position: center 25%;
-  transform: scale(1.02);
-  transition: transform 12s ease-out;
-}
-
-.landing-bg-img.active img,
-.landing-bg-img.active .bg-img {
-  transform: scale(1.05);
+  display: block;
 }
 
 .landing-bg-overlay {
   position: absolute;
   inset: 0;
   background:
-    radial-gradient(ellipse at 50% 35%, rgba(12, 13, 18, 0.48) 0%, rgba(12, 13, 18, 0.86) 100%),
-    linear-gradient(to bottom, rgba(12, 13, 18, 0.35) 0%, rgba(12, 13, 18, 0.78) 60%, var(--bg-color) 100%);
+    radial-gradient(ellipse at 50% 30%, rgba(12, 13, 18, 0.45) 0%, rgba(12, 13, 18, 0.82) 100%),
+    linear-gradient(to bottom, rgba(12, 13, 18, 0.3) 0%, rgba(12, 13, 18, 0.75) 60%, var(--bg-color) 100%);
   backdrop-filter: blur(2px);
   -webkit-backdrop-filter: blur(2px);
 }
@@ -137,7 +125,7 @@ body {
    ========================================================================== */
 .hero-section {
   width: 100%;
-  max-width: 1180px;
+  max-width: 1140px;
   min-height: 84vh;
   min-height: 84dvh;
   margin: 0 auto;
@@ -154,8 +142,8 @@ body {
 .hero-cover {
   flex: 0 0 auto;
   width: 100%;
-  max-width: 360px;
-  perspective: 1100px;
+  max-width: 250px;
+  perspective: 1000px;
   display: flex;
   justify-content: center;
 }
@@ -163,31 +151,38 @@ body {
 .hero-cover-tilt-wrap {
   position: relative;
   width: 100%;
-  max-width: 350px;
-  border-radius: 18px;
+  max-width: 240px;
+  border-radius: 16px;
   transform-style: preserve-3d;
   will-change: transform;
   display: block;
   cursor: pointer;
-  transition: box-shadow 0.3s ease;
+  transform: scale(1);
+  transition: transform 0.35s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.35s ease;
 }
 
 .hero-cover img,
 .hero-cover-img {
   width: 100%;
-  max-width: 350px;
+  max-width: 240px;
   height: auto;
   aspect-ratio: 718 / 1024;
   object-fit: cover;
-  border-radius: 18px;
-  box-shadow: 0 25px 60px -12px rgba(0, 0, 0, 0.8), 0 0 32px var(--accent-glow);
+  border-radius: 16px;
+  box-shadow: 0 16px 36px -8px rgba(0, 0, 0, 0.75), 0 0 20px var(--accent-glow);
   border: 1px solid rgba(255, 255, 255, 0.12);
   display: block;
   transform: translateZ(0);
+  transition: box-shadow 0.35s ease, border-color 0.35s ease;
+}
+
+.hero-cover-tilt-wrap:hover {
+  transform: scale(1.12);
 }
 
 .hero-cover-tilt-wrap:hover .hero-cover-img {
-  box-shadow: 0 35px 75px -15px rgba(0, 0, 0, 0.9), 0 0 45px var(--accent-glow);
+  box-shadow: 0 32px 70px -12px rgba(0, 0, 0, 0.9), 0 0 42px var(--accent-glow);
+  border-color: rgba(255, 255, 255, 0.24);
 }
 
 .hero-cover-sheen {
@@ -196,7 +191,7 @@ body {
   left: 0;
   right: 0;
   bottom: 0;
-  border-radius: 18px;
+  border-radius: 16px;
   pointer-events: none;
   opacity: 0;
   transition: opacity 0.3s ease;
@@ -415,6 +410,19 @@ body {
     gap: 32px;
     padding: 36px 20px 48px 20px;
     min-height: auto;
+  }
+
+  .hero-cover {
+    max-width: 210px;
+  }
+
+  .hero-cover-tilt-wrap {
+    max-width: 200px;
+  }
+
+  .hero-cover img,
+  .hero-cover-img {
+    max-width: 200px;
   }
 
   .hero-content {
