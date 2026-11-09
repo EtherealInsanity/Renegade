@@ -310,6 +310,20 @@
         <span class="drawer-fs-label">Fullscreen</span>
       </button>
     </div>
+
+    <!-- Offline Dao Library -->
+    <div class="setting-group" id="setting-group-offline">
+      <label>Offline Dao Library</label>
+      <div class="offline-drawer-box" id="offline-drawer-box">
+        <div class="offline-drawer-status" id="offline-drawer-status">Checking offline library...</div>
+        <div class="offline-drawer-progress-wrap" id="offline-drawer-progress-wrap" style="display: none;">
+          <div class="offline-drawer-progress-fill" id="offline-drawer-progress-fill"></div>
+        </div>
+        <button type="button" class="offline-drawer-btn" id="btn-offline-drawer-action" style="display: none;">
+          📥 Download All Chapters (57 MB)
+        </button>
+      </div>
+    </div>
   </aside>
 
   <div id="drawer-backdrop" class="drawer-backdrop"></div>
@@ -324,6 +338,7 @@
 
   <script src="../assets/waline-config.js"></script>
   <script src="../assets/anime.min.js"></script>
+  <script src="../assets/offline-sync.js"></script>
   <script src="../assets/reader.js"></script>
 </body>
 </html>

@@ -130,6 +130,7 @@
 
   <script src="/assets/anime.min.js"></script>
   <script src="/assets/waline-config.js"></script>
+  <script src="/assets/offline-sync.js"></script>
   <script>
     // Wallpaper switcher (landscape wallpapers from extra assets)
     const bg1 = document.getElementById('bg-img-1');
@@ -248,6 +249,35 @@
           if (coverSheen) coverSheen.style.opacity = '0';
         }
       });
+    } else if (coverWrap) {
+      // Mobile Tap Micro-bounce
+      coverWrap.addEventListener('pointerdown', () => {
+        if (window.anime) {
+          anime.remove(coverWrap);
+          anime({
+            targets: coverWrap,
+            scale: 0.94,
+            duration: 90,
+            easing: 'easeOutQuad'
+          });
+        }
+      });
+      const resetCover = () => {
+        if (window.anime) {
+          anime.remove(coverWrap);
+          anime({
+            targets: coverWrap,
+            scale: 1,
+            duration: 450,
+            easing: 'easeOutElastic(1, .6)',
+            complete: () => {
+              coverWrap.style.transform = '';
+            }
+          });
+        }
+      };
+      coverWrap.addEventListener('pointerup', resetCover);
+      coverWrap.addEventListener('pointercancel', resetCover);
     }
 
     // Anime.js Staggered Entrance Animation
@@ -322,6 +352,9 @@
         if (installBtn) installBtn.style.display = 'none';
         if (dockInstallItem) dockInstallItem.style.display = 'none';
         if (landingNav) landingNav.style.display = 'none';
+        if (window.OfflineManager) {
+          window.OfflineManager.downloadAll();
+        }
       }
       deferredPrompt = null;
     };

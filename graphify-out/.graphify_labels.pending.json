@@ -13,5 +13,6 @@
   "11": "highlights.js",
   "12": "README.md",
   "13": "sw.js",
-  "14": "giscus-config.js"
+  "14": "giscus-config.js",
+  "15": "offline-sync.js"
 }

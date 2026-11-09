@@ -2,8 +2,8 @@
   "name": "Renegade Reader (仙逆)",
   "short_name": "Renegade",
   "description": "Renegade Immortal (仙逆) by Er Gen - Complete Web Novel Reader & Offline Library",
-  "start_url": "./",
-  "scope": "./",
+  "start_url": "/",
+  "scope": "/",
   "display": "standalone",
   "orientation": "any",
   "background_color": "#0c0d12",
@@ -13,22 +13,45 @@
   "categories": ["books", "entertainment", "lifestyle"],
   "icons": [
     {
-      "src": "assets/icon-192.png",
+      "src": "/assets/icon-192.png",
       "sizes": "192x192",
       "type": "image/png",
       "purpose": "any"
     },
     {
-      "src": "assets/icon-512.png",
+      "src": "/assets/icon-512.png",
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "any"
     },
     {
-      "src": "assets/icon-512.png",
+      "src": "/assets/icon-512.png",
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Continue Reading",
+      "short_name": "Read",
+      "description": "Open Renegade Immortal reader",
+      "url": "/read/ch_1",
+      "icons": [{ "src": "/assets/icon-192.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "Chapters Catalog",
+      "short_name": "Chapters",
+      "description": "View all 13 canonical volumes",
+      "url": "/chapters",
+      "icons": [{ "src": "/assets/icon-192.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "Offline Library",
+      "short_name": "Offline",
+      "description": "Download chapters for offline reading",
+      "url": "/download",
+      "icons": [{ "src": "/assets/icon-192.png", "sizes": "192x192" }]
     }
   ]
 }

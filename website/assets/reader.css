@@ -1382,3 +1382,58 @@ body.fullscreen-active:fullscreen {
   overflow-y: auto;
 }
 
+
+
+/* ==========================================================================
+   Reader Drawer Offline Library Styles
+   ========================================================================== */
+.offline-drawer-box {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius);
+  padding: 12px 14px;
+  font-size: 0.88rem;
+  margin-top: 6px;
+}
+
+.offline-drawer-status {
+  color: var(--text-color);
+  margin-bottom: 8px;
+  line-height: 1.4;
+  font-size: 0.85rem;
+}
+
+.offline-drawer-progress-wrap {
+  width: 100%;
+  height: 6px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 4px;
+  overflow: hidden;
+  margin-bottom: 10px;
+}
+
+.offline-drawer-progress-fill {
+  height: 100%;
+  width: 0%;
+  background: var(--accent-color);
+  transition: width 0.2s ease;
+}
+
+.offline-drawer-btn {
+  background: var(--accent-color);
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  padding: 6px 12px;
+  font-size: 0.82rem;
+  cursor: pointer;
+  font-weight: 500;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: opacity 0.2s ease;
+}
+
+.offline-drawer-btn:hover {
+  opacity: 0.9;
+}

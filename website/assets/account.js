@@ -185,6 +185,7 @@
     setupTabs();
     setupFilters();
     setupBackupTools();
+    setupOfflineStorageCard();
     setupAvatarUploader();
     renderDaoRoadmap(lastRead ? lastRead.chapter : 1);
 
@@ -883,6 +884,69 @@
         `;
       }
     }
+  }
+
+  function setupOfflineStorageCard() {
+    const statusEl = document.getElementById('account-offline-status');
+    const btnDownload = document.getElementById('btn-account-download-offline');
+    const btnText = document.getElementById('account-download-btn-text');
+    const btnClear = document.getElementById('btn-account-clear-offline');
+
+    const refresh = async () => {
+      if (!window.OfflineManager || !window.OfflineManager.isSupported()) {
+        if (statusEl) statusEl.textContent = 'Offline storage not supported in this browser.';
+        return;
+      }
+      const st = await window.OfflineManager.getStatus();
+      if (statusEl) {
+        if (st.ready || st.cached >= st.total) {
+          statusEl.textContent = `✓ All 2,093 chapters stored locally (${st.persisted ? 'Persistent' : 'Cached'}). 100% offline ready!`;
+          if (btnDownload) btnDownload.style.display = 'none';
+        } else if (st.isDownloading) {
+          statusEl.textContent = `Downloading offline library: ${st.cached} / ${st.total} (${st.percent}%)`;
+          if (btnText) btnText.textContent = 'Pause Download';
+        } else {
+          statusEl.textContent = `Offline chapters stored: ${st.cached} / ${st.total} (${st.percent}%)`;
+          if (btnDownload) btnDownload.style.display = 'inline-flex';
+          if (btnText) btnText.textContent = `Download All Chapters (57 MB)`;
+        }
+      }
+    };
+
+    if (btnDownload) {
+      btnDownload.addEventListener('click', () => {
+        if (!window.OfflineManager) return;
+        if (btnText && btnText.textContent.includes('Pause')) {
+          window.OfflineManager.cancelDownload();
+          refresh();
+        } else {
+          if (btnText) btnText.textContent = 'Downloading...';
+          window.OfflineManager.downloadAll(
+            p => {
+              if (statusEl) statusEl.textContent = `Downloading chapters: ${p.completed} / ${p.total} (${p.percent}%)`;
+            },
+            () => refresh(),
+            () => {
+              if (statusEl) statusEl.textContent = 'Download interrupted. You can resume anytime.';
+              if (btnText) btnText.textContent = 'Resume Download';
+            }
+          );
+        }
+      });
+    }
+
+    if (btnClear) {
+      btnClear.addEventListener('click', async () => {
+        if (confirm('Clear all downloaded offline chapters from device storage?')) {
+          if (window.OfflineManager) {
+            await window.OfflineManager.clearOfflineData();
+            refresh();
+          }
+        }
+      });
+    }
+
+    refresh();
   }
 
   function setupBackupTools() {

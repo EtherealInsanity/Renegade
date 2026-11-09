@@ -230,6 +230,7 @@ def main():
 
   <script src="/assets/anime.min.js"></script>
   <script src="/assets/waline-config.js"></script>
+  <script src="/assets/offline-sync.js"></script>
   <script>
     // Wallpaper switcher (landscape wallpapers from extra assets)
     const bg1 = document.getElementById('bg-img-1');
@@ -348,6 +349,35 @@ def main():
           if (coverSheen) coverSheen.style.opacity = '0';
         }}
       }});
+    }} else if (coverWrap) {{
+      // Mobile Tap Micro-bounce
+      coverWrap.addEventListener('pointerdown', () => {{
+        if (window.anime) {{
+          anime.remove(coverWrap);
+          anime({{
+            targets: coverWrap,
+            scale: 0.94,
+            duration: 90,
+            easing: 'easeOutQuad'
+          }});
+        }}
+      }});
+      const resetCover = () => {{
+        if (window.anime) {{
+          anime.remove(coverWrap);
+          anime({{
+            targets: coverWrap,
+            scale: 1,
+            duration: 450,
+            easing: 'easeOutElastic(1, .6)',
+            complete: () => {{
+              coverWrap.style.transform = '';
+            }}
+          }});
+        }}
+      }};
+      coverWrap.addEventListener('pointerup', resetCover);
+      coverWrap.addEventListener('pointercancel', resetCover);
     }}
 
     // Anime.js Staggered Entrance Animation
@@ -422,6 +452,9 @@ def main():
         if (installBtn) installBtn.style.display = 'none';
         if (dockInstallItem) dockInstallItem.style.display = 'none';
         if (landingNav) landingNav.style.display = 'none';
+        if (window.OfflineManager) {{
+          window.OfflineManager.downloadAll();
+        }}
       }}
       deferredPrompt = null;
     }};
@@ -531,7 +564,8 @@ def main():
     <p><a href="/">← Back to Novel Overview</a> · <a href="/download">Download Full EPUB</a></p>
   </footer>
 
-  <script src="assets/anime.min.js"></script>
+  <script src="/assets/anime.min.js"></script>
+  <script src="/assets/offline-sync.js"></script>
   <script>
     // Anime.js Staggered Entrance Animation
     if (window.anime && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {{
@@ -842,6 +876,45 @@ def main():
   </header>
 
   <main class="download-container">
+    <!-- Offline Web App & Novel Storage Card -->
+    <div class="offline-card" id="offline-webapp-card">
+      <div class="offline-card-header">
+        <div>
+          <span class="offline-badge" id="offline-badge">
+            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+            <span id="offline-badge-text">100% Offline Capable</span>
+          </span>
+          <h2 style="margin: 6px 0 4px 0; font-size: clamp(1.3rem, 3.5vw, 1.7rem);">Renegade Reader Web App</h2>
+        </div>
+        <button id="btn-install-app-main" class="btn-primary" style="padding: 10px 20px; font-size: 0.95rem; width: auto; display: none;">
+          📲 Install Web App
+        </button>
+      </div>
+
+      <p style="color: var(--text-muted); line-height: 1.6; margin: 0 0 16px 0;">
+        Install this web app to your home screen or desktop. Once downloaded, all 2,093 chapters, custom reading themes, progress tracking, and notes work 100% offline with zero restrictions.
+      </p>
+
+      <div class="offline-progress-wrap" id="offline-progress-wrap" style="display: none;">
+        <div class="offline-progress-bar" id="offline-progress-bar"></div>
+      </div>
+
+      <div class="offline-status-line">
+        <span id="offline-chapters-count">Checking offline library...</span>
+        <span id="offline-storage-mode">Storage: Checking persistence...</span>
+      </div>
+
+      <div class="offline-actions-row">
+        <button id="btn-download-offline-library" class="btn-primary" style="width: auto; padding: 12px 24px; font-size: 1rem;">
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" x2="12" y1="15" y2="3"/></svg>
+          <span id="btn-download-text">Download All Chapters for Offline (57 MB)</span>
+        </button>
+        <button id="btn-clear-offline-library" class="action-btn-mini danger" style="display: none; padding: 10px 16px; border-radius: var(--border-radius); cursor: pointer;">
+          Clear Offline Storage
+        </button>
+      </div>
+    </div>
+
     <div class="download-card">
       <picture>
         <source srcset="/assets/cover.webp" type="image/webp">
@@ -909,6 +982,7 @@ def main():
   </footer>
 
   <script src="/assets/anime.min.js"></script>
+  <script src="/assets/offline-sync.js"></script>
   <script>
     try {{
       const saved = JSON.parse(localStorage.getItem('renegade_reader_settings'));
@@ -953,6 +1027,106 @@ def main():
         navigator.serviceWorker.register('/sw.js').catch(err => console.debug('SW reg failed', err));
       }});
     }}
+
+    // Offline Storage Engine Logic for Download Page
+    const countEl = document.getElementById('offline-chapters-count');
+    const modeEl = document.getElementById('offline-storage-mode');
+    const badgeEl = document.getElementById('offline-badge');
+    const badgeText = document.getElementById('offline-badge-text');
+    const wrapEl = document.getElementById('offline-progress-wrap');
+    const barEl = document.getElementById('offline-progress-bar');
+    const btnDl = document.getElementById('btn-download-offline-library');
+    const btnDlText = document.getElementById('btn-download-text');
+    const btnClear = document.getElementById('btn-clear-offline-library');
+    const btnInstallMain = document.getElementById('btn-install-app-main');
+
+    let deferredPromptMain = null;
+    window.addEventListener('beforeinstallprompt', (e) => {{
+      e.preventDefault();
+      deferredPromptMain = e;
+      if (btnInstallMain) btnInstallMain.style.display = 'inline-flex';
+    }});
+
+    if (btnInstallMain) {{
+      btnInstallMain.addEventListener('click', async () => {{
+        if (!deferredPromptMain) return;
+        deferredPromptMain.prompt();
+        const choice = await deferredPromptMain.userChoice;
+        if (choice && choice.outcome === 'accepted') {{
+          btnInstallMain.style.display = 'none';
+          if (window.OfflineManager) window.OfflineManager.downloadAll();
+        }}
+        deferredPromptMain = null;
+      }});
+    }}
+
+    const refreshDownloadPage = async () => {{
+      if (!window.OfflineManager || !window.OfflineManager.isSupported()) {{
+        if (countEl) countEl.textContent = 'Offline storage not supported in this browser.';
+        return;
+      }}
+      const st = await window.OfflineManager.getStatus();
+      if (modeEl) modeEl.textContent = `Storage: ${{st.persisted ? 'Persistent' : 'Best-Effort'}}`;
+
+      if (st.ready || st.cached >= st.total) {{
+        if (badgeEl) {{ badgeEl.className = 'offline-badge'; badgeText.textContent = '100% Offline Ready'; }}
+        if (countEl) countEl.textContent = `All ${{st.total}} chapters stored on device (57 MB)`;
+        if (wrapEl) wrapEl.style.display = 'none';
+        if (btnDl) btnDl.style.display = 'none';
+        if (btnClear) btnClear.style.display = 'inline-flex';
+      }} else if (st.isDownloading) {{
+        if (badgeEl) {{ badgeEl.className = 'offline-badge waiting'; badgeText.textContent = 'Downloading...'; }}
+        if (countEl) countEl.textContent = `Downloading: ${{st.cached}} / ${{st.total}} chapters (${{st.percent}}%)`;
+        if (wrapEl) wrapEl.style.display = 'block';
+        if (barEl) barEl.style.width = st.percent + '%';
+        if (btnDlText) btnDlText.textContent = 'Pause Download';
+      }} else {{
+        if (countEl) countEl.textContent = `${{st.cached}} / ${{st.total}} chapters available offline (${{st.percent}}%)`;
+        if (wrapEl) wrapEl.style.display = 'none';
+        if (btnDl) btnDl.style.display = 'inline-flex';
+        if (btnDlText) btnDlText.textContent = `Download All Chapters for Offline (57 MB)`;
+        if (btnClear) btnClear.style.display = st.cached > 0 ? 'inline-flex' : 'none';
+      }}
+    }};
+
+    if (btnDl) {{
+      btnDl.addEventListener('click', () => {{
+        if (!window.OfflineManager) return;
+        if (btnDlText && btnDlText.textContent.includes('Pause')) {{
+          window.OfflineManager.cancelDownload();
+          refreshDownloadPage();
+        }} else {{
+          if (wrapEl) wrapEl.style.display = 'block';
+          if (btnDlText) btnDlText.textContent = 'Downloading...';
+          window.OfflineManager.downloadAll(
+            p => {{
+              if (countEl) countEl.textContent = `Downloading: ${{p.completed}} / ${{p.total}} chapters (${{p.percent}}%)`;
+              if (barEl) barEl.style.width = p.percent + '%';
+            }},
+            () => {{
+              refreshDownloadPage();
+            }},
+            () => {{
+              if (countEl) countEl.textContent = 'Download interrupted. You can resume anytime.';
+              if (btnDlText) btnDlText.textContent = 'Resume Download';
+            }}
+          );
+        }}
+      }});
+    }}
+
+    if (btnClear) {{
+      btnClear.addEventListener('click', async () => {{
+        if (confirm('Clear all downloaded offline chapters from device storage?')) {{
+          if (window.OfflineManager) {{
+            await window.OfflineManager.clearOfflineData();
+            refreshDownloadPage();
+          }}
+        }}
+      }});
+    }}
+
+    refreshDownloadPage();
   </script>
 </body>
 </html>

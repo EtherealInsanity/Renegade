@@ -1,17 +1,17 @@
-# Graph Report - Renegade Reader  (2026-11-08)
+# Graph Report - Renegade Reader  (2026-11-09)
 
 ## Corpus Check
-- 15 files · ~10,658,902 words
+- 16 files · ~10,756,808 words
 - Verdict: corpus is large enough that graph structure adds value.
 - Unclassified: 10 file(s) not represented in the graph (top: .css 6, (none) 2, .epub 1)
 
 ## Summary
-- 152 nodes · 288 edges · 15 communities (10 shown, 5 thin omitted)
+- 156 nodes · 291 edges · 16 communities (10 shown, 6 thin omitted)
 - Extraction: 89% EXTRACTED · 11% INFERRED · 0% AMBIGUOUS · INFERRED: 32 edges (avg confidence: 0.85)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `6085241a`
+- Built from commit: `91b8f0a5`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -53,14 +53,14 @@
 ## Import Cycles
 - None detected.
 
-## Communities (15 total, 5 thin omitted)
+## Communities (16 total, 6 thin omitted)
 
 ### Community 0 - "anime.min.js"
-Cohesion: 0.16
-Nodes (30): a(), B(), cn(), d(), E(), en(), f(), g() (+22 more)
+Cohesion: 0.15
+Nodes (31): a(), B(), C(), cn(), d(), E(), en(), f() (+23 more)
 
 ### Community 1 - "account.js"
-Cohesion: 0.17
+Cohesion: 0.16
 Nodes (20): deleteHighlightItem(), escapeHtml(), getDaoProgression(), getHighlights(), getLastRead(), loadHighlightsData(), loadWalineComments(), persistHighlightChange() (+12 more)
 
 ### Community 2 - "build_chapters.py"
@@ -72,11 +72,11 @@ Cohesion: 0.17
 Nodes (11): description, name, private, scripts, build, build:chapters, build:landing, build:pages (+3 more)
 
 ### Community 4 - "L"
-Cohesion: 0.29
-Nodes (10): C(), L(), b(), g(), h(), m(), o(), u() (+2 more)
+Cohesion: 0.36
+Nodes (9): L(), b(), g(), h(), m(), o(), u(), v() (+1 more)
 
 ### Community 5 - "reader.js"
-Cohesion: 0.18
+Cohesion: 0.17
 Nodes (3): closeAllDrawers(), initComments(), initKeyboardNav()
 
 ### Community 6 - "applySelectionHighlight"
@@ -96,15 +96,17 @@ Cohesion: 0.60
 Nodes (5): closeSettingsDrawer(), initFullscreen(), isFs(), toggleFs(), updateFsUI()
 
 ## Knowledge Gaps
-- **5 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
+- **6 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
 - **Why does `L()` connect `L` to `anime.min.js`?**
-  _High betweenness centrality (0.017) - this node is a cross-community bridge._
+  _High betweenness centrality (0.016) - this node is a cross-community bridge._
 - **Are the 7 inferred relationships involving `r()` (e.g. with `P()` and `b()`) actually correct?**
   _`r()` has 7 INFERRED edges - model-reasoned connections that need verification._
+- **Should `anime.min.js` be split into smaller, more focused modules?**
+  _Cohesion score 0.14616755793226383 - nodes in this community are weakly interconnected._
 - **Why does `initFullscreen()` connect `initFullscreen` to `reader.js`?**
   _High betweenness centrality (0.010) - this node is a cross-community bridge._
 - **Are the 3 inferred relationships involving `k()` (e.g. with `t()` and `b()`) actually correct?**

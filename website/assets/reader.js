@@ -1237,10 +1237,83 @@
     }
 
     initKeyboardNav();
+    // Offline Dao Library controls in Reader Settings Drawer & predictive prefetch
+    function initOfflineReaderControls() {
+      const statusEl = document.getElementById('offline-drawer-status');
+      const progressWrap = document.getElementById('offline-drawer-progress-wrap');
+      const progressFill = document.getElementById('offline-drawer-progress-fill');
+      const actionBtn = document.getElementById('btn-offline-drawer-action');
+
+      const updateUI = async () => {
+        if (!window.OfflineManager || !window.OfflineManager.isSupported()) {
+          if (statusEl) statusEl.textContent = 'Offline storage not supported in this browser.';
+          return;
+        }
+        const st = await window.OfflineManager.getStatus();
+        if (statusEl) {
+          if (st.ready || st.cached >= st.total) {
+            statusEl.textContent = '✓ All 2,093 chapters cached. 100% offline ready!';
+            if (progressWrap) progressWrap.style.display = 'none';
+            if (actionBtn) actionBtn.style.display = 'none';
+          } else if (st.isDownloading) {
+            statusEl.textContent = `Downloading: ${st.cached} / ${st.total} (${st.percent}%)`;
+            if (progressWrap) progressWrap.style.display = 'block';
+            if (progressFill) progressFill.style.width = st.percent + '%';
+            if (actionBtn) {
+              actionBtn.style.display = 'inline-flex';
+              actionBtn.textContent = 'Pause Download';
+            }
+          } else {
+            statusEl.textContent = `Offline: ${st.cached} / ${st.total} chapters cached (${st.percent}%)`;
+            if (progressWrap) progressWrap.style.display = 'none';
+            if (actionBtn) {
+              actionBtn.style.display = 'inline-flex';
+              actionBtn.textContent = '📥 Download All (57 MB)';
+            }
+          }
+        }
+      };
+
+      if (actionBtn) {
+        actionBtn.addEventListener('click', () => {
+          if (!window.OfflineManager) return;
+          if (actionBtn.textContent.includes('Pause')) {
+            window.OfflineManager.cancelDownload();
+            updateUI();
+          } else {
+            actionBtn.textContent = 'Downloading...';
+            if (progressWrap) progressWrap.style.display = 'block';
+            window.OfflineManager.downloadAll(
+              p => {
+                if (statusEl) statusEl.textContent = `Downloading: ${p.completed} / ${p.total} (${p.percent}%)`;
+                if (progressFill) progressFill.style.width = p.percent + '%';
+              },
+              () => {
+                updateUI();
+              },
+              err => {
+                if (statusEl) statusEl.textContent = 'Download interrupted. You can resume anytime.';
+                if (actionBtn) actionBtn.textContent = 'Resume Download';
+              }
+            );
+          }
+        });
+      }
+
+      updateUI();
+
+      // Prefetch upcoming chapters for seamless offline progression
+      const metaCh = document.querySelector('meta[name="chapter-number"]');
+      if (metaCh && metaCh.content && window.OfflineManager) {
+        window.OfflineManager.prefetchUpcoming(metaCh.content, 8);
+      }
+    }
+
     initTouchNavigation();
     initBackToTop();
     initFullscreen();
     initComments();
+    initOfflineReaderControls();
 
     // Anime.js entrance animation for header
     if (window.anime && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {

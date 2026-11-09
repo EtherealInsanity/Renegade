@@ -160,6 +160,26 @@
 
       <!-- Data Backup & Cloud Card -->
       <div class="backup-card">
+        <h3 style="margin: 0;">Offline Dao Library & Storage</h3>
+        <p style="font-size: 0.9rem; color: var(--text-muted); margin: 0;">
+          All 2,093 chapters can be stored permanently in your device storage so you can read without any network connection or restrictions.
+        </p>
+        <div style="font-size: 0.92rem; color: var(--text-color); margin: 4px 0;" id="account-offline-status">
+          Checking offline chapters...
+        </div>
+        <div class="backup-actions">
+          <button id="btn-account-download-offline" class="btn-waline-auth">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" x2="12" y1="15" y2="3"/></svg>
+            <span id="account-download-btn-text">Download All Chapters (57 MB)</span>
+          </button>
+          <button id="btn-account-clear-offline" class="action-btn-mini danger" style="padding: 8px 12px;">
+            Clear Offline Cache
+          </button>
+        </div>
+      </div>
+
+      <!-- Data Backup & Cloud Card -->
+      <div class="backup-card">
         <h3 style="margin: 0;">Data Backup & Cloud Synchronization</h3>
         <p style="font-size: 0.9rem; color: var(--text-muted); margin: 0;">
           Your enlightenment highlights and notes are stored locally in your browser spiritual sea. You can export a JSON backup file anytime or import notes onto a new device.
@@ -184,6 +204,14 @@
   </main>
 
   <script src="/assets/waline-config.js"></script>
+  <script src="/assets/offline-sync.js"></script>
   <script src="/assets/account.js"></script>
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/sw.js').catch(err => console.debug('SW reg failed', err));
+      });
+    }
+  </script>
 </body>
 </html>
